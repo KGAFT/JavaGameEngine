@@ -7,12 +7,16 @@ public class CameraManager {
     private List<Camera> cameras = new ArrayList<>();
     private Camera currentCamera;
 
-    public void switchToCamera(int index){
+    public void switchToCamera(int index) {
         currentCamera = cameras.get(index);
     }
 
-    public void registerCamera(Camera camera){
+    public void registerCamera(Camera camera) {
         cameras.add(camera);
     }
-    public void registerA
+
+    public void registerCameraAndSwitchToIt(Camera camera) {
+        cameras.add(camera);
+        currentCamera = camera;
+    }
 }

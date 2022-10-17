@@ -1,59 +1,55 @@
 package com.kgaft.JavaGameEngine.Engine.Camera;
 
+
 import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+import org.joml.Quaternionfc;
 import org.joml.Vector3f;
 
 public class Camera {
-    private int cameraId;
-    
     private Vector3f position;
+    private Vector3f up;
+    private Vector3f orientation;
 
-    private Vector3f rotation;
-
-    private Matrix4f viewMatrix;
-
-    public Camera() {
-        position = new Vector3f(0, 0, 0);
-        rotation = new Vector3f(0, 0, 0);
+    public Camera(){
+        position = new Vector3f();
+        up = new Vector3f(0, 1, 0);
+        orientation = new Vector3f(0, 0, -1);
     }
 
-    public void setPosition(float x, float y, float z) {
-        position.x = x;
-        position.y = y;
-        position.z = z;
+    public void moveCamera(float forwardBackWardSpeed, float leftRightSpeed, float upDownSpeed){
+        Vector3f orientation = this.orientation;
+        Vector3f up = this.up;
+        position.add(orientation.mul(forwardBackWardSpeed));
+        Vector3f tempVector = new Vector3f();
+        tempVector = tempVector.normalize(orientation.cross(up));
+        position.add(tempVector.mul(leftRightSpeed*-1));
+        position.add(up.mul(upDownSpeed));
     }
 
-    public void movePosition(float offsetX, float offsetY, float offsetZ) {
-        if (offsetZ != 0) {
-            position.x += (float) Math.sin(Math.toRadians(rotation.y)) * -1.0f * offsetZ;
-            position.z += (float) Math.cos(Math.toRadians(rotation.y)) * offsetZ;
+    public void rotateCamera(float xSpeed, float ySpeed){
+        Vector3f orientation = this.orientation;
+        Vector3f up = this.up;
+        Vector3f tempVector = new Vector3f();
+        tempVector = tempVector.normalize(orientation.cross(up));
+        Quaternionf quaternionf = new Quaternionf();
+        quaternionf.setAngleAxis(ySpeed, 0, 1, 0);
+        Vector3f newOrientation = orientation.rotate(quaternionf, tempVector);
+        if(Math.abs(newOrientation.angle(up))<=90){
+            orientation = newOrientation;
+            quaternionf = new Quaternionf();
+            quaternionf.setAngleAxis(xSpeed, 1, 0, 0);
+            this.orientation = orientation.rotate(quaternionf, up);
         }
-        if (offsetX != 0) {
-            position.x += (float) Math.sin(Math.toRadians(rotation.y - 90)) * -1.0f * offsetX;
-            position.z += (float) Math.cos(Math.toRadians(rotation.y - 90)) * offsetX;
-        }
-        position.y += offsetY;
-    }
 
-    public void setRotation(float x, float y, float z) {
-        rotation.x = x;
-        rotation.y = y;
-        rotation.z = z;
     }
+    public Matrix4f getCameraMatrix(float fov, float nearPlane, float farPlane, float aspectRation){
+        Vector3f position = this.position;
+        Matrix4f view = new Matrix4f().identity();
+        Matrix4f projection = new Matrix4f().identity();
 
-    public void moveRotation(float offsetX, float offsetY, float offsetZ) {
-        rotation.x += offsetX;
-        rotation.y += offsetY;
-        rotation.z += offsetZ;
-    }
-
-    public Matrix4f getViewMatrix(Camera camera) {
-        viewMatrix.identity();
-        // First do the rotation so camera rotates over its position
-        viewMatrix.rotate((float) Math.toRadians(rotation.x), new Vector3f(1, 0, 0))
-                .rotate((float) Math.toRadians(rotation.y), new Vector3f(0, 1, 0));
-        // Then do the translation
-        viewMatrix.translate(-position.x, -position.y, -position.z);
-        return viewMatrix;
+        view = view.lookAt(this.position, position.add(orientation), up);
+        projection = projection.perspective((float) Math.toRadians(fov), aspectRation, nearPlane, farPlane);
+        return projection.mul(view);
     }
 }

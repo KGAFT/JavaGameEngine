@@ -33,7 +33,7 @@ public class Engine {
 
         VertexArrayObject vao = VertexArrayObject.createVao();
         vao.attachEbo(ElementBufferObject.createEbo(i_quad));
-        vao.attachVbo(1, VertexBufferObject.createVbo(v_quad, 3), true);
+        vao.attachVbo(0, VertexBufferObject.createVbo(v_quad, 3), true);
 
         while (target.isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT);
