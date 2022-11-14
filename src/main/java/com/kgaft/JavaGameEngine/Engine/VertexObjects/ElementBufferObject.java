@@ -4,6 +4,9 @@ import org.lwjgl.opengl.GL33;
 
 public class ElementBufferObject {
 
+    protected boolean attached = false;
+    protected boolean destroyed = false;
+
     public static ElementBufferObject createEbo(int[] indices) {
         int eboId = GL33.glGenBuffers();
         GL33.glBindBuffer(GL33.GL_ELEMENT_ARRAY_BUFFER, eboId);
@@ -31,5 +34,18 @@ public class ElementBufferObject {
 
     public int getIndicesAmount() {
         return indicesAmount;
+    }
+
+    public void delete(){
+        GL33.glDeleteBuffers(eboId);
+        destroyed = true;
+    }
+
+    public boolean isAttached() {
+        return attached;
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
     }
 }

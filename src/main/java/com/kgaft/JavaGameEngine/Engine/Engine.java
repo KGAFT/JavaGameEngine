@@ -29,7 +29,7 @@ public class Engine {
         shadersToInit.put("Shaders/default.frag", GL33.GL_FRAGMENT_SHADER);
         shadersToInit.put("Shaders/default.vert", GL33.GL_VERTEX_SHADER);
         Shader.initializeShader(shadersToInit);
-
+        GL33.glEnable(GL33.GL_DEPTH_TEST);
         float[] vertices = new float[] {
                 -0.5f, 0.5f, 0.5f,
                 -0.5f, -0.5f, 0.5f,
@@ -88,12 +88,11 @@ public class Engine {
         vao.attachVbo(0, VertexBufferObject.createVbo(vertices, 3), true);
         CameraManager.registerCameraAndSwitchToIt(camera);
         Matrix4f position = new Matrix4f().identity();
-        position.scale(0.1f, 0.1f, 0.1f);
         float[] posData = new float[4*4];
         posData = position.get(posData);
 
         while (target.isWindowActive()){
-            GL33.glClear(GL33.GL_COLOR_BUFFER_BIT);
+            GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
             GL33.glClearColor(0, 0.5f, 0, 1);
             Shader.attach();
             CameraManager.handleCamera();
