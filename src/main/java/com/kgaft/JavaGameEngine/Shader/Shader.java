@@ -13,7 +13,9 @@ public class Shader {
 
     private static int shaderId;
 
-
+    public static void uniformMatrix4f(float[] data, String matrixName){
+        GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(shaderId, matrixName), false, data);
+    }
     public static void initializeShader(HashMap<String, Integer> shadersToCompile) {
         List<Integer> shadersToLink = new ArrayList<>();
         shadersToCompile.forEach((fileName, type) -> {

@@ -5,51 +5,30 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Quaternionfc;
 import org.joml.Vector3f;
+import org.lwjgl.glfw.GLFW;
 
 public class Camera {
-    private Vector3f position;
-    private Vector3f up;
-    private Vector3f orientation;
+    private Vector3f position = new Vector3f(0.0f, 0.0f, 2.0f);
+    private Vector3f orientation = new Vector3f(0.0f, 0.0f, -1.0f);
+    private Vector3f up = new Vector3f(0.0f, 1.0f, 0.0f);
 
-    public Camera(){
-        position = new Vector3f();
-        up = new Vector3f(0, 1, 0);
-        orientation = new Vector3f(0, 0, -1);
+
+    public void move(float forwardBackWardAmplifier, float leftRightAmplifier, float upDownAmplifier){
+        position.add(new Vector3f(orientation).mul(forwardBackWardAmplifier));
+        position.add(new Vector3f(orientation).cross(new Vector3f(up)).normalize().mul(leftRightAmplifier*-1));
+        position.add(new Vector3f(up).mul(upDownAmplifier));
     }
-
-    public void moveCamera(float forwardBackWardSpeed, float leftRightSpeed, float upDownSpeed){
-        Vector3f orientation = this.orientation;
-        Vector3f up = this.up;
-        position.add(orientation.mul(forwardBackWardSpeed));
-        Vector3f tempVector = new Vector3f();
-        tempVector = tempVector.normalize(orientation.cross(up));
-        position.add(tempVector.mul(leftRightSpeed*-1));
-        position.add(up.mul(upDownSpeed));
-    }
-
-    public void rotateCamera(float xSpeed, float ySpeed){
-        Vector3f orientation = this.orientation;
-        Vector3f up = this.up;
-        Vector3f tempVector = new Vector3f();
-        tempVector = tempVector.normalize(orientation.cross(up));
-        Quaternionf quaternionf = new Quaternionf();
-        quaternionf.setAngleAxis(ySpeed, 0, 1, 0);
-        Vector3f newOrientation = orientation.rotate(quaternionf, tempVector);
+    public void rotate(float xSpeed, float ySpeed){
+        Vector3f newOrientation = new Vector3f(orientation).rotateY((float) Math.toRadians(ySpeed), new Vector3f(orientation).cross(new Vector3f(up)).normalize());
         if(Math.abs(newOrientation.angle(up))<=90){
             orientation = newOrientation;
-            quaternionf = new Quaternionf();
-            quaternionf.setAngleAxis(xSpeed, 1, 0, 0);
-            this.orientation = orientation.rotate(quaternionf, up);
         }
-
+        orientation = orientation.rotateX((float) Math.toRadians(xSpeed), new Vector3f(up));
     }
-    public Matrix4f getCameraMatrix(float fov, float nearPlane, float farPlane, float aspectRation){
-        Vector3f position = this.position;
-        Matrix4f view = new Matrix4f().identity();
-        Matrix4f projection = new Matrix4f().identity();
-
-        view = view.lookAt(this.position, position.add(orientation), up);
-        projection = projection.perspective((float) Math.toRadians(fov), aspectRation, nearPlane, farPlane);
-        return projection.mul(view);
+    Matrix4f getCameraMatrix(float fovInDegrees, float nearPlane, float farPlane, float viewPortWidth, float viewPortHeight){
+        Matrix4f projectionMatrix = new Matrix4f().perspective((float) Math.toRadians(fovInDegrees), viewPortWidth/viewPortHeight, nearPlane, farPlane);
+        Matrix4f viewMatrix = new Matrix4f().lookAt(new Vector3f(position), new Vector3f(position).add(new Vector3f(orientation)), new Vector3f(up));
+        return projectionMatrix.mul(viewMatrix);
     }
+
 }

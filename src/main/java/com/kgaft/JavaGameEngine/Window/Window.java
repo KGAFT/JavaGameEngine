@@ -1,7 +1,5 @@
 package com.kgaft.JavaGameEngine.Window;
 
-import org.lwjgl.glfw.GLFWWindowSizeCallbackI;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,15 +35,17 @@ public class Window {
 
     private List<WindowResizeCallBack> resizeCallBackList = new ArrayList<>();
 
-    private int startWidth;
-    private int startHeight;
+    private int width;
+    private int height;
 
-    private Window(long windowHandle, int startWidth, int startHeight) {
+    private Window(long windowHandle, int width, int height) {
         this.windowHandle = windowHandle;
-        this.startWidth = startWidth;
-        this.startHeight = startHeight;
+        this.width = width;
+        this.height = height;
         this.windowHandle = windowHandle;
         glfwSetWindowSizeCallback(windowHandle, (l, i, i1) -> {
+            this.width = i;
+            this.height = i1;
             checkResizeCallBacks(i, i1);
         });
     }
@@ -79,11 +79,11 @@ public class Window {
         return !glfwWindowShouldClose(windowHandle);
     }
 
-    public int getStartWidth() {
-        return startWidth;
+    public int getWidth() {
+        return width;
     }
 
-    public int getStartHeight() {
-        return startHeight;
+    public int getHeight() {
+        return height;
     }
 }
