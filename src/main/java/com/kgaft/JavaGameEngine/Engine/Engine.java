@@ -86,7 +86,8 @@ public class Engine {
         VertexArrayObject vao = VertexArrayObject.createVao();
         vao.attachEbo(ElementBufferObject.createEbo(indices));
         vao.attachVbo(0, VertexBufferObject.createVbo(vertices, 3), true);
-        CameraManager.registerCameraAndSwitchToIt(camera);
+        CameraManager cameraManager = new CameraManager();
+        cameraManager.registerCameraAndSwitchToIt(camera);
         Matrix4f position = new Matrix4f().identity();
         float[] posData = new float[4*4];
         posData = position.get(posData);
@@ -95,7 +96,8 @@ public class Engine {
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
             GL33.glClearColor(0, 0.5f, 0, 1);
             Shader.attach();
-            CameraManager.handleCamera();
+            Window.getWindow().preRenderEvents();
+            cameraManager.handleCamera();
             Shader.uniformMatrix4f(posData, "modelMatrix");
             vao.draw();
             target.postEvents();
