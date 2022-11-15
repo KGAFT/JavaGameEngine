@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         Window.prepareWindow(800, 600, "HelloWorld!");
         Window window = Window.getWindow();
-        Engine engine = new Engine(window);
+        Engine engine = new Engine();
         engine.start();
     }
 }

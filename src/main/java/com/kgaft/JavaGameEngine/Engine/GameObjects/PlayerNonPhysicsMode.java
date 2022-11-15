@@ -3,12 +3,21 @@ package com.kgaft.JavaGameEngine.Engine.GameObjects;
 import com.kgaft.JavaGameEngine.Window.KeyBoardCallBack;
 import com.kgaft.JavaGameEngine.Window.MouseMovementCallBack;
 import com.kgaft.JavaGameEngine.Window.Window;
+import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerNonPhysicsMode implements MouseMovementCallBack, KeyBoardCallBack {
+
+    private float mouseXSensitivity = 10;
+    private float mouseYSensitivity = 10;
+
+    private float xMovementSensitivity = 1;
+    private float yMovementSensitivity = 1;
+    private float zMovementSensitivity = 1;
+
     private List<NonPhysicMoveAbleObject> dependentObjects = new ArrayList<>();
 
 
@@ -19,6 +28,7 @@ public class PlayerNonPhysicsMode implements MouseMovementCallBack, KeyBoardCall
 
     @Override
     public void keyPressed(int keyCodeId) {
+        Vector3f moveVector = new Vector3f(0, 0, 0);
         switch(keyCodeId){
             case GLFW.GLFW_KEY_ENTER:
                 Window.getWindow().setCursorMode(Window.FIXED_HIDDEN_CURSOR_MODE);
@@ -27,25 +37,27 @@ public class PlayerNonPhysicsMode implements MouseMovementCallBack, KeyBoardCall
                 Window.getWindow().setCursorMode(Window.DYNAMIC_CURSOR);
                 break;
             case GLFW.GLFW_KEY_W:
-                currentCamera.move(1, 0, 0);
+                moveVector.y+=1;
                 break;
             case GLFW.GLFW_KEY_A:
-                currentCamera.move(0, -1, 0);
+                moveVector.x+=1;
                 break;
             case GLFW.GLFW_KEY_S:
-                currentCamera.move(-1, 0, 0);
+                moveVector.y-=1;
                 break;
             case GLFW.GLFW_KEY_D:
-                currentCamera.move(0, 1, 0);
+                moveVector.x-=1;
                 break;
             case GLFW.GLFW_KEY_SPACE:
-                currentCamera.move(0, 0, 1);
+                moveVector.z+=1;
                 break;
             case GLFW.GLFW_KEY_C:
-                currentCamera.move(0, 0, -1);
+                moveVector.z-=1;
                 break;
-
         }
+        dependentObjects.forEach(nonPhysicMoveAbleObject -> {
+            nonPhysicMoveAbleObject.move(moveVector.y*yMovementSensitivity, moveVector.x*xMovementSensitivity, moveVector.z*zMovementSensitivity);
+        });
     }
 
     @Override
@@ -56,7 +68,7 @@ public class PlayerNonPhysicsMode implements MouseMovementCallBack, KeyBoardCall
     @Override
     public void mouseMoved(double x, double y) {
         dependentObjects.forEach(object->{
-            object.rotate((float) x*10, (float)y*10);
+            object.rotate((float) y*-1*mouseYSensitivity, (float)x*-1*mouseXSensitivity);
         });
     }
 
@@ -68,6 +80,43 @@ public class PlayerNonPhysicsMode implements MouseMovementCallBack, KeyBoardCall
         dependentObjects.remove(object);
     }
 
+    public float getMouseXSensitivity() {
+        return mouseXSensitivity;
+    }
 
+    public void setMouseXSensitivity(float mouseXSensitivity) {
+        this.mouseXSensitivity = mouseXSensitivity;
+    }
 
+    public float getMouseYSensitivity() {
+        return mouseYSensitivity;
+    }
+
+    public void setMouseYSensitivity(float mouseYSensitivity) {
+        this.mouseYSensitivity = mouseYSensitivity;
+    }
+
+    public float getxMovementSensitivity() {
+        return xMovementSensitivity;
+    }
+
+    public void setxMovementSensitivity(float xMovementSensitivity) {
+        this.xMovementSensitivity = xMovementSensitivity;
+    }
+
+    public float getyMovementSensitivity() {
+        return yMovementSensitivity;
+    }
+
+    public void setyMovementSensitivity(float yMovementSensitivity) {
+        this.yMovementSensitivity = yMovementSensitivity;
+    }
+
+    public float getzMovementSensitivity() {
+        return zMovementSensitivity;
+    }
+
+    public void setzMovementSensitivity(float zMovementSensitivity) {
+        this.zMovementSensitivity = zMovementSensitivity;
+    }
 }

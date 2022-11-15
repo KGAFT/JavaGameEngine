@@ -1,6 +1,7 @@
 package com.kgaft.JavaGameEngine.Shader;
 
 import com.kgaft.JavaGameEngine.Utils.IOUtil;
+import org.joml.Vector3f;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL33;
 
@@ -15,6 +16,16 @@ public class Shader {
 
     public static void uniformMatrix4f(float[] data, String matrixName){
         GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(shaderId, matrixName), false, data);
+    }
+
+    public static void uniformVector3f(float[] data, String vectorName){
+        GL33.glUniform3fv(GL33.glGetUniformLocation(shaderId, vectorName), data);
+    }
+    public static void uniformVector3f(Vector3f data, String vectorName){
+        GL33.glUniform3f(GL33.glGetUniformLocation(shaderId, vectorName), data.x, data.y, data.z);
+    }
+    public static void uniformFloat(float value, String varName){
+        GL33.glUniform1f(GL33.glGetUniformLocation(shaderId, varName), value);
     }
     public static void initializeShader(HashMap<String, Integer> shadersToCompile) {
         List<Integer> shadersToLink = new ArrayList<>();
@@ -73,5 +84,9 @@ public class Shader {
             return IOUtil.inputStreamToString(inputStream);
         }
         return null;
+    }
+
+    public static int getShaderId() {
+        return shaderId;
     }
 }

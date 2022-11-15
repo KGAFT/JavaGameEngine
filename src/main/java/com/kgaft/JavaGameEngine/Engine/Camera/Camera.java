@@ -21,6 +21,7 @@ public class Camera implements NonPhysicMoveAbleObject {
     }
     @Override
     public void rotate(float xSpeed, float ySpeed){
+
         Vector3f newOrientation = new Vector3f(orientation).rotateY((float) Math.toRadians(ySpeed), new Vector3f(orientation).cross(new Vector3f(up)).normalize());
         if(Math.abs(newOrientation.angle(up))<=90){
             orientation = newOrientation;
@@ -33,4 +34,11 @@ public class Camera implements NonPhysicMoveAbleObject {
         return projectionMatrix.mul(viewMatrix);
     }
 
+    public Vector3f getPosition() {
+        return position;
+    }
+
+    public Vector3f getOrientation() {
+        return orientation;
+    }
 }
