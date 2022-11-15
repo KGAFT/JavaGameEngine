@@ -3,6 +3,8 @@ package com.kgaft.JavaGameEngine.Engine;
 import com.kgaft.JavaGameEngine.Engine.Camera.Camera;
 import com.kgaft.JavaGameEngine.Engine.Camera.CameraManager;
 import com.kgaft.JavaGameEngine.Engine.GameObjects.PlayerNonPhysicsMode;
+import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Model;
+import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.ModelLoader;
 import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Texture;
 import com.kgaft.JavaGameEngine.Engine.VertexObjects.ElementBufferObject;
 import com.kgaft.JavaGameEngine.Engine.VertexObjects.VertexArrayObject;
@@ -32,7 +34,7 @@ public class Engine {
         shadersToInit.put("Shaders/default.vert", GL33.GL_VERTEX_SHADER);
         Shader.initializeShader(shadersToInit);
         GL33.glEnable(GL33.GL_DEPTH_TEST);
-
+        /*
         float[] vertices = new float[] {
                 -0.5f, 0.5f, 0.5f,
                 -0.5f, -0.5f, 0.5f,
@@ -96,12 +98,12 @@ public class Engine {
         vao.attachEbo(ElementBufferObject.createEbo(indices));
         vao.attachVbo(0, VertexBufferObject.createVbo(vertices, 3), true);
         vao.attachVbo(1, VertexBufferObject.createVbo(UVs, 2), false);
+
+         */
         CameraManager cameraManager = new CameraManager();
         cameraManager.registerCameraAndSwitchToIt(camera);
-        Matrix4f position = new Matrix4f().identity();
-        position.scale(0.5f);
-        float[] posData = new float[4*4];
-        posData = position.get(posData);
+        ModelLoader modelLoader = new ModelLoader();
+        Model model = modelLoader.loadModel(Engine.class.getClassLoader().getResource("Models/grind/scene.gltf").getPath());
         PlayerNonPhysicsMode playerNonPhysicsMode = new PlayerNonPhysicsMode();
         playerNonPhysicsMode.addDependentObject(camera);
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
@@ -110,11 +112,9 @@ public class Engine {
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
             GL33.glClearColor(0, 0.5f, 0, 1);
             Shader.attach();
-            texture.attach("baseColorTexture");
             Window.getWindow().preRenderEvents();
             cameraManager.handleCamera();
-            Shader.uniformMatrix4f(posData, "modelMatrix");
-            vao.draw();
+            model.draw();
             Window.getWindow().postEvents();
         }
     }

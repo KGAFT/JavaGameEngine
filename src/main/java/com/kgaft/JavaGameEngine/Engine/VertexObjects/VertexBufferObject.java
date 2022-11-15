@@ -9,7 +9,7 @@ public class VertexBufferObject {
     public static VertexBufferObject createVbo(float[] vertices, int stride) {
         int vboId = GL33.glGenBuffers();
         GL33.glBindBuffer(GL33.GL_ARRAY_BUFFER, vboId);
-        GL33.glBufferData(GL33.GL_ARRAY_BUFFER, vertices, GL33.GL_STATIC_DRAW);
+        GL33.glBufferData(GL33.GL_ARRAY_BUFFER, vertices, GL33.GL_DYNAMIC_DRAW);
         GL33.glBindBuffer(GL33.GL_ARRAY_BUFFER, 0);
         GL33.glBindVertexArray(0);
         return new VertexBufferObject(vboId, stride);

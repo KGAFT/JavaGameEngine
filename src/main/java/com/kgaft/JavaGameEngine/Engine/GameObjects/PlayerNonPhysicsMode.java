@@ -11,12 +11,12 @@ import java.util.List;
 
 public class PlayerNonPhysicsMode implements MouseMovementCallBack, KeyBoardCallBack {
 
-    private float mouseXSensitivity = 10;
-    private float mouseYSensitivity = 10;
+    private float mouseXSensitivity = 2;
+    private float mouseYSensitivity = 2;
 
-    private float xMovementSensitivity = 1;
-    private float yMovementSensitivity = 1;
-    private float zMovementSensitivity = 1;
+    private float xMovementSensitivity = 0.1f;
+    private float yMovementSensitivity = 0.1f;
+    private float zMovementSensitivity = 0.1f;
 
     private List<NonPhysicMoveAbleObject> dependentObjects = new ArrayList<>();
 

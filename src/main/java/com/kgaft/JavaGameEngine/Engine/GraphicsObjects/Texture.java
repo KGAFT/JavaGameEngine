@@ -25,7 +25,7 @@ public class Texture {
         ByteBuffer textureContent = STBImage.stbi_load(filePath, width, height, colorAmount, STBImage.STBI_rgb);
         System.out.println(STBImage.stbi_failure_reason());
         int textureId = GL33.glGenTextures();
-        GL33.glActiveTexture(GL33.GL_TEXTURE0 + slotCount);
+        GL33.glActiveTexture(GL33.GL_TEXTURE0 + 0);
         GL33.glBindTexture(GL33.GL_TEXTURE_2D, textureId);
         GL33.glTexParameteri(GL33.GL_TEXTURE_2D, GL33.GL_TEXTURE_MIN_FILTER, GL33.GL_NEAREST);
         GL33.glTexParameteri(GL33.GL_TEXTURE_2D, GL33.GL_TEXTURE_MAG_FILTER, GL33.GL_NEAREST);
@@ -48,6 +48,8 @@ public class Texture {
     private int slot;
     private int textureId;
 
+    private String samplerName;
+
     public Texture(int slot, int textureId) {
         this.slot = slot;
         this.textureId = textureId;
@@ -57,5 +59,22 @@ public class Texture {
         int samplerLocation = glGetUniformLocation(Shader.getShaderId(), samplerName);
         glUniform1i(samplerLocation, slot);
         glBindTexture(GL_TEXTURE_2D, textureId);
+    }
+    public void attach() {
+       // glActiveTexture(GL_TEXTURE0+0);
+        int samplerLocation = glGetUniformLocation(Shader.getShaderId(), samplerName);
+        glUniform1i(samplerLocation, 0);
+        glBindTexture(GL_TEXTURE_2D, textureId);
+    }
+    public void destroy(){
+        glDeleteTextures(textureId);
+    }
+
+    public String getSamplerName() {
+        return samplerName;
+    }
+
+    public void setSamplerName(String samplerName) {
+        this.samplerName = samplerName;
     }
 }
