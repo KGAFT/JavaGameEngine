@@ -76,12 +76,7 @@ public class ModelLoader {
         for(int c = 0; c<count; c++){
             path.clear();
             Assimp.aiGetMaterialTexture(material, textureType, 0, path, (IntBuffer) null, null, null, null, null, null);
-            Texture texture = null;
-            try{
-                texture = textureList.get(path.dataString());
-            }catch (Exception e){
-
-            }
+            Texture texture = textureList.get(path.dataString());
             if(texture==null){
                 switch (textureType){
                     case Assimp.aiTextureType_DIFFUSE:
@@ -93,6 +88,9 @@ public class ModelLoader {
             }
             if(texture!=null){
                 results.add(texture);
+                if(!textureList.containsKey(path.dataString())){
+                    textureList.put(path.dataString(), texture);
+                }
             }
         }
         return results;
@@ -115,10 +113,11 @@ public class ModelLoader {
         for (int i = 0; i < indices.size(); i++) {
             indRaw[i] = indices.get(i);
         }
-        vao.attachVbo(3, VertexBufferObject.createVbo(posRaw, 3), true);
+
         vao.attachEbo(ElementBufferObject.createEbo(indRaw));
-        vao.attachVbo(2, VertexBufferObject.createVbo(uvsRaw, 2), false);
-        vao.attachVbo(1, VertexBufferObject.createVbo(normalsRaw, 3), false);
+        vao.attachVbo(0, VertexBufferObject.createVbo(posRaw, 3));
+        vao.attachVbo(1, VertexBufferObject.createVbo(uvsRaw, 2));
+        vao.attachVbo(2, VertexBufferObject.createVbo(normalsRaw, 3));
         Mesh mesh = new Mesh();
         mesh.setMeshTextures(textures);
         mesh.setVertexArrayObject(vao);

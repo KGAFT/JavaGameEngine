@@ -31,7 +31,7 @@ public class Texture {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
         if (colorAmount[0] >= 3) {
-            GL33.glTexImage2D(GL33.GL_TEXTURE_2D, 0, GL33.GL_RGBA, width[0], height[0], 0, GL33.GL_RGBA, GL33.GL_UNSIGNED_BYTE, textureContent);
+            GL33.glTexImage2D(GL33.GL_TEXTURE_2D, 0, GL33.GL_RGBA, width[0], height[0], 0, GL33.GL_RGB, GL33.GL_UNSIGNED_BYTE, textureContent);
         } else if (colorAmount[0] == 1) {
             GL33.glTexImage2D(GL33.GL_TEXTURE_2D, 0, GL33.GL_RGBA, width[0], height[0], 0, GL33.GL_RED, GL33.GL_UNSIGNED_BYTE, textureContent);
         }
@@ -58,7 +58,7 @@ public class Texture {
         glBindTexture(GL_TEXTURE_2D, textureId);
     }
     public void attach() {
-
+        glActiveTexture(GL_TEXTURE0+slot);
         int samplerLocation = glGetUniformLocation(Shader.getShaderId(), samplerName);
         glUniform1i(samplerLocation, slot);
         glBindTexture(GL_TEXTURE_2D, textureId);

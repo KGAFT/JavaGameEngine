@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL33;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class VertexArrayObject {
@@ -14,30 +15,28 @@ public class VertexArrayObject {
 
     private int vaoId;
 
-    private int layoutLocationDataToDraw;
+
 
     private ElementBufferObject drawEbo;
 
-    private List<VertexBufferObject> VBOs = new ArrayList<>();
+    private HashMap<Integer, VertexBufferObject> VBOs = new HashMap<Integer, VertexBufferObject>();
 
     private VertexArrayObject(int vaoId) {
         this.vaoId = vaoId;
     }
 
-    public void attachVbo(int layoutLocation, VertexBufferObject vbo, boolean isDrawTarget) {
+    public void attachVbo(int layoutLocation, VertexBufferObject vbo) {
 
         if(!vbo.attached){
             if(!vbo.destroyed){
                 bind();
                 vbo.bind();
-                GL33.glVertexAttribPointer(layoutLocation, vbo.getStride(), GL11.GL_FLOAT, false, vbo.getStride()*4, 0);
+                GL33.glVertexAttribPointer(layoutLocation, vbo.getStride(), GL11.GL_FLOAT, false, 0, 0);
                 unBind();
                 vbo.unBind();
-                if (isDrawTarget) {
-                    layoutLocationDataToDraw = layoutLocation;
-                }
+
                 vbo.attached = true;
-                VBOs.add(vbo);
+                VBOs.put(layoutLocation, vbo);
             }
             else{
                 throw new RuntimeException("Error: you cannot attach destroyed vbo");
@@ -76,9 +75,9 @@ public class VertexArrayObject {
     public void draw() {
         if(!drawEbo.destroyed){
             bind();
-            GL33.glEnableVertexAttribArray(layoutLocationDataToDraw);
+            VBOs.keySet().forEach(GL33::glEnableVertexAttribArray);
             GL33.glDrawElements(GL11.GL_TRIANGLES, drawEbo.getIndicesAmount(), GL11.GL_UNSIGNED_INT, 0);
-            GL33.glDisableVertexAttribArray(layoutLocationDataToDraw);
+            VBOs.keySet().forEach(GL33::glDisableVertexAttribArray);
             GL33.glBindVertexArray(vaoId);
         }
         else{
@@ -94,7 +93,7 @@ public class VertexArrayObject {
     public void destroy(){
         GL33.glDeleteVertexArrays(vaoId);
         drawEbo.delete();
-        VBOs.forEach(VertexBufferObject::delete);
+        VBOs.values().forEach(VertexBufferObject::delete);
         VBOs.clear();
     }
 }

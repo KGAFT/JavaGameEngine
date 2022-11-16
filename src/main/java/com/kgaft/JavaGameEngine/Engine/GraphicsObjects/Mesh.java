@@ -21,9 +21,7 @@ public class Mesh {
         float[] worldPositionData = new float[4 * 4];
         worldMatrix.get(worldPositionData);
         Shader.uniformMatrix4f(worldPositionData, "modelMatrix");
-        for (int i = 0; i < meshTextures.size(); i++) {
-            meshTextures.get(i).attach();
-        }
+        meshTextures.forEach(Texture::attach);
         vertexArrayObject.draw();
     }
 
