@@ -30,7 +30,7 @@ public class VertexArrayObject {
             if(!vbo.destroyed){
                 bind();
                 vbo.bind();
-                GL33.glVertexAttribPointer(layoutLocation, vbo.getStride(), GL11.GL_FLOAT, false, 0, 0);
+                GL33.glVertexAttribPointer(layoutLocation, vbo.getStride(), GL11.GL_FLOAT, false, vbo.getStride()*4, 0);
                 unBind();
                 vbo.unBind();
                 if (isDrawTarget) {

@@ -18,7 +18,7 @@ public class ModelLoader {
     private HashMap<String, Texture> textureList = new HashMap<>();
 
     public Model loadModel(String modelPath){
-        AIScene scene = Assimp.aiImportFile(modelPath, Assimp.aiProcess_Triangulate | Assimp.aiProcess_FlipUVs);
+        AIScene scene = Assimp.aiImportFile(modelPath, Assimp.aiProcess_FlipUVs | Assimp.aiProcess_Triangulate);
         System.out.println(Assimp.aiGetErrorString());
         return processScene(scene, modelPath);
     }
@@ -115,10 +115,10 @@ public class ModelLoader {
         for (int i = 0; i < indices.size(); i++) {
             indRaw[i] = indices.get(i);
         }
-        vao.attachVbo(0, VertexBufferObject.createVbo(posRaw, 3), true);
+        vao.attachVbo(3, VertexBufferObject.createVbo(posRaw, 3), true);
         vao.attachEbo(ElementBufferObject.createEbo(indRaw));
-        vao.attachVbo(1, VertexBufferObject.createVbo(uvsRaw, 2), false);
-        vao.attachVbo(2, VertexBufferObject.createVbo(normalsRaw, 3), false);
+        vao.attachVbo(2, VertexBufferObject.createVbo(uvsRaw, 2), false);
+        vao.attachVbo(1, VertexBufferObject.createVbo(normalsRaw, 3), false);
         Mesh mesh = new Mesh();
         mesh.setMeshTextures(textures);
         mesh.setVertexArrayObject(vao);
