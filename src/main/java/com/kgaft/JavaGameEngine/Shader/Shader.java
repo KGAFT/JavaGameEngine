@@ -27,6 +27,9 @@ public class Shader {
     public static void uniformFloat(float value, String varName){
         GL33.glUniform1f(GL33.glGetUniformLocation(shaderId, varName), value);
     }
+    public static void uniformInt(int value, String varName){
+        GL33.glUniform1i(GL33.glGetUniformLocation(shaderId, varName), value);
+    }
     public static void initializeShader(HashMap<String, Integer> shadersToCompile) {
         List<Integer> shadersToLink = new ArrayList<>();
         shadersToCompile.forEach((fileName, type) -> {

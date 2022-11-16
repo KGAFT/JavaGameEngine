@@ -34,6 +34,7 @@ public class ModelLoader {
     }
     private Mesh processMesh(AIMesh mesh, AIScene scene, String directory){
         List<Texture> textures = loadTextures(AIMaterial.create(scene.mMaterials().get(mesh.mMaterialIndex())), Assimp.aiTextureType_DIFFUSE, directory);
+
         textures.addAll(loadTextures(AIMaterial.create(scene.mMaterials().get(mesh.mMaterialIndex())), Assimp.aiTextureType_SPECULAR, directory));
         List<Float> positions = new ArrayList<>();
         List<Float> normals = new ArrayList<>();
@@ -53,7 +54,6 @@ public class ModelLoader {
             normals.add(normal.y());
             normals.add(normal.z());
         }
-        IntBuffer intBuffer = mesh.mNumUVComponents();
         AIVector3D.Buffer uvsBuffer = mesh.mTextureCoords(0);
         while(uvsBuffer.remaining()>0){
             AIVector3D vector3D = uvsBuffer.get();
@@ -76,12 +76,15 @@ public class ModelLoader {
         for(int c = 0; c<count; c++){
             path.clear();
             Assimp.aiGetMaterialTexture(material, textureType, 0, path, (IntBuffer) null, null, null, null, null, null);
-            Texture texture = textureList.get(path.dataString());
+            Texture texture = null; //textureList.get(path.dataString());
             if(texture==null){
                 switch (textureType){
                     case Assimp.aiTextureType_DIFFUSE:
+                        /*
                         texture = Texture.loadTexture(textureDirectory+"/"+path.dataString());
-                        texture.setSamplerName("baseColorTexture");
+
+                         */
+                        //texture.setSamplerName("baseColorTexture");
                         break;
 
                 }

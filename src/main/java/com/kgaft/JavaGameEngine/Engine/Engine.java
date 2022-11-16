@@ -3,6 +3,7 @@ package com.kgaft.JavaGameEngine.Engine;
 import com.kgaft.JavaGameEngine.Engine.Camera.Camera;
 import com.kgaft.JavaGameEngine.Engine.Camera.CameraManager;
 import com.kgaft.JavaGameEngine.Engine.GameObjects.PlayerNonPhysicsMode;
+import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Mesh;
 import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Model;
 import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.ModelLoader;
 import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Texture;
@@ -16,9 +17,13 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL33;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Engine {
+
+
+
     public Engine(){
 
         GL.createCapabilities();
@@ -34,88 +39,90 @@ public class Engine {
         shadersToInit.put("Shaders/default.vert", GL33.GL_VERTEX_SHADER);
         Shader.initializeShader(shadersToInit);
         GL33.glEnable(GL33.GL_DEPTH_TEST);
-        /*
-        float[] vertices = new float[] {
+
+        float[] positions = new float[]{
+// VO
                 -0.5f, 0.5f, 0.5f,
+// V1
                 -0.5f, -0.5f, 0.5f,
+// V2
                 0.5f, -0.5f, 0.5f,
+// V3
                 0.5f, 0.5f, 0.5f,
+// V4
                 -0.5f, 0.5f, -0.5f,
+// V5
                 0.5f, 0.5f, -0.5f,
+// V6
                 -0.5f, -0.5f, -0.5f,
-                0.5f, -0.5f, -0.5f,
-                -0.5f, 0.5f, -0.5f,
-                0.5f, 0.5f, -0.5f,
-                -0.5f, 0.5f, 0.5f,
-                0.5f, 0.5f, 0.5f,
-                0.5f, 0.5f, 0.5f,
-                0.5f, -0.5f, 0.5f,
-                -0.5f, 0.5f, 0.5f,
-                -0.5f, -0.5f, 0.5f,
-                -0.5f, -0.5f, -0.5f,
-                0.5f, -0.5f, -0.5f,
-                -0.5f, -0.5f, 0.5f,
-                0.5f, -0.5f, 0.5f,
+// V7
+                0.5f, -0.5f, -0.5f
         };
-        float[] textCoords = new float[]{
+
+        int[] indices = new int[] {
+// Front face
+                0, 1, 3, 3, 1, 2,
+// Top Face
+                4, 0, 3, 5, 4, 3,
+// Right face
+                3, 2, 7, 5, 3, 7,
+// Left face
+                6, 1, 0, 6, 0, 4,
+// Bottom face
+                2, 1, 6, 2, 6, 7,
+// Back face
+                7, 6, 4, 7, 4, 5,
+        };
+
+        float[] UVs = new float[]{
                 0.0f, 0.0f,
                 0.0f, 0.5f,
                 0.5f, 0.5f,
                 0.5f, 0.0f,
-                0.0f, 0.0f,
-                0.5f, 0.0f,
-                0.0f, 0.5f,
-                0.5f, 0.5f,
                 0.0f, 0.5f,
                 0.5f, 0.5f,
                 0.0f, 1.0f,
-                0.5f, 1.0f,
-                0.0f, 0.0f,
-                0.0f, 0.5f,
-                0.5f, 0.0f,
-                0.5f, 0.5f,
-                0.5f, 0.0f,
-                1.0f, 0.0f,
-                0.5f, 0.5f,
-                1.0f, 0.5f,
+                0.5f, 1.0f
         };
-        int[] indices = new int[]{
-                0, 1, 3, 3, 1, 2,
-                8, 10, 11, 9, 8, 11,
-                12, 13, 7, 5, 12, 7,
-                14, 15, 6, 4, 14, 6,
-                16, 18, 19, 17, 16, 19,
-                4, 6, 7, 5, 4, 7,
-        };
-        Texture texture = Texture.loadTexture("/home/daniil/Documents/texture.jpg");
-        float[] UVs = new float[]{
-            0.0F, 0.0F,
-            0, 1,
-            1, 1,
-            1, 0
-        };
-        VertexArrayObject vao = VertexArrayObject.createVao();
-        vao.attachEbo(ElementBufferObject.createEbo(indices));
-        vao.attachVbo(0, VertexBufferObject.createVbo(vertices, 3), true);
-        vao.attachVbo(1, VertexBufferObject.createVbo(UVs, 2), false);
 
-         */
+        Mesh mesh = Mesh.createMesh(positions, UVs, new float[8*3], indices);
         CameraManager cameraManager = new CameraManager();
         cameraManager.registerCameraAndSwitchToIt(camera);
-        ModelLoader modelLoader = new ModelLoader();
-        Model model = modelLoader.loadModel(Engine.class.getClassLoader().getResource("Models/grind/scene.gltf").getPath());
+        Texture texture = null;
+        Texture secondTexture = null;
+        Texture thirdTexture = null;
+        try {
+            texture = Texture.loadTexture(Engine.class.getClassLoader().getResource("textures/Texture.png").getPath(), Texture.BASE_COLOR_TEXTURE);
+            secondTexture = Texture.loadTexture(Engine.class.getClassLoader().getResource("textures/secondTexture.png").getPath(), Texture.BASE_COLOR_TEXTURE);
+            thirdTexture = Texture.loadTexture(Engine.class.getClassLoader().getResource("textures/thirdTexture.png").getPath(),Texture.BASE_COLOR_TEXTURE);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         PlayerNonPhysicsMode playerNonPhysicsMode = new PlayerNonPhysicsMode();
         playerNonPhysicsMode.addDependentObject(camera);
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
+        long framesAmount = 0;
         while (Window.getWindow().isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
             GL33.glClearColor(0, 0.5f, 0, 1);
             Shader.attach();
+            if(framesAmount%2==0){
+                secondTexture.attach();
+            }
+            else if(framesAmount%3==0){
+                thirdTexture.attach();
+            }
+            else{
+                texture.attach();
+
+            }
+            mesh.updateAndLoadToGameWorld();
             Window.getWindow().preRenderEvents();
             cameraManager.handleCamera();
-            model.draw();
             Window.getWindow().postEvents();
+            framesAmount++;
         }
     }
 
