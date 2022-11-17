@@ -2,17 +2,10 @@ package com.kgaft.JavaGameEngine.Engine.GraphicsObjects;
 
 import com.kgaft.JavaGameEngine.Shader.Shader;
 import de.matthiasmann.twl.utils.PNGDecoder;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL33;
-import org.lwjgl.stb.STBImage;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL33.*;
 

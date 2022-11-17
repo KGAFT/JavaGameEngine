@@ -18,6 +18,7 @@ import org.lwjgl.opengl.GL33;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Engine {
@@ -35,6 +36,7 @@ public class Engine {
             GL33.glViewport(0, 0, newWidth, newHeight);
         });
         HashMap<String, Integer> shadersToInit = new HashMap<>();
+        shadersToInit.put("Shaders/light.frag", GL33.GL_FRAGMENT_SHADER);
         shadersToInit.put("Shaders/default.frag", GL33.GL_FRAGMENT_SHADER);
         shadersToInit.put("Shaders/default.vert", GL33.GL_VERTEX_SHADER);
         Shader.initializeShader(shadersToInit);
@@ -84,45 +86,39 @@ public class Engine {
                 0.0f, 1.0f,
                 0.5f, 1.0f
         };
+        float[] normals = new float[]{
+                -1.0f,  0.0f,  0.0f,
+                0.0f, -1.0f,  0.0f,
+                0.0f,  0.0f,  1.0f,
+                0.0f,  0.0f,  1.0f,
+                0.0f,  0.0f,  1.0f,
+                1.0f,  0.0f,  0.0f,
+                0.0f, -1.0f,  0.0f,
+                0.0f, -1.0f,  0.0f
+        };
 
-        Mesh mesh = Mesh.createMesh(positions, UVs, new float[8*3], indices);
         CameraManager cameraManager = new CameraManager();
         cameraManager.registerCameraAndSwitchToIt(camera);
-        Texture texture = null;
-        Texture secondTexture = null;
-        Texture thirdTexture = null;
+        ArrayList<Texture> textures = new ArrayList<>();
         try {
-            texture = Texture.loadTexture(Engine.class.getClassLoader().getResource("textures/Texture.png").getPath(), Texture.BASE_COLOR_TEXTURE);
-            secondTexture = Texture.loadTexture(Engine.class.getClassLoader().getResource("textures/secondTexture.png").getPath(), Texture.BASE_COLOR_TEXTURE);
-            thirdTexture = Texture.loadTexture(Engine.class.getClassLoader().getResource("textures/thirdTexture.png").getPath(),Texture.BASE_COLOR_TEXTURE);
+            textures.add(Texture.loadTexture(Engine.class.getClassLoader().getResource("textures/Texture.png").getPath(), Texture.BASE_COLOR_TEXTURE));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        Mesh mesh = Mesh.createMesh(positions, UVs, normals, indices, textures);
         PlayerNonPhysicsMode playerNonPhysicsMode = new PlayerNonPhysicsMode();
         playerNonPhysicsMode.addDependentObject(camera);
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
-        long framesAmount = 0;
+
         while (Window.getWindow().isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
             GL33.glClearColor(0, 0.5f, 0, 1);
             Shader.attach();
-            if(framesAmount%2==0){
-                secondTexture.attach();
-            }
-            else if(framesAmount%3==0){
-                thirdTexture.attach();
-            }
-            else{
-                texture.attach();
-
-            }
             mesh.updateAndLoadToGameWorld();
             Window.getWindow().preRenderEvents();
             cameraManager.handleCamera();
             Window.getWindow().postEvents();
-            framesAmount++;
         }
     }
 

@@ -8,6 +8,9 @@ in vec3 Normals;
 
 uniform sampler2D baseColorTexture;
 
+vec3 processAllLights(vec3 objectColor);
+
 void main() {
-    FragColor = texture(baseColorTexture, uvsCoords);
+    vec4 objectColor = texture(baseColorTexture, uvsCoords);
+    FragColor = vec4(processAllLights(vec3(objectColor.x, objectColor.y, objectColor.z)), objectColor.w);
 }

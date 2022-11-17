@@ -24,6 +24,17 @@ public class Mesh {
         mesh.setVertexArrayObject(vao);
         return mesh;
     }
+    public static Mesh createMesh(float[] vertices, float[] UVs, float[] normals, int[] indices, List<Texture> textures){
+        VertexArrayObject vao = VertexArrayObject.createVao();
+        vao.attachEbo(ElementBufferObject.createEbo(indices));
+        vao.attachVbo(0, VertexBufferObject.createVbo(vertices, 3));
+        vao.attachVbo(1, VertexBufferObject.createVbo(UVs, 2));
+        vao.attachVbo(2, VertexBufferObject.createVbo(normals, 3));
+        Mesh mesh = new Mesh();
+        mesh.setVertexArrayObject(vao);
+        mesh.setMeshTextures(textures);
+        return mesh;
+    }
 
 
     private VertexArrayObject vertexArrayObject;

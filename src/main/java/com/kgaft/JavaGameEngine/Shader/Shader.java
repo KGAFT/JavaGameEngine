@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Shader {
 
-    private static int shaderId;
+    private static int shaderId = -1;
 
     public static void uniformMatrix4f(float[] data, String matrixName){
         GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(shaderId, matrixName), false, data);
@@ -43,7 +43,7 @@ public class Shader {
     }
 
     public static void attach() {
-        if (shaderId != 0) {
+        if (shaderId != -1) {
             GL33.glUseProgram(shaderId);
         } else {
             throw new RuntimeException("Error: shader does not loaded");
