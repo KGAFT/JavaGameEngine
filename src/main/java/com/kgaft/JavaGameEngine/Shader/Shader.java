@@ -1,6 +1,7 @@
 package com.kgaft.JavaGameEngine.Shader;
 
 import com.kgaft.JavaGameEngine.Utils.IOUtil;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL33;
@@ -17,14 +18,21 @@ public class Shader {
     public static void uniformMatrix4f(float[] data, String matrixName){
         GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(shaderId, matrixName), false, data);
     }
-    public static void uniformFloatValueInArray(int index, float value, String name){
-        GL33.glUniform1f(GL33.glGetUniformLocation(shaderId, name)+index, value);
+    public static void uniformFloatValueInArrayOfStructs(int index, float value, String arrayName, String valueName){
+        String name = arrayName+"["+index+"]."+valueName;
+        GL33.glUniform1f(GL33.glGetUniformLocation(shaderId, name), value);
     }
 
-    public static void uniformVector3fInArray(int index, Vector3f value, String name){
-        GL33.glUniform3f(GL33.glGetUniformLocation(shaderId, name)+index, value.x, value.y, value.z);
+    public static void uniformVector3fInArrayOfStructs(int index, Vector3f value, String arrayName, String valueName){
+        String name = arrayName+"["+index+"]."+valueName;
+        GL33.glUniform3f(GL33.glGetUniformLocation(shaderId, name), value.x, value.y, value.z);
     }
-
+    public static void uniformMatrix4fInArrayOfStructs(int index, Matrix4f value, String arrayName, String valueName){
+        String name = arrayName+"["+index+"]."+valueName;
+        float[] data = new float[4*4];
+        value.get(data);
+        GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(shaderId, name), false, data);
+    }
     public static void uniformVector3f(float[] data, String vectorName){
         GL33.glUniform3fv(GL33.glGetUniformLocation(shaderId, vectorName), data);
     }

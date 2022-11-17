@@ -8,6 +8,7 @@ struct LightInfo{
     float specularShininess;
     float ambientStrength;
     float specularStrength;
+    mat4 lightMatrix;
 };
 
 uniform vec3 cameraPosition;
@@ -31,6 +32,9 @@ vec3 processAllLights(vec3 objectColor){
 
 
 vec3 processLight(LightInfo lightInfo, vec3 viewPos, vec3 objectColor, vec3 Normal, vec3 FragPos){
+    vec4 tempLightPos = vec4(lightInfo.position, 1.0f)*lightInfo.lightMatrix;
+    lightInfo.position = vec3(tempLightPos.x, tempLightPos.y, tempLightPos.z);
+
     float ambientStrength = lightInfo.ambientStrength;
     vec3 ambient = ambientStrength * lightInfo.color;
 

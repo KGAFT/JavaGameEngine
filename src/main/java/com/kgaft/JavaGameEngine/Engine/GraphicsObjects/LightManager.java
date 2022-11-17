@@ -19,10 +19,21 @@ public class LightManager {
     public static void removeLight(Light light){
         lights.remove(light);
     }
+
+
     public static void loadLights(){
         Shader.uniformInt(lights.size(), "activatedLightBlocks");
-        lights.forEach(light->{
-
-        });
+        for (int i = 0; i < lights.size(); i++) {
+            loadLightToShader(lights.get(i), i);
+        }
     }
+    private static void loadLightToShader(Light light, int index){
+        Shader.uniformVector3fInArrayOfStructs(index, light.getPositionLight(), "lights", "position");
+        Shader.uniformVector3fInArrayOfStructs(index, light.getLightColor(), "lights", "color");
+        Shader.uniformFloatValueInArrayOfStructs(index, light.getShininess(), "lights", "specularShininess");
+        Shader.uniformFloatValueInArrayOfStructs(index, light.getAmbientStrength(), "lights", "ambientStrength");
+        Shader.uniformFloatValueInArrayOfStructs(index, light.getSpecularStrength(), "lights", "specularStrength");
+        Shader.uniformMatrix4fInArrayOfStructs(index, light.getLightMatrix(), "lights", "lightMatrix");
+    }
+
 }
