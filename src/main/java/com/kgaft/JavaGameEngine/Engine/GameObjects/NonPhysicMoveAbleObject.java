@@ -1,6 +1,8 @@
 package com.kgaft.JavaGameEngine.Engine.GameObjects;
 
+import org.joml.Vector3f;
+
 public interface NonPhysicMoveAbleObject {
-    void move(float forwardBackWardAmplifier, float leftRightAmplifier, float upDownAmplifier);
-    void rotate(float xSpeed, float ySpeed);
+    void move(Vector3f move);
+    void rotate(Vector3f rotation);
 }

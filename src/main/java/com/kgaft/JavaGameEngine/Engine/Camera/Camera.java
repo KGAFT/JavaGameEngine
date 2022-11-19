@@ -15,27 +15,25 @@ public class Camera implements NonPhysicMoveAbleObject {
     private Vector3f up = new Vector3f(0.0f, 1.0f, 0.0f);
 
      */
-    private final Vector3f position = new Vector3f(0.0f, 0.0f, 2.0f);
-    private final Vector3f rotation = new Vector3f(0.0f, 0.0f, -1.0f);
+    private Vector3f position = new Vector3f(0.0f, 0.0f, 2.0f);
+    private Vector3f rotation = new Vector3f(0.0f, 0.0f, -1.0f);
 
     @Override
-    public void move(float forwardBackWardAmplifier, float leftRightAmplifier, float upDownAmplifier){
+    public void move(Vector3f move){
 
-        if ( forwardBackWardAmplifier != 0 ) {
-            position.x += (float)Math.sin(Math.toRadians(rotation.y)) * forwardBackWardAmplifier;
-            position.z += (float)Math.cos(Math.toRadians(rotation.y)) * forwardBackWardAmplifier*-1.0f;
+        if ( move.x != 0 ) {
+            position.x += (float)Math.sin(Math.toRadians(rotation.y)) * move.x;
+            position.z += (float)Math.cos(Math.toRadians(rotation.y)) * move.x*-1.0f;
         }
-        if ( leftRightAmplifier != 0) {
-            position.x += (float) Math.sin(Math.toRadians(rotation.y - 90)) * leftRightAmplifier;
-            position.z += (float) Math.cos(Math.toRadians(rotation.y - 90)) * leftRightAmplifier*-1.0f;
+        if ( move.z != 0) {
+            position.x += (float) Math.sin(Math.toRadians(rotation.y - 90)) * move.z;
+            position.z += (float) Math.cos(Math.toRadians(rotation.y - 90)) * move.z*-1.0f;
         }
-        position.y += upDownAmplifier;
+        position.y += move.y;
     }
     @Override
-    public void rotate(float xSpeed, float ySpeed){
-
-        rotation.x += xSpeed*-1;
-        rotation.y += ySpeed*-1;
+    public void rotate(Vector3f rotation){
+        this.rotation = new Vector3f(this.rotation.x+rotation.x, this.rotation.y+rotation.y, -1.0f);
 
     }
     Matrix4f getCameraMatrix(float fovInDegrees, float nearPlane, float farPlane, float viewPortWidth, float viewPortHeight){

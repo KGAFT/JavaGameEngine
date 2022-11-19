@@ -6,6 +6,7 @@ import org.joml.Vector3f;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL33;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,11 +46,21 @@ public class Shader {
     public static void uniformInt(int value, String varName){
         GL33.glUniform1i(GL33.glGetUniformLocation(shaderId, varName), value);
     }
-    public static void initializeShader(HashMap<String, Integer> shadersToCompile) {
+    public static void initializeShader() {
         List<Integer> shadersToLink = new ArrayList<>();
-        shadersToCompile.forEach((fileName, type) -> {
-            shadersToLink.add(compileShader(getShaderSourceCode(fileName), type));
-        });
+        File file = new File(Shader.class.getClassLoader().getResource("Shaders").getPath());
+        for (File listFile : file.listFiles()) {
+            int type = 0;
+            switch (IOUtil.getFileExtension(listFile.getName())){
+                case "frag":
+                    type = GL33.GL_FRAGMENT_SHADER;
+                    break;
+                case "vert":
+                    type = GL33.GL_VERTEX_SHADER;
+                    break;
+            }
+            shadersToLink.add(compileShader(getShaderSourceCode("Shaders/"+listFile.getName()), type));
+        }
         try {
             shaderId = compileShaderProgram(shadersToLink);
         } catch (RuntimeException e) {

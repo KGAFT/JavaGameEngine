@@ -56,7 +56,7 @@ public class PlayerNonPhysicsMode implements MouseMovementCallBack, KeyBoardCall
                 break;
         }
         dependentObjects.forEach(nonPhysicMoveAbleObject -> {
-            nonPhysicMoveAbleObject.move(moveVector.y*yMovementSensitivity, moveVector.x*xMovementSensitivity, moveVector.z*zMovementSensitivity);
+            nonPhysicMoveAbleObject.move(new Vector3f(moveVector.y*yMovementSensitivity, moveVector.z*zMovementSensitivity, moveVector.x*xMovementSensitivity) );
         });
     }
 
@@ -68,7 +68,7 @@ public class PlayerNonPhysicsMode implements MouseMovementCallBack, KeyBoardCall
     @Override
     public void mouseMoved(double x, double y) {
         dependentObjects.forEach(object->{
-            object.rotate((float) y*-1*mouseYSensitivity, (float)x*-1*mouseXSensitivity);
+            object.rotate(new Vector3f((float) y*mouseYSensitivity, (float)x*mouseXSensitivity, 1.0f));
         });
     }
 

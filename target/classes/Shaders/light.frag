@@ -8,7 +8,7 @@ struct PointLightInfo{
 	float a;
 	float b;
 	float ambientIntensity;
-	float spelcularIntensity;
+	float specularIntensity;
 	float shininess;
 };
 struct DirectLightInfo{
@@ -101,7 +101,7 @@ LightReturn pointLight(PointLightInfo info, vec3 primitivePosition, vec3 Normal,
 	float diffuse = max(dot(normal, lightDirection), 0.0f);
 
 	// specular lighting
-	float specularLight = info.spelcularIntensity;
+	float specularLight = info.specularIntensity;
 	vec3 viewDirection = normalize(cameraPosition - primitivePosition);
 	vec3 reflectionDirection = reflect(-lightDirection, normal);
 	float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), info.shininess);
