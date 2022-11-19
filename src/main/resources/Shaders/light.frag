@@ -1,6 +1,6 @@
 #version 330 core
 
-#define LIGHT_BLOCKS_AMOUNT 60
+#define LIGHT_BLOCKS_AMOUNT 53
 
 struct PointLightInfo{
 	vec3 lightPosition;
@@ -28,29 +28,63 @@ struct SpotLightInfo{
 	float specularIntensity;
 	float shininess;
 };
-
+struct LightReturn{
+	vec4 baseColor;
+	float specularColor;
+	vec4 lightColor;
+};
 uniform vec3 cameraPosition;
-uniform LightInfo lights[LIGHT_BLOCKS_AMOUNT];
+uniform PointLightInfo pointLights[LIGHT_BLOCKS_AMOUNT];
+uniform DirectLightInfo directLights[LIGHT_BLOCKS_AMOUNT];
+uniform SpotLightInfo spotLights[LIGHT_BLOCKS_AMOUNT];
 
-uniform int activatedLightBlocks;
+uniform int activatedPointLights;
+uniform int activatedSpotLights;
+uniform int activatedDirectLgihts;
 
 in vec3 Normals;
 in vec3 fragmentPosition;
 
+LightReturn pointLight(PointLightInfo info, vec3 primitivePosition, vec3 Normal, vec4 baseColor, float specularInfo);
+LightReturn directLight(DirectLightInfo info, vec3 primitivePosition, vec3 Normal, vec4 baseColor, float specularInfo);
+LightReturn spotLight(SpotLightInfo info, vec3 primitivePosition, vec3 Normal, vec4 baseColor, float specularInfo);
 
-
-vec3 processAllLights(vec3 objectColor, sampler2D baseColorMap, sampler2D specularLight, vec2 texCoord){
-    for(int counter = 0; counter<activatedLightBlocks; counter++){
-        objectColor = processLight(lights[counter], cameraPosition, objectColor, Normals, fragmentPosition);
-    }
-    return objectColor;
+vec4 processAllLights(vec3 primitivePosition, sampler2D baseColorMap, sampler2D specularLight, vec2 texCoord){
+	vec4 objectColor = texture(baseColorMap, texCoord);
+	float specularInfo = texture(specularLight, texCoord).r;
+	vec4 lightColor = vec4(1.0, 1.0, 1.0, 1.0);
+	bool lightColorEmpty = true;
+	for(int counter = 0; counter<activatedPointLights; counter++){
+		LightReturn pointLightReturn = pointLight(pointLights[counter], primitivePosition, Normals, objectColor, specularInfo);
+		objectColor = pointLightReturn.baseColor;
+		specularInfo = pointLightReturn.specularColor;
+		if(lightColorEmpty){
+			lightColor=pointLightReturn.lightColor;
+		}
+		else{
+			lightColor*=pointLightReturn.lightColor;
+		}
+	}
+	for(int counter = 0; counter<activatedDirectLgihts; counter++){
+		LightReturn lightReturn = directLight(directLights[counter], primitivePosition, Normals, objectColor, specularInfo);
+		objectColor = lightReturn.baseColor;
+		specularInfo = lightReturn.specularColor;
+		lightColor*=lightReturn.lightColor;
+	}
+	for(int counter = 0; counter<activatedSpotLights; counter++){
+		LightReturn lightReturn = spotLight(spotLights[counter], primitivePosition, Normals, objectColor, specularInfo);
+		objectColor = lightReturn.baseColor;
+		specularInfo = lightReturn.specularColor;
+		lightColor*=lightReturn.lightColor;
+	}
+    return (objectColor+specularInfo)*lightColor;
 }
 
 
-vec4 pointLight(PointLightInfo info, vec3 primitivePosition, vec3 Normal, sampler2D baseColorMap, sampler2D specularMap, vec2 texCoord)
+LightReturn pointLight(PointLightInfo info, vec3 primitivePosition, vec3 Normal, vec4 baseColor, float specularInfo)
 {
 	// used in two variables so I calculate it here to not have to do it twice
-	vec3 lightVec = info.lightPosition - crntPos;
+	vec3 lightVec = info.lightPosition - primitivePosition;
 
 	// intensity of light with respect to distance
 	float dist = length(lightVec);
@@ -72,11 +106,15 @@ vec4 pointLight(PointLightInfo info, vec3 primitivePosition, vec3 Normal, sample
 	vec3 reflectionDirection = reflect(-lightDirection, normal);
 	float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), info.shininess);
 	float specular = specAmount * specularLight;
+	LightReturn pointLightReturn;
+	pointLightReturn.lightColor = info.lightColor;
+	pointLightReturn.baseColor = baseColor * (diffuse * inten + ambient);
+	pointLightReturn.specularColor = specularInfo * specular * inten;
 
-	return (texture(baseColorMap, texCoord) * (diffuse * inten + ambient) + texture(specularMap, texCoord).r * specular * inten) * info.lightColor;
+	return pointLightReturn;
 }
 
-vec4 direcLight(DirectLightInfo info, vec3 primitivePosition, vec3 Normal, sampler2D baseColorMap, sampler2D specularMap, vec2 texCoord)
+LightReturn directLight(DirectLightInfo info, vec3 primitivePosition, vec3 Normal, vec4 baseColor, float specularInfo)
 {
 	// ambient lighting
 	float ambient = info.ambientIntensity;
@@ -92,11 +130,14 @@ vec4 direcLight(DirectLightInfo info, vec3 primitivePosition, vec3 Normal, sampl
 	vec3 reflectionDirection = reflect(-lightDirection, normal);
 	float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), info.shininess);
 	float specular = specAmount * specularLight;
-
-	return (texture(baseColorMap, texCoord) * (diffuse + ambient) + texture(specularMap, texCoord).r * specular) * info.color;
+	LightReturn lightReturn;
+	lightReturn.lightColor = info.color;
+	lightReturn.baseColor = baseColor*(diffuse+ambient);
+	lightReturn.specularColor = specularInfo*specular;
+	return lightReturn;
 }
 
-vec4 spotLight(SpotLightInfo info, vec3 primitivePosition, vec3 Normal, sampler2D baseColorMap, sampler2D specularMap, vec2 texCoord)
+LightReturn spotLight(SpotLightInfo info, vec3 primitivePosition, vec3 Normal, vec4 baseColor, float specularInfo)
 {
 	// controls how big the area that is lit up is
 	float outerCone = info.outerCone;
@@ -120,6 +161,9 @@ vec4 spotLight(SpotLightInfo info, vec3 primitivePosition, vec3 Normal, sampler2
 	// calculates the intensity of the crntPos based on its angle to the center of the light cone
 	float angle = dot(vec3(0.0f, -1.0f, 0.0f), -lightDirection);
 	float inten = clamp((angle - outerCone) / (innerCone - outerCone), 0.0f, 1.0f);
-
-	return (texture(baseColorMap, texCoord) * (diffuse * inten + ambient) + texture(specularMap, texCoord).r * specular * inten) * info.color;
+	LightReturn lightReturn;
+	lightReturn.lightColor = info.color;
+	lightReturn.specularColor = specularInfo*specular*inten;
+	lightReturn.baseColor = baseColor*(diffuse * inten + ambient);
+	return lightReturn;
 }

@@ -5,12 +5,12 @@ in vec2 uvsCoords;
 out vec4 FragColor;
 
 in vec3 Normals;
+in vec3 primitivePosition;
 
 uniform sampler2D baseColorTexture;
-
-vec3 processAllLights(vec3 objectColor);
+uniform sampler2D specularTexture;
+vec4 processAllLights(vec3 primitivePosition, sampler2D baseColorMap, sampler2D specularLight, vec2 texCoord);
 
 void main() {
-    vec4 objectColor = texture(baseColorTexture, uvsCoords);
-    FragColor = vec4(processAllLights(vec3(objectColor.x, objectColor.y, objectColor.z)), objectColor.w);
+    FragColor = processAllLights(primitivePosition, baseColorTexture, specularTexture, uvsCoords);
 }
