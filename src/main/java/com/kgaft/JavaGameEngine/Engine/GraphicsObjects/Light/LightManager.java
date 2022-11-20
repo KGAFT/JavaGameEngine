@@ -1,48 +1,46 @@
 package com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Light;
 
+import com.kgaft.JavaGameEngine.Engine.Camera.Camera;
 import com.kgaft.JavaGameEngine.Shader.Shader;
+import com.kgaft.JavaGameEngine.Shader.ShaderStruct;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LightManager {
-   // private static List<Light> lights = new ArrayList<>();
-    private static Vector3f cameraPosition;
+    private static ArrayList<PointLight> pointLights = new ArrayList<>();
+    private static ArrayList<DirectLight> directLights = new ArrayList<>();
+    private static ArrayList<SpotLight> spotLights = new ArrayList<>();
+    private static Camera camera;
 
-    public static void setCameraPosition(Vector3f cameraPosition) {
-        LightManager.cameraPosition = cameraPosition;
-    }
-   /* public static void addLight(Light light){
-        lights.add(light);
-    }
-    public static void removeLight(Light light){
-        lights.remove(light);
+    public static Camera getCamera() {
+        return camera;
     }
 
-
-    */
+    public static void setCamera(Camera camera) {
+        LightManager.camera = camera;
+    }
 
     public static void loadLights(){
-        /*
-        Shader.uniformInt(lights.size(), "activatedLightBlocks");
-        for (int i = 0; i < lights.size(); i++) {
-            loadLightToShader(lights.get(i), i);
-        }
-
-         */
+        Shader.uniformInt(pointLights.size(), "activatedPointLights");
+        Shader.uniformInt(spotLights.size(), "activatedSpotLights");
+        Shader.uniformInt(directLights.size(), "activatedDirectLights");
+        Shader.uniformArrayOfStructs(new ArrayList<>(pointLights), "pointLights");
+        Shader.uniformArrayOfStructs(new ArrayList<>(directLights), "directLights");
+        Shader.uniformArrayOfStructs(new ArrayList<>(spotLights), "spotLights");
     }
-    /*
-    private static void loadLightToShader(Light light, int index){
 
-        Shader.uniformVector3fInArrayOfStructs(index, light.getPositionLight(), "lights", "position");
-        Shader.uniformVector3fInArrayOfStructs(index, light.getLightColor(), "lights", "color");
-        Shader.uniformFloatValueInArrayOfStructs(index, light.getShininess(), "lights", "specularShininess");
-        Shader.uniformFloatValueInArrayOfStructs(index, light.getAmbientStrength(), "lights", "ambientStrength");
-        Shader.uniformFloatValueInArrayOfStructs(index, light.getSpecularStrength(), "lights", "specularStrength");
-        Shader.uniformMatrix4fInArrayOfStructs(index, light.getLightMatrix(), "lights", "lightMatrix");
+    public static void addSpotLight(SpotLight spotLight){
+        spotLights.add(spotLight);
+    }
+    public static void addPointLight(PointLight pointLight){
+        pointLights.add(pointLight);
+    }
+    public static void addDirectLight(DirectLight directLight){
+        directLights.add(directLight);
+    }
 
-         */
 
 
 }

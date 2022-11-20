@@ -4,13 +4,19 @@ in vec2 uvsCoords;
 
 out vec4 FragColor;
 
-in vec3 Normals;
+in vec3 Normales;
 in vec3 primitivePosition;
 
 uniform sampler2D baseColorTexture;
-uniform sampler2D specularTexture;
-vec4 processAllLights(vec3 primitivePosition, sampler2D baseColorMap, sampler2D specularLight, vec2 texCoord);
+
+
+out vec3 WorldPos0;
+out vec3 Normals;
+
+vec4 loadLights();
 
 void main() {
-    FragColor = processAllLights(primitivePosition, baseColorTexture, specularTexture, uvsCoords);
+    WorldPos0 = primitivePosition;
+    Normals = Normales;
+    FragColor = texture(baseColorTexture, uvsCoords)*loadLights();
 }

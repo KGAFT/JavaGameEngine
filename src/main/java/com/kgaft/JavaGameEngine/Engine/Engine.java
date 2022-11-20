@@ -4,9 +4,14 @@ import com.kgaft.JavaGameEngine.Engine.Camera.Camera;
 import com.kgaft.JavaGameEngine.Engine.Camera.CameraManager;
 import com.kgaft.JavaGameEngine.Engine.GameObjects.PlayerNonPhysicsMode;
 import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.*;
+import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Light.DirectLight;
 import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Light.LightManager;
+import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Light.PointLight;
+import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Light.SpotLight;
 import com.kgaft.JavaGameEngine.Shader.Shader;
 import com.kgaft.JavaGameEngine.Window.Window;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL33;
 
@@ -101,16 +106,17 @@ public class Engine {
         Mesh mesh = Mesh.createMesh(positions, UVs, normals, indices, textures);
         PlayerNonPhysicsMode playerNonPhysicsMode = new PlayerNonPhysicsMode();
         playerNonPhysicsMode.addDependentObject(camera);
+
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
-       // Light light = new Light(new Vector3f(0.5f, 0.5f, 0.5f), new Vector3f(0.5f, 0.0f, 0.4f));
-        //LightManager.addLight(light);
+
+        LightManager.setCamera(camera);
         while (Window.getWindow().isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
-            GL33.glClearColor(0, 0.0f, 0, 1);
+            GL33.glClearColor(0, 0.5f, 0, 1);
             Shader.attach();
             LightManager.loadLights();
-           // light.rotate(new Vector3f(1, 1, 0));
+            //spotLight.rotate(new Vector3f(0f, 0f, 1f));
             mesh.updateAndLoadToGameWorld();
             Window.getWindow().preRenderEvents();
             cameraManager.handleCamera();

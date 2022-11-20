@@ -9,10 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DirectLight extends WorldObject implements ShaderStruct {
-    private float ambientIntensity = 0.2f;
-    private float specularIntensity = 0.5f;
-    private float shininess = 32f;
-    private Vector4f color;
+    private Vector3f color;
+    private float ambientIntensity = 0.0f;
+    private float diffuseIntensity = 0.1f;
+    private float specularPower;
+    private float specularIntensity;
 
     public DirectLight(Vector4f color) {
         this.color = color;

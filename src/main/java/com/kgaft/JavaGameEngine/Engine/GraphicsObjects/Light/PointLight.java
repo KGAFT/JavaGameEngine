@@ -2,7 +2,6 @@ package com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Light;
 
 import com.kgaft.JavaGameEngine.Engine.GameObjects.WorldObject;
 import com.kgaft.JavaGameEngine.Shader.ShaderStruct;
-import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.util.HashMap;
