@@ -12,7 +12,7 @@ out vec3 Normals;
 
 void main(){
     uvsCoords = textureCoordinates;
-    Normals = (vec4(Normals, 0.0f)*modelMatrix).xyz;
+    Normals = (vec4(normals, 0.0f)*modelMatrix).xyz;
     WorldPos0 = vec3(modelMatrix*vec4(position, 1.0));
     gl_Position = cameraMatrix*modelMatrix*vec4(position, 1.0);
 }

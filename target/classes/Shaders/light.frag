@@ -76,7 +76,7 @@ vec3 getNormalFromMap(vec2 uvs)
 }
 
 vec4 loadLights(vec2 uvs){
-	vec3 Normals = normalize(Normals);//getNormalFromMap(uvs);
+	vec3 Normals = getNormalFromMap(uvs);
 	vec4 color;
 	bool isColorEmpty = true;
 	for(int i = 0; i<enabledDirectionalLights; i++){
