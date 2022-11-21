@@ -15,7 +15,7 @@ public class DirectLight extends WorldObject implements ShaderStruct {
 
     float specularPower = 32;
     float specularIntensity = 1;
-    private Vector3f direction = new Vector3f(1.0f, 0.0f, 0.0f);
+    private Vector3f direction = new Vector3f(0.0f, 1.0f, 0.0f);
 
     public DirectLight(Vector4f color) {
         this.color = color;

@@ -99,27 +99,25 @@ public class Engine {
         cameraManager.registerCameraAndSwitchToIt(camera);
         PlayerNonPhysicsMode playerNonPhysicsMode = new PlayerNonPhysicsMode();
         playerNonPhysicsMode.addDependentObject(camera);
-        String modelPath = Engine.class.getClassLoader().getResource("Models/grind/scene.gltf").getPath();
+        String modelPath = Engine.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1);
         Model model = new ModelLoader().loadModel(modelPath);
         try {
-            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/grind/textures/Main_baseColor.png").getPath(), Texture.BASE_COLOR_TEXTURE));
+            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_BaseColor_tga.png").getPath(), Texture.BASE_COLOR_TEXTURE));
+            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_Normal_tga.png").getPath(), Texture.NORMAL_MAP_TEXTURE));
         } catch (IOException e) {
             e.printStackTrace();
         }
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
         DirectLight directLight = new DirectLight(new Vector4f(1f, 1f, 1f, 1f));
-        PointLight pointLight = new PointLight(new Vector4f(0.5f, 0.0f, 0.0f, 1.0f));
-       // LightManager.addDirectLight(directLight);
-       // LightManager.addPointLight(pointLight);
+        PointLight pointLight = new PointLight(new Vector4f(0.5f, 0.0f, 0.5f, 1.0f));
         SpotLight spotLight = new SpotLight(new Vector4f(0.5f, 0.0f, 0.5f, 1f));
-       // LightManager.addSpotLight(spotLight);
-       // LightManager.addDirectLight(directLight);
-        LightManager.addPointLight(pointLight);
+        //LightManager.addSpotLight(spotLight);
+        LightManager.addDirectLight(directLight);
         LightManager.setCamera(camera);
         while (Window.getWindow().isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
-            GL33.glClearColor(0.5f, 0.0f, 0, 1);
+            GL33.glClearColor(0.0f, 0.0f, 0, 1);
             Shader.attach();
             LightManager.loadLights();
             //spotLight.rotate(new Vector3f(0f, 0f, 1f));
