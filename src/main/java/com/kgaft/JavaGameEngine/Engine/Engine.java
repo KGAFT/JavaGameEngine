@@ -109,11 +109,16 @@ public class Engine {
 
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
-
+        DirectLight directLight = new DirectLight(new Vector4f(1f, 1f, 1f, 1f));
+        PointLight pointLight = new PointLight(new Vector4f(0.5f, 0.0f, 0.0f, 1.0f));
+       // LightManager.addDirectLight(directLight);
+       // LightManager.addPointLight(pointLight);
+        SpotLight spotLight = new SpotLight(new Vector4f(0.5f, 0.0f, 0.5f, 1f));
+        LightManager.addSpotLight(spotLight);
         LightManager.setCamera(camera);
         while (Window.getWindow().isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
-            GL33.glClearColor(0, 0.5f, 0, 1);
+            GL33.glClearColor(0.5f, 0.0f, 0, 1);
             Shader.attach();
             LightManager.loadLights();
             //spotLight.rotate(new Vector3f(0f, 0f, 1f));

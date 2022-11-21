@@ -9,13 +9,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DirectLight extends WorldObject implements ShaderStruct {
-    private Vector3f color;
-    private float ambientIntensity = 0.0f;
-    private float diffuseIntensity = 0.1f;
-    private float specularPower;
-    private float specularIntensity;
+    private Vector4f color;
+    private float ambientIntensity = 0.5f;
+    private float diffuseIntensity = 0.75f;
+
+    float specularPower = 32;
+    float specularIntensity = 1;
+    private Vector3f direction = new Vector3f(1.0f, 0.0f, 0.0f);
 
     public DirectLight(Vector4f color) {
+        this.color = color;
+    }
+
+    public Vector4f getColor() {
+        return color;
+    }
+
+    public void setColor(Vector4f color) {
         this.color = color;
     }
 
@@ -27,16 +37,21 @@ public class DirectLight extends WorldObject implements ShaderStruct {
         this.ambientIntensity = ambientIntensity;
     }
 
-    public float getSpecularIntensity() {
-        return specularIntensity;
+    public float getDiffuseIntensity() {
+        return diffuseIntensity;
     }
 
-    public void setSpecularIntensity(float specularIntensity) {
-        this.specularIntensity = specularIntensity;
+    public void setDiffuseIntensity(float diffuseIntensity) {
+        this.diffuseIntensity = diffuseIntensity;
     }
 
-    public float getShininess() {
-        return shininess;
+
+    public Vector3f getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Vector3f direction) {
+        this.direction = direction;
     }
 
     @Override
@@ -44,26 +59,15 @@ public class DirectLight extends WorldObject implements ShaderStruct {
 
     }
 
-    public void setShininess(float shininess) {
-        this.shininess = shininess;
-    }
-
-    public Vector4f getColor() {
-        return color;
-    }
-
-    public void setColor(Vector4f color) {
-        this.color = color;
-    }
-
     @Override
     public Map<String, Object> getFields() {
         HashMap<String, Object> fields = new HashMap<>();
         fields.put("color", color);
-        fields.put("direction", getPosition());
-        fields.put("ambientIntensity", ambientIntensity);
+        fields.put("ambientIntensity", new Float(ambientIntensity));
+        fields.put("diffuseIntensity", new Float(diffuseIntensity));
+        fields.put("direction", direction);
+        fields.put("specularPower", specularPower);
         fields.put("specularIntensity", specularIntensity);
-        fields.put("shininess", shininess);
         return fields;
     }
 }

@@ -2,61 +2,24 @@ package com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Light;
 
 import com.kgaft.JavaGameEngine.Engine.GameObjects.WorldObject;
 import com.kgaft.JavaGameEngine.Shader.ShaderStruct;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PointLight extends WorldObject implements ShaderStruct {
-    private float farDistance = 3.0f;
-    private float nearDistance = 0.7f;
-    private float ambientIntensity = 0.2f;
-    private float specularIntensity = 0.5f;
-    private float shininess = 32;
     private Vector4f color;
+    private float ambientIntensity = 0.1f;
+    private float diffuseIntensity = 0.5f;
+    private float constant = 0.0f;
+    private float linear = 0.1f;
+    private float exponential;
+    private float specularIntensity = 1.0f;
+    private float specularPower = 32;
 
     public PointLight(Vector4f color) {
         this.color = color;
-    }
-
-    public float getFarDistance() {
-        return farDistance;
-    }
-
-    public void setFarDistance(float farDistance) {
-        this.farDistance = farDistance;
-    }
-
-    public float getNearDistance() {
-        return nearDistance;
-    }
-
-    public void setNearDistance(float nearDistance) {
-        this.nearDistance = nearDistance;
-    }
-
-    public float getAmbientIntensity() {
-        return ambientIntensity;
-    }
-
-    public void setAmbientIntensity(float ambientIntensity) {
-        this.ambientIntensity = ambientIntensity;
-    }
-
-    public float getSpecularIntensity() {
-        return specularIntensity;
-    }
-
-    public void setSpecularIntensity(float specularIntensity) {
-        this.specularIntensity = specularIntensity;
-    }
-
-    public float getShininess() {
-        return shininess;
-    }
-
-    public void setShininess(float shininess) {
-        this.shininess = shininess;
     }
 
     public Vector4f getColor() {
@@ -67,16 +30,74 @@ public class PointLight extends WorldObject implements ShaderStruct {
         this.color = color;
     }
 
+    public float getAmbientIntensity() {
+        return ambientIntensity;
+    }
+
+    public void setAmbientIntensity(float ambientIntensity) {
+        this.ambientIntensity = ambientIntensity;
+    }
+
+    public float getDiffuseIntensity() {
+        return diffuseIntensity;
+    }
+
+    public void setDiffuseIntensity(float diffuseIntensity) {
+        this.diffuseIntensity = diffuseIntensity;
+    }
+
+    public float getConstant() {
+        return constant;
+    }
+
+    public void setConstant(float constant) {
+        this.constant = constant;
+    }
+
+    public float getLinear() {
+        return linear;
+    }
+
+    public void setLinear(float linear) {
+        this.linear = linear;
+    }
+
+    public float getExponential() {
+        return exponential;
+    }
+
+    public void setExponential(float exponential) {
+        this.exponential = exponential;
+    }
+
+    public float getSpecularIntensity() {
+        return specularIntensity;
+    }
+
+    public void setSpecularIntensity(float specularIntensity) {
+        this.specularIntensity = specularIntensity;
+    }
+
+    public float getSpecularPower() {
+        return specularPower;
+    }
+
+    public void setSpecularPower(float specularPower) {
+        this.specularPower = specularPower;
+    }
+
     @Override
     public Map<String, Object> getFields() {
         HashMap<String, Object> fields = new HashMap<>();
-        fields.put("lightPosition", getPosition());
-        fields.put("lightColor", color);
-        fields.put("a", farDistance);
-        fields.put("b", nearDistance);
-        fields.put("ambientIntensity", ambientIntensity);
+        fields.put("color", color);
+        fields.put("ambientIntensity", new Float(ambientIntensity));
+        fields.put("diffuseIntensity", new Float(diffuseIntensity));
+        fields.put("specularPower", specularPower);
         fields.put("specularIntensity", specularIntensity);
-        fields.put("shininess", shininess);
+        fields.put("position", getPosition());
+        fields.put("constant", constant);
+        fields.put("linear", linear);
+        fields.put("exp", exponential);
         return fields;
     }
 }

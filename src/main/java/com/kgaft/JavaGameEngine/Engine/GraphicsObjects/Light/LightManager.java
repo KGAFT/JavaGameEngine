@@ -23,11 +23,12 @@ public class LightManager {
     }
 
     public static void loadLights(){
-        Shader.uniformInt(pointLights.size(), "activatedPointLights");
-        Shader.uniformInt(spotLights.size(), "activatedSpotLights");
-        Shader.uniformInt(directLights.size(), "activatedDirectLights");
+        Shader.uniformVector3f(camera.getPosition(), "cameraPosition");
+        Shader.uniformInt(pointLights.size(), "enabledPointLights");
+        Shader.uniformInt(spotLights.size(), "enabledSpotLights");
+        Shader.uniformInt(directLights.size(), "enabledDirectionalLights");
         Shader.uniformArrayOfStructs(new ArrayList<>(pointLights), "pointLights");
-        Shader.uniformArrayOfStructs(new ArrayList<>(directLights), "directLights");
+        Shader.uniformArrayOfStructs(new ArrayList<>(directLights), "directionalLights");
         Shader.uniformArrayOfStructs(new ArrayList<>(spotLights), "spotLights");
     }
 

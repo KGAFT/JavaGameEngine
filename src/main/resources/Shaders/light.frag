@@ -5,51 +5,39 @@
 in vec3 WorldPos0;
 in vec3 Normals;
 
-struct BaseLight
-{
-	vec3 Color;
-	float AmbientIntensity;
-	float DiffuseIntensity;
-	float specularPower;
-	float specularIntensity;
-};
-
 struct DirectionalLight
 {
-	vec3 Color;
-	float AmbientIntensity;
-	float DiffuseIntensity;
-	vec3 Direction;
+	vec4 color;
+	float ambientIntensity;
+	float diffuseIntensity;
 	float specularPower;
 	float specularIntensity;
+	vec3 direction;
 };
 
-struct PointLight
-{
-	vec3 Color;
-	float AmbientIntensity;
-	float DiffuseIntensity;
-	vec3 Position;
-	float Constant;
-	float Linear;
-	float Exp;
+struct PointLight{
+	vec4 color;
+	float ambientIntensity;
+	float diffuseIntensity;
 	float specularPower;
 	float specularIntensity;
+	vec3 position;
+	float constant;
+	float linear;
+	float exp;
 };
-
-struct SpotLight
-{
-	vec3 Color;
-	float AmbientIntensity;
-	float DiffuseIntensity;
-	vec3 Position;
-	float Constant;
-	float Linear;
-	float Exp;
-	vec3 Direction;
-	float Cutoff;
+struct SpotLight{
+	vec4 color;
+	float ambientIntensity;
+	float diffuseIntensity;
 	float specularPower;
 	float specularIntensity;
+	vec3 position;
+	float constant;
+	float linear;
+	float exp;
+	vec3 direction;
+	float cutOff;
 };
 
 uniform int enabledDirectionalLights;
@@ -62,118 +50,160 @@ uniform DirectionalLight directionalLights[LIGHT_BLOCKS_AMOUNT];
 uniform PointLight pointLights[LIGHT_BLOCKS_AMOUNT];
 uniform SpotLight spotLights[LIGHT_BLOCKS_AMOUNT];
 
-vec4 CalcDirectionalLight(DirectionalLight directionalLight, vec3 Normal);
-vec4 CalcPointLight(PointLight l, vec3 Normal);
-vec4 CalcSpotLight(SpotLight l, vec3 Normal);
+
+vec4 loadDirectionalLight(DirectionalLight directionalLight);
+vec4 loadPointLight(PointLight pointLight);
+vec4 loadSpotLight(SpotLight spotLight);
 
 vec4 loadLights(){
-	vec3 Normal = normalize(Normals);
-	vec4 light;
-	bool lightEmpty = true;
+	vec3 Normals = normalize(Normals);
+	vec4 color;
+	bool isColorEmpty = true;
 	for(int i = 0; i<enabledDirectionalLights; i++){
-		if(lightEmpty){
-			light = CalcDirectionalLight(directionalLights[i], Normal);
-			lightEmpty = false;
+		if(isColorEmpty){
+			color = loadDirectionalLight(directionalLights[i]);
+			isColorEmpty = false;
 		}
 		else{
-			light+=CalcDirectionalLight(directionalLights[i], Normal);
+			color+=loadDirectionalLight(directionalLights[i]);
 		}
 	}
 	for(int i = 0; i<enabledPointLights; i++){
-		if(lightEmpty){
-			light = CalcPointLight(pointLights[i], Normal);
-			lightEmpty = false;
+		if(isColorEmpty){
+			color = loadPointLight(pointLights[i]);
+			isColorEmpty = false;
 		}
 		else{
-			light+=CalcPointLight(pointLights[i], Normal);
+			color+=loadPointLight(pointLights[i]);
 		}
 	}
 	for(int i = 0; i<enabledSpotLights; i++){
-		if(lightEmpty){
-			light = CalcSpotLight(spotLights[i], Normal);
-			lightEmpty = false;
+		if(isColorEmpty){
+			color = loadSpotLight(spotLights[i]);
+			isColorEmpty = false;
 		}
 		else{
-			light+=CalcSpotLight(spotLights[i], Normal);
-		}
-	}
-	return light;
-}
-
-vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, vec3 Normal)
-{
-	vec4 AmbientColor = vec4(Light.Color * Light.AmbientIntensity, 1.0f);
-	float DiffuseFactor = dot(Normal, -LightDirection);
-
-	vec4 DiffuseColor = vec4(0, 0, 0, 0);
-	vec4 SpecularColor = vec4(0, 0, 0, 0);
-
-	if (DiffuseFactor > 0) {
-		DiffuseColor = vec4(Light.Color * Light.DiffuseIntensity * DiffuseFactor, 1.0f);
-
-		vec3 VertexToEye = normalize(cameraPosition - WorldPos0);
-		vec3 LightReflect = normalize(reflect(LightDirection, Normal));
-		float SpecularFactor = dot(VertexToEye, LightReflect);
-		if (SpecularFactor > 0) {
-			SpecularFactor = pow(SpecularFactor, Light.specularPower);
-			SpecularColor = vec4(Light.Color * Light.specularIntensity * SpecularFactor, 1.0f);
+			color+=loadSpotLight(spotLights[i]);
 		}
 	}
 
-	return (AmbientColor + DiffuseColor + SpecularColor);
+	return color;
 }
 
-vec4 CalcDirectionalLight(DirectionalLight directionalLight, vec3 Normal)
-{
-	BaseLight baseLight;
-	baseLight.specularIntensity = directionalLight.specularIntensity;
-	baseLight.specularPower = directionalLight.specularPower;
-	baseLight.AmbientIntensity = directionalLight.AmbientIntensity;
-	baseLight.DiffuseIntensity = directionalLight.DiffuseIntensity;
-	baseLight.Color = directionalLight.Color;
-	return CalcLightInternal(baseLight, directionalLight.Direction, Normal);
-}
+vec4 loadBaseLight(DirectionalLight directionalLight){
+	vec4 ambientColor = directionalLight.color *
+	directionalLight.ambientIntensity;
+	float diffuseFactor = dot(normalize(Normals), -directionalLight.direction);
 
-vec4 CalcPointLight(PointLight l, vec3 Normal)
-{
-	vec3 LightDirection = WorldPos0 - l.Position;
-	float Distance = length(LightDirection);
-	LightDirection = normalize(LightDirection);
-	BaseLight baseLight;
-	baseLight.specularIntensity = l.specularIntensity;
-	baseLight.specularPower = l.specularPower;
-	baseLight.AmbientIntensity = l.AmbientIntensity;
-	baseLight.DiffuseIntensity = l.DiffuseIntensity;
-	baseLight.Color = l.Color;
-	vec4 Color = CalcLightInternal(baseLight, LightDirection, Normal);
-	float AttenuationFactor =  l.Constant +
-	l.Linear * Distance +
-	l.Exp * Distance * Distance;
+	vec4 diffuseColor = vec4(0, 0, 0, 0);
+	vec4 specularColor = vec4(0, 0, 0, 0);
+	if (diffuseFactor > 0) {
+		vec3 vertexToEye = normalize(cameraPosition-WorldPos0);
+		diffuseColor = directionalLight.color *
+		directionalLight.diffuseIntensity *
+		diffuseFactor;
+		diffuseColor.w = 1;
+		vec3 lightReflect = normalize(reflect(directionalLight.direction, Normals));
+		float specularFactor = dot(vertexToEye, lightReflect);
+		if(specularFactor>0){
+			specularFactor = pow(specularFactor, directionalLight.specularPower);
+			specularColor = directionalLight.color * directionalLight.specularIntensity * specularFactor;
+			specularColor.w = 1;
+		}
 
-	return Color / AttenuationFactor;
-}
-
-vec4 CalcSpotLight(SpotLight l, vec3 Normal)
-{
-
-	PointLight pointLight;
-	pointLight.Color = l.Color;
-	pointLight.DiffuseIntensity = l.DiffuseIntensity;
-	pointLight.AmbientIntensity = l.AmbientIntensity;
-	pointLight.specularPower = l.specularPower;
-	pointLight.specularIntensity = l.specularIntensity;
-	pointLight.Constant = l.Constant;
-	pointLight.Exp = l.Exp;
-	pointLight.Linear = l.Linear;
-	pointLight.Position = l.Position;
-	vec3 LightToPixel = normalize(WorldPos0 - l.Position);
-	float SpotFactor = dot(LightToPixel, l.Direction);
-
-	if (SpotFactor > l.Cutoff) {
-		vec4 Color = CalcPointLight(pointLight, Normal);
-		return Color * (1.0 - (1.0 - SpotFactor) * 1.0/(1.0 - l.Cutoff));
 	}
 	else {
-		return vec4(0,0,0,0);
+		diffuseColor = vec4(0, 0, 0, 0);
 	}
+	return (ambientColor+diffuseColor+specularColor);
+}
+
+vec4 loadBaseLight(PointLight light, vec3 direction){
+	vec4 ambientColor = light.color *
+	light.ambientIntensity;
+	float diffuseFactor = dot(normalize(Normals), -direction);
+
+	vec4 diffuseColor = vec4(0, 0, 0, 0);
+	vec4 specularColor = vec4(0, 0, 0, 0);
+	if (diffuseFactor > 0) {
+		vec3 vertexToEye = normalize(cameraPosition-WorldPos0);
+		diffuseColor = light.color *
+		light.diffuseIntensity *
+		diffuseFactor;
+		diffuseColor.w = 1;
+		vec3 lightReflect = normalize(reflect(direction, Normals));
+		float specularFactor = dot(vertexToEye, lightReflect);
+		if(specularFactor>0){
+			specularFactor = pow(specularFactor, light.specularPower);
+			specularColor = light.color * light.specularIntensity * specularFactor;
+			specularColor.w = 1;
+		}
+
+	}
+	else {
+		diffuseColor = vec4(0, 0, 0, 0);
+	}
+	return (ambientColor+diffuseColor+specularColor);
+}
+
+vec4 loadBaseLight(SpotLight light, vec3 direction){
+	vec4 ambientColor = light.color *
+	light.ambientIntensity;
+	float diffuseFactor = dot(normalize(Normals), -direction);
+
+	vec4 diffuseColor = vec4(0, 0, 0, 0);
+	vec4 specularColor = vec4(0, 0, 0, 0);
+	if (diffuseFactor > 0) {
+		vec3 vertexToEye = normalize(cameraPosition-WorldPos0);
+		diffuseColor = light.color *
+		light.diffuseIntensity *
+		diffuseFactor;
+		diffuseColor.w = 1;
+		vec3 lightReflect = normalize(reflect(direction, Normals));
+		float specularFactor = dot(vertexToEye, lightReflect);
+		if(specularFactor>0){
+			specularFactor = pow(specularFactor, light.specularPower);
+			specularColor = light.color * light.specularIntensity * specularFactor;
+			specularColor.w = 1;
+		}
+
+	}
+	else {
+		diffuseColor = vec4(0, 0, 0, 0);
+	}
+	return (ambientColor+diffuseColor+specularColor);
+}
+
+vec4 loadDirectionalLight(DirectionalLight directionalLight){
+	return loadBaseLight(directionalLight);
+}
+
+vec4 loadPointLight(PointLight pointLight){
+	vec3 lightDirection = cameraPosition-pointLight.position;
+	float lightDistance = length(lightDirection);
+	lightDirection = normalize(lightDirection);
+	vec4 baseColor = loadBaseLight(pointLight, lightDirection);
+	float attenuationFactor = pointLight.constant+pointLight.linear*lightDistance+pointLight.exp*lightDistance*lightDistance;
+	return baseColor/attenuationFactor;
+}
+vec4 loadPointLight(SpotLight pointLight){
+	vec3 lightDirection = cameraPosition-pointLight.position;
+	float lightDistance = length(lightDirection);
+	lightDirection = normalize(lightDirection);
+	vec4 baseColor = loadBaseLight(pointLight, lightDirection);
+	float attenuationFactor = pointLight.constant+pointLight.linear*lightDistance+pointLight.exp*lightDistance*lightDistance;
+	return baseColor/attenuationFactor;
+}
+
+vec4 loadSpotLight(SpotLight spotLight){
+	vec3 lightToPixel = normalize(WorldPos0 - spotLight.position);
+	float spotFactor = dot(lightToPixel, spotLight.direction);
+	if(spotFactor>spotLight.cutOff){
+		vec4 color = loadPointLight(spotLight);
+		return color*(1.0 - (1.0 - spotFactor) * 1.0/(1.0 - spotLight.cutOff));
+	}
+	else{
+		return vec4(0, 0, 0, 0);
+	}
+
 }

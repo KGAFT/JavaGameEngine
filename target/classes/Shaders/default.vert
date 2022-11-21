@@ -7,13 +7,12 @@ layout(location = 2) in vec3 normals;
 uniform mat4 modelMatrix;
 uniform mat4 cameraMatrix;
 out vec2 uvsCoords;
+out vec3 WorldPos0;
 out vec3 Normals;
-out vec3 primitivePosition;
-
 
 void main(){
     uvsCoords = textureCoordinates;
-    Normals = mat3(transpose(inverse(modelMatrix)))*normals;
-    primitivePosition = vec3(modelMatrix*vec4(position, 1.0));
+    Normals = (vec4(Normals, 0.0f)*modelMatrix).xyz;
+    WorldPos0 = vec3(modelMatrix*vec4(position, 1.0));
     gl_Position = cameraMatrix*modelMatrix*vec4(position, 1.0);
 }
