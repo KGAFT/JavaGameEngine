@@ -97,16 +97,15 @@ public class Engine {
 
         CameraManager cameraManager = new CameraManager();
         cameraManager.registerCameraAndSwitchToIt(camera);
-        ArrayList<Texture> textures = new ArrayList<>();
-        try {
-            textures.add(Texture.loadTexture(Engine.class.getClassLoader().getResource("textures/Texture.png").getPath(), Texture.BASE_COLOR_TEXTURE));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Mesh mesh = Mesh.createMesh(positions, UVs, normals, indices, textures);
         PlayerNonPhysicsMode playerNonPhysicsMode = new PlayerNonPhysicsMode();
         playerNonPhysicsMode.addDependentObject(camera);
-
+        String modelPath = Engine.class.getClassLoader().getResource("Models/grind/scene.gltf").getPath();
+        Model model = new ModelLoader().loadModel(modelPath);
+        try {
+            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/grind/textures/Main_baseColor.png").getPath(), Texture.BASE_COLOR_TEXTURE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
         DirectLight directLight = new DirectLight(new Vector4f(1f, 1f, 1f, 1f));
@@ -114,7 +113,9 @@ public class Engine {
        // LightManager.addDirectLight(directLight);
        // LightManager.addPointLight(pointLight);
         SpotLight spotLight = new SpotLight(new Vector4f(0.5f, 0.0f, 0.5f, 1f));
-        LightManager.addSpotLight(spotLight);
+       // LightManager.addSpotLight(spotLight);
+       // LightManager.addDirectLight(directLight);
+        LightManager.addPointLight(pointLight);
         LightManager.setCamera(camera);
         while (Window.getWindow().isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
@@ -122,7 +123,7 @@ public class Engine {
             Shader.attach();
             LightManager.loadLights();
             //spotLight.rotate(new Vector3f(0f, 0f, 1f));
-            mesh.updateAndLoadToGameWorld();
+            model.draw();
             Window.getWindow().preRenderEvents();
             cameraManager.handleCamera();
             Window.getWindow().postEvents();

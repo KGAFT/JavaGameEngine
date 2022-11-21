@@ -78,4 +78,8 @@ public class Mesh {
     public void setMeshTextures(List<Texture> meshTextures) {
         this.meshTextures = meshTextures;
     }
+
+    public List<Texture> getMeshTextures() {
+        return meshTextures;
+    }
 }

@@ -15,8 +15,6 @@ import java.util.List;
 
 public class ModelLoader {
 
-    private HashMap<String, Texture> textureList = new HashMap<>();
-
     public Model loadModel(String modelPath){
         AIScene scene = Assimp.aiImportFile(modelPath, Assimp.aiProcess_FlipUVs | Assimp.aiProcess_Triangulate);
         System.out.println(Assimp.aiGetErrorString());
@@ -24,18 +22,14 @@ public class ModelLoader {
     }
     private Model processScene(AIScene scene, String modelPath){
         PointerBuffer meshes = scene.mMeshes();
-        File file = new File(modelPath);
         List<Mesh> modelMeshes = new ArrayList<>();
         for(int c = 0; c<scene.mNumMeshes(); c++){
             AIMesh mesh = AIMesh.create(meshes.get(c));
-            modelMeshes.add(processMesh(mesh, scene, file.getParent()));
+            modelMeshes.add(processMesh(mesh));
         }
         return new Model(modelMeshes);
     }
-    private Mesh processMesh(AIMesh mesh, AIScene scene, String directory){
-        List<Texture> textures = loadTextures(AIMaterial.create(scene.mMaterials().get(mesh.mMaterialIndex())), Assimp.aiTextureType_DIFFUSE, directory);
-
-        textures.addAll(loadTextures(AIMaterial.create(scene.mMaterials().get(mesh.mMaterialIndex())), Assimp.aiTextureType_SPECULAR, directory));
+    private Mesh processMesh(AIMesh mesh){
         List<Float> positions = new ArrayList<>();
         List<Float> normals = new ArrayList<>();
         List<Float> uvs = new ArrayList<>();
@@ -67,38 +61,10 @@ public class ModelLoader {
                 indices.add(index.get());
             }
         }
-        return assembleDataToMesh(positions, normals, uvs, indices, textures);
+        return assembleDataToMesh(positions, normals, uvs, indices);
     }
-    private List<Texture> loadTextures(AIMaterial material, int textureType, String textureDirectory){
-        List<Texture> results = new ArrayList<>();
-        int count = Assimp.aiGetMaterialTextureCount(material, textureType);
-        AIString path = AIString.calloc();
-        for(int c = 0; c<count; c++){
-            path.clear();
-            Assimp.aiGetMaterialTexture(material, textureType, 0, path, (IntBuffer) null, null, null, null, null, null);
-            Texture texture = null; //textureList.get(path.dataString());
-            if(texture==null){
-                switch (textureType){
-                    case Assimp.aiTextureType_DIFFUSE:
-                        /*
-                        texture = Texture.loadTexture(textureDirectory+"/"+path.dataString());
 
-                         */
-                        //texture.setSamplerName("baseColorTexture");
-                        break;
-
-                }
-            }
-            if(texture!=null){
-                results.add(texture);
-                if(!textureList.containsKey(path.dataString())){
-                    textureList.put(path.dataString(), texture);
-                }
-            }
-        }
-        return results;
-    }
-    private Mesh assembleDataToMesh(List<Float> positions, List<Float> normals, List<Float> uvs, List<Integer> indices, List<Texture> textures){
+    private Mesh assembleDataToMesh(List<Float> positions, List<Float> normals, List<Float> uvs, List<Integer> indices){
         VertexArrayObject vao = VertexArrayObject.createVao();
         float[] posRaw = new float[positions.size()];
         float[] normalsRaw = new float[normals.size()];
@@ -122,7 +88,6 @@ public class ModelLoader {
         vao.attachVbo(1, VertexBufferObject.createVbo(uvsRaw, 2));
         vao.attachVbo(2, VertexBufferObject.createVbo(normalsRaw, 3));
         Mesh mesh = new Mesh();
-        mesh.setMeshTextures(textures);
         mesh.setVertexArrayObject(vao);
         return mesh;
     }

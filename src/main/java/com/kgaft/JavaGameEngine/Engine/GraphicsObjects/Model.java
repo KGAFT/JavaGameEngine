@@ -22,4 +22,10 @@ public class Model {
     public void scale(Vector3f scale){
         meshes.forEach(mesh -> mesh.scale(scale));
     }
+
+    public void addTexture(Texture texture){
+        meshes.forEach(mesh -> {
+            mesh.getMeshTextures().add(texture);
+        });
+    }
 }
