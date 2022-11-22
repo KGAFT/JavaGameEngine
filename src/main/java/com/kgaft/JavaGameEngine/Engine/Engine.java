@@ -112,7 +112,7 @@ public class Engine {
         DirectLight directLight = new DirectLight(new Vector4f(1f, 1f, 1f, 1f));
         PointLight pointLight = new PointLight(new Vector4f(0.5f, 0.0f, 0.5f, 1.0f));
         SpotLight spotLight = new SpotLight(new Vector4f(0.5f, 0.0f, 0.5f, 1f));
-        //LightManager.addSpotLight(spotLight);
+        LightManager.addSpotLight(spotLight);
         LightManager.addDirectLight(directLight);
         LightManager.setCamera(camera);
         while (Window.getWindow().isWindowActive()){
