@@ -6,13 +6,13 @@ layout(location = 2) in vec3 normals;
 
 uniform mat4 modelMatrix;
 uniform mat4 cameraMatrix;
-out vec2 uvsCoords;
-out vec3 WorldPos0;
+out vec2 UvsCoords;
+out vec3 fragmentPosition;
 out vec3 Normals;
 
 void main(){
-    uvsCoords = textureCoordinates;
+    UvsCoords = textureCoordinates;
     Normals = (vec4(normals, 0.0f)*modelMatrix).xyz;
-    WorldPos0 = vec3(modelMatrix*vec4(position, 1.0));
+    fragmentPosition = vec3(modelMatrix*vec4(position, 1.0));
     gl_Position = cameraMatrix*modelMatrix*vec4(position, 1.0);
 }

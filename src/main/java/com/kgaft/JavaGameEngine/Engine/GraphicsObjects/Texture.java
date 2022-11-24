@@ -15,6 +15,14 @@ public class Texture {
     public static final String BASE_COLOR_TEXTURE = "baseColorTexture";
 
     public static final String NORMAL_MAP_TEXTURE = "normalMap";
+
+    public static final String ALBEDO_TEXTURE = "albedoMap";
+
+    public static final String METALLIC_TEXTURE = "metallicMap";
+
+    public static final String ROUGHNESS_TEXTURE = "roughnessMap";
+
+    public static final String AMBIENT_OCCLUSION_MAP = "aoMap";
     public static Texture loadTexture(String filePath, String textureType) throws IOException {
         PNGDecoder decoder = new PNGDecoder(new FileInputStream(filePath));
         ByteBuffer buf = ByteBuffer.allocateDirect(

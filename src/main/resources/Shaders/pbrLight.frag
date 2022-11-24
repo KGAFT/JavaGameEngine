@@ -1,29 +1,30 @@
 #version 330 core
 
 #define PI 3.14159265359
-#define LIGHT_BLOCKS_AMOUNT 400
-in vec2 TexCoords;
-in vec3 WorldPos;
-in vec3 Normal;
+#define LIGHT_BLOCKS_AMOUNT 30
 
 out vec4 FragColor;
+in vec3 Normals;
+in vec2 UvsCoords;
+in vec3 fragmentPosition;
+
+struct Light{
+    vec3 position;
+    vec4 color;
+};
+
 
 uniform sampler2D albedoMap;
 uniform sampler2D normalMap;
 uniform sampler2D metallicMap;
 uniform sampler2D roughnessMap;
-uniform sampler2D aoMap;
 
-struct Light{
-    vec3 position;
-    vec3 color;
-};
-uniform Light lights[LIGHT_BLOCKS_AMOUNT];
+
+uniform Light light;
 uniform int enabledLightBlocksAmount;
 uniform vec3 cameraPosition;
 
-
-vec3 getNormalFromMap()
+vec3 getNormalFromMap(vec2 TexCoords, vec3 Normal, vec3 WorldPos)
 {
     vec3 tangentNormal = texture(normalMap, TexCoords).xyz * 2.0 - 1.0;
 
@@ -39,114 +40,58 @@ vec3 getNormalFromMap()
 
     return normalize(TBN * tangentNormal);
 }
-// ----------------------------------------------------------------------------
-float DistributionGGX(vec3 N, vec3 H, float roughness)
-{
-    float a = roughness*roughness;
-    float a2 = a*a;
-    float NdotH = max(dot(N, H), 0.0);
-    float NdotH2 = NdotH*NdotH;
 
-    float nom   = a2;
-    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-    denom = PI * denom * denom;
-
-    return nom / denom;
-}
-// ----------------------------------------------------------------------------
-float GeometrySchlickGGX(float NdotV, float roughness)
-{
-    float r = (roughness + 1.0);
-    float k = (r*r) / 8.0;
-
-    float nom   = NdotV;
-    float denom = NdotV * (1.0 - k) + k;
-
-    return nom / denom;
-}
-// ----------------------------------------------------------------------------
-float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
-{
-    float NdotV = max(dot(N, V), 0.0);
-    float NdotL = max(dot(N, L), 0.0);
-    float ggx2 = GeometrySchlickGGX(NdotV, roughness);
-    float ggx1 = GeometrySchlickGGX(NdotL, roughness);
-
-    return ggx1 * ggx2;
-}
-// ----------------------------------------------------------------------------
-vec3 fresnelSchlick(float cosTheta, vec3 F0)
-{
-    return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
-}
-// ----------------------------------------------------------------------------
-
-vec3 processLight(Light light, vec3 albedo, vec3 normals, vec3 worldViewPosition, float roughness, float metallic, vec3 F0){
-    vec3 lightPositionPrepared = normalize(light.position - WorldPos);
-    vec3 H = normalize(worldViewPosition + lightPositionPrepared);
-    float distance = length(light.position - WorldPos);
-    float attenuation = 1.0 / (distance * distance);
-    vec3 radiance = light.color * attenuation;
-
-    // Cook-Torrance BRDF
-    float NDF = DistributionGGX(normals, H, roughness);
-    float geometrySmith   = GeometrySmith(normals, worldViewPosition, lightPositionPrepared, roughness);
-    vec3 fresnelShclicked    = fresnelSchlick(max(dot(H, worldViewPosition), 0.0), F0);
-
-    vec3 numerator    = NDF * geometrySmith * fresnelShclicked;
-    float denominator = 4.0 * max(dot(normals, worldViewPosition), 0.0) * max(dot(normals, lightPositionPrepared), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
-    vec3 specular = numerator / denominator;
-
-    // kS is equal to Fresnel
-    vec3 kS = fresnelShclicked;
-    // for energy conservation, the diffuse and specular light can't
-    // be above 1.0 (unless the surface emits light); to preserve this
-    // relationship the diffuse component (kD) should equal 1.0 - kS.
-    vec3 kD = vec3(1.0) - kS;
-    // multiply kD by the inverse metalness such that only non-metals
-    // have diffuse lighting, or a linear blend if partly metal (pure metals
-    // have no diffuse light).
-    kD *= 1.0 - metallic;
-
-    // scale light by NdotL
-    float NdotL = max(dot(normals, lightPositionPrepared), 0.0);
-
-    // add to outgoing radiance Lo
-    return (kD * albedo / PI + specular) * radiance * NdotL;
+float schlickBackmannGeometryShadowing(float alpha, vec3 normals, vec3 viewOrLight){
+    float numerator = max(dot(normals, viewOrLight), 0.0);
+    alpha/=2.0;
+    float denominator = numerator*(1.0-alpha)+alpha;
+    denominator = max(denominator, 0.000000001);
+    return numerator/denominator;
 }
 
-void main()
-{
-    vec3 albedo     = pow(texture(albedoMap, TexCoords).rgb, vec3(2.2));
-    float metallic  = texture(metallicMap, TexCoords).r;
-    float roughness = texture(roughnessMap, TexCoords).r;
-    float ao        = texture(aoMap, TexCoords).r;
+float smithModel(float alpha, vec3 normals, vec3 worldViewVector, vec3 lightPosition){
+    return schlickBackmannGeometryShadowing(alpha, normals, worldViewVector)*schlickBackmannGeometryShadowing(alpha, normals, lightPosition);
+}
 
-    vec3 normals = getNormalFromMap();
-    vec3 worldViewPosition = normalize(camPos - WorldPos);
 
-    // calculate reflectance at normal incidence; if dia-electric (like plastic) use F0
-    // of 0.04 and if it's a metal, use the albedo color as F0 (metallic workflow)
-    vec3 F0 = vec3(0.04);
-    F0 = mix(F0, albedo, metallic);
+vec3 fresnelSchlick(vec3 existingSchlick, vec3 worldViewVector, vec3 halfWay){
+    return existingSchlick+(vec3(1.0)-existingSchlick)*pow(1-max(dot(worldViewVector, halfWay), 0.0), 5.0);
+}
 
-    // reflectance equation
-    vec3 Lo = vec3(0.0);
-    for(int i = 0; i < enabledLightBlocksAmount; i++)
-    {
-        Lo+=processLight(lights[i], albedo, normals, worldViewPosition, roughness, metallic, F0);
-    }
+float throwBridgeReitzNormalDistributionGGX(float alpha, vec3 normals, vec3 halfWay){
+    float numerator = pow(alpha, 2.0);
 
-    // ambient lighting (note that the next IBL tutorial will replace
-    // this ambient lighting with environment lighting).
-    vec3 ambient = vec3(0.03) * albedo * ao;
+    float dotHalfWay = max(dot(normals, halfWay), 0.0);
+    float denominator = PI*pow(pow(dotHalfWay, 2.0)*(pow(alpha, 2.0)-1.0)+1.0, 2.0);
+    denominator = max(denominator, 0.000000001);
+    return numerator/denominator;
+}
 
-    vec3 color = ambient + Lo;
+vec3 PBR(vec3 albedo, vec3 startFresnelSchlick, vec3 worldViewVector, vec3 halfWay, vec3 normals, vec3 lightPosition,vec3 lightColor, float alpha, float metallic){
+    vec3 fresnelEffect = fresnelSchlick(startFresnelSchlick, worldViewVector, halfWay);
+    vec3 dFresnelEffect = (vec3(1.0)-fresnelEffect)*(1.0-metallic);
 
-    // HDR tonemapping
-    color = color / (color + vec3(1.0));
-    // gamma correct
-    color = pow(color, vec3(1.0/2.2));
+    vec3 lambert = albedo/PI;
+    vec3 cookTorranceNumerator = throwBridgeReitzNormalDistributionGGX(alpha, normals, halfWay)
+    *smithModel(alpha, normals, worldViewVector, lightPosition)
+    *fresnelEffect;
+    float cookTorranceDenominator = 4.0*max(dot(worldViewVector, normals), 0.0)*max(dot(lightPosition, normals), 0.0);
 
-    FragColor = vec4(color, 1.0);
+    vec3 cookTorrance = cookTorranceNumerator/cookTorranceDenominator;
+
+    vec3 BRDF = dFresnelEffect*lambert+cookTorrance;
+    vec3 result = BRDF*lightColor*max(dot(lightPosition, normals), 0.0);
+    return result;
+}
+
+void main() {
+    vec3 albedo = texture(albedoMap, UvsCoords).rgb;
+    vec3 normals = getNormalFromMap(UvsCoords, Normals, fragmentPosition);
+    float metallic = texture(metallicMap, UvsCoords).r;
+    float roughness = texture(roughnessMap, UvsCoords).r;
+    vec3 startFresnelSchlick = vec3(0.04);
+    startFresnelSchlick = mix(startFresnelSchlick, albedo, metallic);
+    vec3 worldViewVector = normalize(cameraPosition-fragmentPosition);
+    vec3 halfWay = normalize(worldViewVector+normalize(light.position));
+    FragColor = vec4(PBR(albedo, startFresnelSchlick, worldViewVector, halfWay, normals, normalize(light.position), light.color.rgb, light.color.a, metallic), light.color.a);
 }

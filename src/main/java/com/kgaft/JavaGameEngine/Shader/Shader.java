@@ -21,6 +21,11 @@ public class Shader {
     private static final String PHONG_LIGHT_SHADER_NAME = "light.frag";
     private static final String PHONG_ENTRY_POINT = "default.frag";
 
+    public static final int PHONG_MODE = 0;
+
+    public static final int PBR_MODE = 1;
+
+    private static int currentWorkMode = 0;
     public static void uniformMatrix4f(float[] data, String matrixName) {
         GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(shaderId, matrixName), false, data);
     }
@@ -89,18 +94,21 @@ public class Shader {
         List<String> exclude = new ArrayList<>();
         exclude.add(PBR_LIGHT_SHADER_NAME);
         initializeShader(exclude);
+        currentWorkMode = PHONG_MODE;
+
     }
     public static void initForPbrLight(){
         List<String> exclude = new ArrayList<>();
         exclude.add(PHONG_LIGHT_SHADER_NAME);
         exclude.add(PHONG_ENTRY_POINT);
         initializeShader(exclude);
+        currentWorkMode = PBR_MODE;
     }
     public static void initializeShader(List<String> exclude) {
         List<Integer> shadersToLink = new ArrayList<>();
         File file = new File(Shader.class.getClassLoader().getResource("Shaders").getPath());
         for (File listFile : file.listFiles()) {
-            if(!exclude.contains(listFile)){
+            if(!exclude.contains(listFile.getName())){
                 int type = 0;
                 switch (IOUtil.getFileExtension(listFile.getName())) {
                     case "frag":
@@ -169,5 +177,9 @@ public class Shader {
 
     public static int getShaderId() {
         return shaderId;
+    }
+
+    public static int getCurrentWorkMode() {
+        return currentWorkMode;
     }
 }
