@@ -19,6 +19,7 @@ public class Shader {
 
     private static final String PBR_LIGHT_SHADER_NAME = "pbrLight.frag";
     private static final String PHONG_LIGHT_SHADER_NAME = "light.frag";
+    private static final String PHONG_ENTRY_POINT = "default.frag";
 
     public static void uniformMatrix4f(float[] data, String matrixName) {
         GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(shaderId, matrixName), false, data);
@@ -92,6 +93,7 @@ public class Shader {
     public static void initForPbrLight(){
         List<String> exclude = new ArrayList<>();
         exclude.add(PHONG_LIGHT_SHADER_NAME);
+        exclude.add(PHONG_ENTRY_POINT);
         initializeShader(exclude);
     }
     public static void initializeShader(List<String> exclude) {

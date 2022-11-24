@@ -6,6 +6,8 @@ in vec2 TexCoords;
 in vec3 WorldPos;
 in vec3 Normal;
 
+out vec4 FragColor;
+
 uniform sampler2D albedoMap;
 uniform sampler2D normalMap;
 uniform sampler2D metallicMap;
@@ -113,7 +115,7 @@ vec3 processLight(Light light, vec3 albedo, vec3 normals, vec3 worldViewPosition
     return (kD * albedo / PI + specular) * radiance * NdotL;
 }
 
-void processLights()
+void main()
 {
     vec3 albedo     = pow(texture(albedoMap, TexCoords).rgb, vec3(2.2));
     float metallic  = texture(metallicMap, TexCoords).r;
@@ -146,5 +148,5 @@ void processLights()
     // gamma correct
     color = pow(color, vec3(1.0/2.2));
 
-    //FragColor = vec4(color, 1.0);
+    FragColor = vec4(color, 1.0);
 }
