@@ -33,77 +33,18 @@ public class Engine {
         Window.getWindow().addResizeCallBack((newWidth, newHeight) -> {
             GL33.glViewport(0, 0, newWidth, newHeight);
         });
-        HashMap<String, Integer> shadersToInit = new HashMap<>();
-        shadersToInit.put("Shaders/light.frag", GL33.GL_FRAGMENT_SHADER);
-        shadersToInit.put("Shaders/default.frag", GL33.GL_FRAGMENT_SHADER);
-        shadersToInit.put("Shaders/default.vert", GL33.GL_VERTEX_SHADER);
-        Shader.initializeShader();
+        Shader.initForPhongLight();
         GL33.glEnable(GL33.GL_DEPTH_TEST);
-
-        float[] positions = new float[]{
-// VO
-                -0.5f, 0.5f, 0.5f,
-// V1
-                -0.5f, -0.5f, 0.5f,
-// V2
-                0.5f, -0.5f, 0.5f,
-// V3
-                0.5f, 0.5f, 0.5f,
-// V4
-                -0.5f, 0.5f, -0.5f,
-// V5
-                0.5f, 0.5f, -0.5f,
-// V6
-                -0.5f, -0.5f, -0.5f,
-// V7
-                0.5f, -0.5f, -0.5f
-        };
-
-        int[] indices = new int[] {
-// Front face
-                0, 1, 3, 3, 1, 2,
-// Top Face
-                4, 0, 3, 5, 4, 3,
-// Right face
-                3, 2, 7, 5, 3, 7,
-// Left face
-                6, 1, 0, 6, 0, 4,
-// Bottom face
-                2, 1, 6, 2, 6, 7,
-// Back face
-                7, 6, 4, 7, 4, 5,
-        };
-
-        float[] UVs = new float[]{
-                0.0f, 0.0f,
-                0.0f, 0.5f,
-                0.5f, 0.5f,
-                0.5f, 0.0f,
-                0.0f, 0.5f,
-                0.5f, 0.5f,
-                0.0f, 1.0f,
-                0.5f, 1.0f
-        };
-        float[] normals = new float[]{
-                -1.0f,  0.0f,  0.0f,
-                0.0f, -1.0f,  0.0f,
-                0.0f,  0.0f,  1.0f,
-                0.0f,  0.0f,  1.0f,
-                0.0f,  0.0f,  1.0f,
-                1.0f,  0.0f,  0.0f,
-                0.0f, -1.0f,  0.0f,
-                0.0f, -1.0f,  0.0f
-        };
 
         CameraManager cameraManager = new CameraManager();
         cameraManager.registerCameraAndSwitchToIt(camera);
         PlayerNonPhysicsMode playerNonPhysicsMode = new PlayerNonPhysicsMode();
         playerNonPhysicsMode.addDependentObject(camera);
-        String modelPath = Engine.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath();
+        String modelPath = Engine.class.getClassLoader().getResource("Models/PokeBall/Pokeball.obj").getPath();
         Model model = new ModelLoader().loadModel(modelPath);
         try {
-            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_BaseColor_tga.png").getPath(), Texture.BASE_COLOR_TEXTURE));
-            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_Normal_tga.png").getPath(), Texture.NORMAL_MAP_TEXTURE));
+            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_BaseColor.png").getPath(), Texture.BASE_COLOR_TEXTURE));
+            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_Normal.png").getPath(), Texture.NORMAL_MAP_TEXTURE));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,7 +53,7 @@ public class Engine {
         DirectLight directLight = new DirectLight(new Vector4f(1f, 1f, 1f, 1f));
         PointLight pointLight = new PointLight(new Vector4f(0.5f, 0.0f, 0.5f, 1.0f));
         SpotLight spotLight = new SpotLight(new Vector4f(0.5f, 0.0f, 0.5f, 1f));
-        LightManager.addSpotLight(spotLight);
+        //LightManager.addSpotLight(spotLight);
         LightManager.addDirectLight(directLight);
         LightManager.setCamera(camera);
         while (Window.getWindow().isWindowActive()){

@@ -17,6 +17,9 @@ public class Shader {
 
     private static int shaderId = -1;
 
+    private static final String PBR_LIGHT_SHADER_NAME = "pbrLight.frag";
+    private static final String PHONG_LIGHT_SHADER_NAME = "light.frag";
+
     public static void uniformMatrix4f(float[] data, String matrixName) {
         GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(shaderId, matrixName), false, data);
     }
@@ -81,22 +84,33 @@ public class Shader {
     public static void uniformInt(int value, String varName) {
         GL33.glUniform1i(GL33.glGetUniformLocation(shaderId, varName), value);
     }
-
-    public static void initializeShader() {
+    public static void initForPhongLight(){
+        List<String> exclude = new ArrayList<>();
+        exclude.add(PBR_LIGHT_SHADER_NAME);
+        initializeShader(exclude);
+    }
+    public static void initForPbrLight(){
+        List<String> exclude = new ArrayList<>();
+        exclude.add(PHONG_LIGHT_SHADER_NAME);
+        initializeShader(exclude);
+    }
+    public static void initializeShader(List<String> exclude) {
         List<Integer> shadersToLink = new ArrayList<>();
         File file = new File(Shader.class.getClassLoader().getResource("Shaders").getPath());
         for (File listFile : file.listFiles()) {
-            int type = 0;
-            switch (IOUtil.getFileExtension(listFile.getName())) {
-                case "frag":
-                    type = GL33.GL_FRAGMENT_SHADER;
-                    break;
-                case "vert":
-                    type = GL33.GL_VERTEX_SHADER;
-                    break;
+            if(!exclude.contains(listFile)){
+                int type = 0;
+                switch (IOUtil.getFileExtension(listFile.getName())) {
+                    case "frag":
+                        type = GL33.GL_FRAGMENT_SHADER;
+                        break;
+                    case "vert":
+                        type = GL33.GL_VERTEX_SHADER;
+                        break;
+                }
+                shadersToLink.add(compileShader(getShaderSourceCode("Shaders/" + listFile.getName()), type));
             }
-            shadersToLink.add(compileShader(getShaderSourceCode("Shaders/" + listFile.getName()), type));
-        }
+           }
         try {
             shaderId = compileShaderProgram(shadersToLink);
         } catch (RuntimeException e) {
