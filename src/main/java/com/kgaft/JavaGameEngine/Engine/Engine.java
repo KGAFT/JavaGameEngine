@@ -99,7 +99,7 @@ public class Engine {
         cameraManager.registerCameraAndSwitchToIt(camera);
         PlayerNonPhysicsMode playerNonPhysicsMode = new PlayerNonPhysicsMode();
         playerNonPhysicsMode.addDependentObject(camera);
-        String modelPath = Engine.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1);
+        String modelPath = Engine.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath();
         Model model = new ModelLoader().loadModel(modelPath);
         try {
             model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_BaseColor_tga.png").getPath(), Texture.BASE_COLOR_TEXTURE));
