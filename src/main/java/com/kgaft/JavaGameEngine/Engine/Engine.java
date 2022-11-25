@@ -37,14 +37,14 @@ public class Engine {
         cameraManager.registerCameraAndSwitchToIt(camera);
         PlayerNonPhysicsMode playerNonPhysicsMode = new PlayerNonPhysicsMode();
         playerNonPhysicsMode.addDependentObject(camera);
-        String modelPath = Engine.class.getClassLoader().getResource("Models/PokeBall/Pokeball.obj").getPath().substring(1);
+        String modelPath = Engine.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1);
         Model model = new ModelLoader().loadModel(modelPath);
         try {
-            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_BaseColor.png").getPath(), Texture.ALBEDO_TEXTURE));
-            //model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_AO.png").getPath(), Texture.AMBIENT_OCCLUSION_MAP));
-            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_Metallic.png").getPath(), Texture.METALLIC_TEXTURE));
-            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_Roughness.png").getPath(), Texture.ROUGHNESS_TEXTURE));
-            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_Normal.png").getPath(), Texture.NORMAL_MAP_TEXTURE));
+            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_BaseColor_tga.png").getPath(), Texture.ALBEDO_TEXTURE));
+            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_T_ao.png").getPath(), Texture.AMBIENT_OCCLUSION_MAP));
+              model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_Metallic.png").getPath(), Texture.METALLIC_TEXTURE));
+            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_Roughness.png").getPath(), Texture.ROUGHNESS_TEXTURE));
+            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_Normal_tga.png").getPath(), Texture.NORMAL_MAP_TEXTURE));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class Engine {
         PbrLightManager.addLight(pbrLight);
         while (Window.getWindow().isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
-            GL33.glClearColor(0.0f, 0.0f, 1, 1);
+            GL33.glClearColor(0.0f, 0.0f, 0, 1);
             Shader.attach();
             PbrLightManager.loadLight();
             //spotLight.rotate(new Vector3f(0f, 0f, 1f));
