@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL33;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Engine {
 
@@ -50,16 +51,22 @@ public class Engine {
         }
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
-        DirectLight directLight = new DirectLight(new Vector4f(1f, 1f, 1f, 1f));
-        PointLight pointLight = new PointLight(new Vector4f(0.5f, 0.0f, 0.5f, 1.0f));
-        SpotLight spotLight = new SpotLight(new Vector4f(0.5f, 0.0f, 0.5f, 1f));
-        //LightManager.addSpotLight(spotLight);
-        LightManager.addDirectLight(directLight);
-        LightManager.setCamera(camera);
-        PbrLight pbrLight = new PbrLight(new Vector4f(0.5f, 0.7f, 0.3f, 0.7f));
-        playerNonPhysicsMode.addDependentObject(pbrLight);
+        for(int counter = 0; counter<10; counter++){
+            PbrLight pbrLight;
+            if(counter%2==0){
+                pbrLight = new PbrLight(new Vector3f(0.5f, 0.7f, 0.3f), new Vector3f(3f, 5f, -5f));
+            }
+            else if(counter%3==0){
+                pbrLight = new PbrLight(new Vector3f(0.5f, 0.7f, 0.3f), new Vector3f(-3f, 5f, 5f));
+            }
+            else{
+                pbrLight = new PbrLight(new Vector3f(0.5f, 0.7f, 0.3f), new Vector3f(-3f, -5f, 5f));
+            }
+            pbrLight.setIntensity(100);
+            PbrLightManager.addLight(pbrLight);
+        }
+
         PbrLightManager.setCamera(camera);
-        PbrLightManager.addLight(pbrLight);
         while (Window.getWindow().isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
             GL33.glClearColor(0.0f, 0.0f, 0, 1);

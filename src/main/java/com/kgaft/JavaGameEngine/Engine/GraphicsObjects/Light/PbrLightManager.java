@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class PbrLightManager {
 
     private static Camera camera;
-    private static ArrayList<PbrLight> pbrLights = new ArrayList<>();
+    private static ArrayList<ShaderStruct> pbrLights = new ArrayList<>();
 
     public static void addLight(PbrLight light){
         pbrLights.add(light);
@@ -19,9 +19,9 @@ public class PbrLightManager {
         if(Shader.getCurrentWorkMode()!=Shader.PBR_MODE){
             Shader.initForPbrLight();
         }
-        Shader.uniformInt(pbrLights.size(), "enabledLightBlocksAmount");
+        Shader.uniformInt(pbrLights.size(), "enabledPbrLights");
         Shader.uniformVector3f(camera.getPosition(), "cameraPosition");
-        Shader.uniformStruct(pbrLights.get(0), "light");
+        Shader.uniformArrayOfStructs(pbrLights, "lights");
     }
 
     public static Camera getCamera() {
