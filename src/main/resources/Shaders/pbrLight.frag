@@ -15,6 +15,18 @@ struct PbrLight{
     float intensity;
 };
 
+struct DirectLight{
+    vec3 direction;
+    vec3 color;
+    float intensity;
+};
+
+struct PointLight{
+    vec3 position;
+    vec3 color;
+    float intensity;
+};
+
 uniform sampler2D albedoMap;
 uniform sampler2D normalMap;
 uniform sampler2D metallicMap;
@@ -35,16 +47,16 @@ const float PI = 3.14159265359;
 
 
 
-vec3 getNormalFromMap(vec2 TexCoords, vec3 Normal, vec3 WorldPos)
+vec3 getNormalFromMap(vec2 uvsCoords, vec3 normals, vec3 fragmentPosition)
 {
-    vec3 tangentNormal = texture(normalMap, TexCoords).xyz * 2.0 - 1.0;
+    vec3 tangentNormal = texture(normalMap, uvsCoords).xyz * 2.0 - 1.0;
 
-    vec3 Q1  = dFdx(WorldPos);
-    vec3 Q2  = dFdy(WorldPos);
-    vec2 st1 = dFdx(TexCoords);
-    vec2 st2 = dFdy(TexCoords);
+    vec3 Q1  = dFdx(fragmentPosition);
+    vec3 Q2  = dFdy(fragmentPosition);
+    vec2 st1 = dFdx(uvsCoords);
+    vec2 st2 = dFdy(uvsCoords);
 
-    vec3 N   = normalize(Normal);
+    vec3 N   = normalize(normals);
     vec3 T  = normalize(Q1*st2.t - Q2*st1.t);
     vec3 B  = -normalize(cross(N, T));
     mat3 TBN = mat3(T, B, N);
@@ -53,11 +65,11 @@ vec3 getNormalFromMap(vec2 TexCoords, vec3 Normal, vec3 WorldPos)
 }
 
 // ----------------------------------------------------------------------------
-float DistributionGGX(vec3 N, vec3 H, float roughness)
+float DistributionGGX(vec3 normals, vec3 halfWayVector, float roughness)
 {
     float a = roughness*roughness;
     float a2 = a*a;
-    float NdotH = max(dot(N, H), 0.0);
+    float NdotH = max(dot(normals, halfWayVector), 0.0);
     float NdotH2 = NdotH*NdotH;
 
     float nom   = a2;
@@ -78,34 +90,34 @@ float GeometrySchlickGGX(float NdotV, float roughness)
     return nom / denom;
 }
 // ----------------------------------------------------------------------------
-float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
+float GeometrySmith(vec3 processedNormals, vec3 worldViewVector, vec3 lightPosition, float roughness)
 {
-    float NdotV = max(dot(N, V), 0.0);
-    float NdotL = max(dot(N, L), 0.0);
+    float NdotV = max(dot(processedNormals, worldViewVector), 0.0);
+    float NdotL = max(dot(processedNormals, lightPosition), 0.0);
     float ggx2 = GeometrySchlickGGX(NdotV, roughness);
     float ggx1 = GeometrySchlickGGX(NdotL, roughness);
 
     return ggx1 * ggx2;
 }
 // ----------------------------------------------------------------------------
-vec3 fresnelSchlick(float cosTheta, vec3 F0)
+vec3 fresnelSchlick(float cosTheta, vec3 startFresnelSchlick)
 {
-    return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+    return startFresnelSchlick + (1.0 - startFresnelSchlick) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
 }
 
-vec3 processPbrLight(PbrLight light, vec3 N, vec3 V, vec3 F0){
-    vec3 L = normalize(light.position - fragmentPosition);
-    vec3 H = normalize(V + L);
+vec3 processPbrLight(PbrLight light, vec3 normals, vec3 worldViewVector, vec3 startFresnelSchlick){
+    vec3 processedLightPos = normalize(light.position - fragmentPosition);
+    vec3 halfWay = normalize(worldViewVector + processedLightPos);
     float distance = length(light.position - fragmentPosition);
     float attenuation = 1.0 / (distance * distance);
     vec3 radiance = light.color * light.intensity * attenuation;
 
-    float NDF = DistributionGGX(N, H, roughness);
-    float G   = GeometrySmith(N, V, L, roughness);
-    vec3 F    = fresnelSchlick(clamp(dot(H, V), 0.0, 1.0), F0);
+    float NDF = DistributionGGX(normals, halfWay, roughness);
+    float G   = GeometrySmith(normals, worldViewVector, processedLightPos, roughness);
+    vec3 F    = fresnelSchlick(clamp(dot(halfWay, worldViewVector), 0.0, 1.0), startFresnelSchlick);
 
     vec3 numerator    = NDF * G * F;
-    float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
+    float denominator = 4.0 * max(dot(normals, worldViewVector), 0.0) * max(dot(normals, processedLightPos), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
     vec3 specular = numerator / denominator;
 
     // kS is equal to Fresnel
@@ -116,7 +128,35 @@ vec3 processPbrLight(PbrLight light, vec3 N, vec3 V, vec3 F0){
     kD *= 1.0 - metallic;
 
     // scale light by NdotL
-    float NdotL = max(dot(N, L), 0.0);
+    float NdotL = max(dot(normals, processedLightPos), 0.0);
+
+
+    return (kD * albedo / PI + specular) * radiance * NdotL;
+}
+
+vec3 processDirectionaLight(DirectLight light, vec3 normals, vec3 worldViewVector, vec3 startFresnelSchlick){
+    vec3 processedLightPos = normalize(-light.direction);
+    vec3 halfWay = normalize(worldViewVector + processedLightPos);
+
+    vec3 radiance = light.color * light.intensity;
+
+    float NDF = DistributionGGX(normals, halfWay, roughness);
+    float G   = GeometrySmith(normals, worldViewVector, processedLightPos, roughness);
+    vec3 F    = fresnelSchlick(clamp(dot(halfWay, worldViewVector), 0.0, 1.0), startFresnelSchlick);
+
+    vec3 numerator    = NDF * G * F;
+    float denominator = 4.0 * max(dot(normals, worldViewVector), 0.0) * max(dot(normals, processedLightPos), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
+    vec3 specular = numerator / denominator;
+
+    // kS is equal to Fresnel
+    vec3 kS = F;
+
+    vec3 kD = vec3(1.0) - kS;
+
+    kD *= 1.0 - metallic;
+
+    // scale light by NdotL
+    float NdotL = max(dot(normals, processedLightPos), 0.0);
 
 
     return (kD * albedo / PI + specular) * radiance * NdotL;

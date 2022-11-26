@@ -54,13 +54,13 @@ public class Engine {
         for(int counter = 0; counter<10; counter++){
             PbrLight pbrLight;
             if(counter%2==0){
-                pbrLight = new PbrLight(new Vector3f(0.5f, 0.7f, 0.3f), new Vector3f(3f, 5f, -5f));
+                pbrLight = new PbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(10f, 5f, -5f));
             }
             else if(counter%3==0){
-                pbrLight = new PbrLight(new Vector3f(0.5f, 0.7f, 0.3f), new Vector3f(-3f, 15f, 5f));
+                pbrLight = new PbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(-10f, 15f, 5f));
             }
             else{
-                pbrLight = new PbrLight(new Vector3f(0.5f, 0.7f, 0.3f), new Vector3f(-3f, -5f, 5f));
+                pbrLight = new PbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(-10f, -5f, 5f));
             }
             pbrLight.setIntensity(100);
             PbrLightManager.addLight(pbrLight);
