@@ -9,7 +9,7 @@ in vec3 fragmentPosition;
 out vec4 FragColor;
 
 
-struct PbrLight{
+struct PointLight{
     vec3 position;
     vec3 color;
     float intensity;
@@ -21,11 +21,14 @@ struct DirectLight{
     float intensity;
 };
 
-struct PointLight{
+struct SpotLight{
     vec3 position;
+    vec3 direction;
     vec3 color;
     float intensity;
+    float cutOff;
 };
+
 
 uniform sampler2D albedoMap;
 uniform sampler2D normalMap;
@@ -34,13 +37,17 @@ uniform sampler2D roughnessMap;
 uniform sampler2D aoMap;
 
 
-vec3 albedo;
-float metallic;
-float roughness;
-float ao;
 
-uniform PbrLight lights[LIGHT_BLOCKS_AMOUNT];
-uniform int enabledPbrLights;
+
+
+
+uniform PointLight pointLights[LIGHT_BLOCKS_AMOUNT];
+uniform DirectLight directLights[LIGHT_BLOCKS_AMOUNT];
+uniform SpotLight spotLights[LIGHT_BLOCKS_AMOUNT];
+
+uniform int enabledSpotLights;
+uniform int enabledDirectionalLights;
+uniform int enabledPointLights;
 uniform vec3 cameraPosition;
 
 const float PI = 3.14159265359;
@@ -105,7 +112,7 @@ vec3 fresnelSchlick(float cosTheta, vec3 startFresnelSchlick)
     return startFresnelSchlick + (1.0 - startFresnelSchlick) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
 }
 
-vec3 processPbrLight(PbrLight light, vec3 normals, vec3 worldViewVector, vec3 startFresnelSchlick){
+vec3 processPointLight(PointLight light, vec3 normals, vec3 worldViewVector, vec3 startFresnelSchlick, float roughness, float metallic, vec3 albedo){
     vec3 processedLightPos = normalize(light.position - fragmentPosition);
     vec3 halfWay = normalize(worldViewVector + processedLightPos);
     float distance = length(light.position - fragmentPosition);
@@ -134,7 +141,7 @@ vec3 processPbrLight(PbrLight light, vec3 normals, vec3 worldViewVector, vec3 st
     return (kD * albedo / PI + specular) * radiance * NdotL;
 }
 
-vec3 processDirectionaLight(DirectLight light, vec3 normals, vec3 worldViewVector, vec3 startFresnelSchlick){
+vec3 processDirectionaLight(DirectLight light, vec3 normals, vec3 worldViewVector, vec3 startFresnelSchlick, float roughness, float metallic, vec3 albedo){
     vec3 processedLightPos = normalize(-light.direction);
     vec3 halfWay = normalize(worldViewVector + processedLightPos);
 
@@ -162,25 +169,67 @@ vec3 processDirectionaLight(DirectLight light, vec3 normals, vec3 worldViewVecto
     return (kD * albedo / PI + specular) * radiance * NdotL;
 }
 
+vec3 processSpotLight(SpotLight spotLight, vec3 normals, vec3 worldViewVector, vec3 startFresnelSchlick, float roughness, float metallic, vec3 albedo){
+    vec3 lightToPixel = normalize(fragmentPosition - spotLight.position);
+    float spotFactor = dot(lightToPixel, spotLight.direction);
+
+    if(spotFactor>spotLight.cutOff){
+        vec3 processedLightPos = normalize(spotLight.position - fragmentPosition);
+        vec3 halfWay = normalize(worldViewVector + processedLightPos);
+        float distance = length(spotLight.position - fragmentPosition);
+        float attenuation = 1.0 / (distance * distance);
+        vec3 radiance = spotLight.color * spotLight.intensity * attenuation;
+
+        float NDF = DistributionGGX(normals, halfWay, roughness);
+        float G   = GeometrySmith(normals, worldViewVector, processedLightPos, roughness);
+        vec3 F    = fresnelSchlick(clamp(dot(halfWay, worldViewVector), 0.0, 1.0), startFresnelSchlick);
+
+        vec3 numerator    = NDF * G * F;
+        float denominator = 4.0 * max(dot(normals, worldViewVector), 0.0) * max(dot(normals, processedLightPos), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
+        vec3 specular = numerator / denominator;
+
+        // kS is equal to Fresnel
+        vec3 kS = F;
+
+        vec3 kD = vec3(1.0) - kS;
+
+        kD *= 1.0 - metallic;
+
+        // scale light by NdotL
+        float NdotL = max(dot(normals, processedLightPos), 0.0);
+
+        vec3 result = (kD * albedo / PI + specular) * radiance * NdotL;
+
+        float spotLightIntensity = (1.0 - (1.0 - spotFactor)/(1.0 - spotLight.cutOff));
+
+        return result*spotLightIntensity;
+    }
+    return vec3(0);
+}
+
 void main()
 {
-    albedo = pow(texture(albedoMap, UvsCoords).rgb, vec3(2.2));
-    metallic = texture(metallicMap, UvsCoords).r;
-    roughness = texture(roughnessMap, UvsCoords).r;
-    ao = texture(aoMap, UvsCoords).r;
-    vec3 N = normalize(getNormalFromMap(UvsCoords, Normals, fragmentPosition));
-    vec3 V = normalize(cameraPosition - fragmentPosition);
+    vec3 albedo = pow(texture(albedoMap, UvsCoords).rgb, vec3(2.2));
+    float metallic = texture(metallicMap, UvsCoords).r;
+    float roughness = texture(roughnessMap, UvsCoords).r;
+    float ao = texture(aoMap, UvsCoords).r;
+    vec3 processedNormals = normalize(getNormalFromMap(UvsCoords, Normals, fragmentPosition));
+    vec3 worldViewVector = normalize(cameraPosition - fragmentPosition);
 
     // calculate reflectance at normal incidence; if dia-electric (like plastic) use F0
     // of 0.04 and if it's a metal, use the albedo color as F0 (metallic workflow)
-    vec3 F0 = vec3(0.04);
-    F0 = mix(F0, albedo, metallic);
+    vec3 startFresnelSchlick = vec3(0.04);
+    startFresnelSchlick = mix(startFresnelSchlick, albedo, metallic);
 
     // reflectance equation
     vec3 Lo = vec3(0.0);
 
-    for(int i = 0; i<enabledPbrLights; i++){
-        Lo+=processPbrLight(lights[i], N, V, F0);
+    for(int i = 0; i<enabledDirectionalLights; i++){
+        Lo+=processDirectionaLight(directLights[i], processedNormals, worldViewVector, startFresnelSchlick, roughness, metallic, albedo);
+    }
+
+    for(int i = 0; i<enabledPointLights; i++){
+        Lo+=processPointLight(pointLights[i], processedNormals, worldViewVector, startFresnelSchlick, roughness, metallic, albedo);
     }
 
     vec3 ambient = vec3(0.03) * albedo * ao;

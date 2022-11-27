@@ -1,20 +1,18 @@
 package com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Light;
 
-import com.kgaft.JavaGameEngine.Engine.GameObjects.WorldObject;
 import com.kgaft.JavaGameEngine.Shader.ShaderStruct;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class PbrLight implements ShaderStruct {
+public class PointPbrLight implements ShaderStruct {
     private Vector3f color;
 
     private Vector3f position;
     private float intensity = 10;
 
-    public PbrLight(Vector3f color, Vector3f position) {
+    public PointPbrLight(Vector3f color, Vector3f position) {
         this.color = color;
         this.position = position;
     }

@@ -3,12 +3,12 @@ package com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Light;
 import com.kgaft.JavaGameEngine.Engine.Camera.Camera;
 import com.kgaft.JavaGameEngine.Shader.Shader;
 import com.kgaft.JavaGameEngine.Shader.ShaderStruct;
-import org.joml.Vector3f;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public class LightManager {
+public class LightManager{
     private static ArrayList<PointLight> pointLights = new ArrayList<>();
     private static ArrayList<DirectLight> directLights = new ArrayList<>();
     private static ArrayList<SpotLight> spotLights = new ArrayList<>();
@@ -41,6 +41,8 @@ public class LightManager {
     public static void addDirectLight(DirectLight directLight){
         directLights.add(directLight);
     }
+
+
 
 
 

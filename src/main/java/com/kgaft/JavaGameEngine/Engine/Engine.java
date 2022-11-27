@@ -8,14 +8,10 @@ import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Light.*;
 import com.kgaft.JavaGameEngine.Shader.Shader;
 import com.kgaft.JavaGameEngine.Window.Window;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL33;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
 
 public class Engine {
 
@@ -51,21 +47,15 @@ public class Engine {
         }
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
-        for(int counter = 0; counter<10; counter++){
-            PbrLight pbrLight;
-            if(counter%2==0){
-                pbrLight = new PbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(10f, 5f, -5f));
-            }
-            else if(counter%3==0){
-                pbrLight = new PbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(-10f, 15f, 5f));
-            }
-            else{
-                pbrLight = new PbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(-10f, -5f, 5f));
-            }
-            pbrLight.setIntensity(100);
-            PbrLightManager.addLight(pbrLight);
-        }
-
+        PointPbrLight pbrLight = new PointPbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(10f, 0f, 5f));
+        DirectPbrLight directPbrLight = new DirectPbrLight(new Vector3f(0.5f, 0.2f, 0.6f), new Vector3f(10f, 0f, 5f));
+        directPbrLight.setIntensity(6);
+        SpotPbrLight spotPbrLight = new SpotPbrLight(new Vector3f(1.0f, 0.0f, 0.0f), new Vector3f(10f, 0f, 5f), new Vector3f(0, 0, 5), 10);
+        pbrLight.setIntensity(10);
+        spotPbrLight.setIntensity(1000);
+        PbrLightManager.addPointLight(pbrLight);
+        //PbrLightManager.addDirectLight(directPbrLight);
+        PbrLightManager.addSpotLight(spotPbrLight);
         PbrLightManager.setCamera(camera);
         while (Window.getWindow().isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
