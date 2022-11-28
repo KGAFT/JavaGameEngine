@@ -34,7 +34,7 @@ public class Engine {
         cameraManager.registerCameraAndSwitchToIt(camera);
         PlayerNonPhysicsMode playerNonPhysicsMode = new PlayerNonPhysicsMode();
         playerNonPhysicsMode.addDependentObject(camera);
-        String modelPath = Engine.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1);
+        String modelPath = Engine.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(0);
         Model model = new ModelLoader().loadModel(modelPath);
         try {
             model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_BaseColor_tga.png").getPath(), Texture.ALBEDO_TEXTURE));
@@ -47,15 +47,7 @@ public class Engine {
         }
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
-        PointPbrLight pbrLight = new PointPbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(10f, 0f, 5f));
-        DirectPbrLight directPbrLight = new DirectPbrLight(new Vector3f(0.5f, 0.2f, 0.6f), new Vector3f(10f, 0f, 5f));
-        directPbrLight.setIntensity(6);
-        SpotPbrLight spotPbrLight = new SpotPbrLight(new Vector3f(1.0f, 0.0f, 0.0f), new Vector3f(10f, 0f, 5f), new Vector3f(0, 0, 5), 10);
-        pbrLight.setIntensity(10);
-        spotPbrLight.setIntensity(1000);
-        PbrLightManager.addPointLight(pbrLight);
-        //PbrLightManager.addDirectLight(directPbrLight);
-        PbrLightManager.addSpotLight(spotPbrLight);
+
         PbrLightManager.setCamera(camera);
         while (Window.getWindow().isWindowActive()){
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);

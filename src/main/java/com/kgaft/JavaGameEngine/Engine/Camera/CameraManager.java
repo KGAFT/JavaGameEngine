@@ -35,7 +35,7 @@ public class CameraManager {
         currentCamera = camera;
     }
     public void handleCamera(){
-        Matrix4f matrix4f = currentCamera.getCameraMatrix(fov, nearPlane, farPlane, Window.getWindow().getWidth(), Window.getWindow().getHeight());
+        Matrix4f matrix4f = currentCamera.getCameraMatrix(Window.getWindow().getWidth(), Window.getWindow().getHeight());
         matrix4f.get(currentCamData);
 
         Shader.uniformMatrix4f(currentCamData, "cameraMatrix");

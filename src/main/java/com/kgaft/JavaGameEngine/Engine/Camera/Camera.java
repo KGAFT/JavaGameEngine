@@ -9,12 +9,9 @@ import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
 public class Camera implements NonPhysicMoveAbleObject {
-    /*
-    private Vector3f position = new Vector3f(0.0f, 0.0f, 2.0f);
-    private Vector3f orientation = new Vector3f(0.0f, 0.0f, -1.0f);
-    private Vector3f up = new Vector3f(0.0f, 1.0f, 0.0f);
-
-     */
+    private float fov;
+    private float nearPlane;
+    private float farPlane;
     private Vector3f position = new Vector3f(0.0f, 0.0f, 2.0f);
     private Vector3f rotation = new Vector3f(0.0f, 0.0f, -1.0f);
 
@@ -36,7 +33,7 @@ public class Camera implements NonPhysicMoveAbleObject {
         this.rotation = new Vector3f(this.rotation.x+rotation.x, this.rotation.y+rotation.y, -1.0f);
 
     }
-    Matrix4f getCameraMatrix(float fovInDegrees, float nearPlane, float farPlane, float viewPortWidth, float viewPortHeight){
+    Matrix4f getCameraMatrix(float viewPortWidth, float viewPortHeight){
 
         Matrix4f viewMatrix = new Matrix4f();
         viewMatrix.identity();
@@ -46,7 +43,7 @@ public class Camera implements NonPhysicMoveAbleObject {
         Matrix4f projectionMatrix = new Matrix4f().identity();
         float aspectRatio = viewPortWidth / viewPortHeight;
         projectionMatrix.identity();
-        projectionMatrix.perspective((float) Math.toRadians(fovInDegrees), aspectRatio, nearPlane, farPlane);
+        projectionMatrix.perspective((float) Math.toRadians(fov), aspectRatio, nearPlane, farPlane);
         return projectionMatrix.mul(viewMatrix);
 
     }
@@ -57,5 +54,29 @@ public class Camera implements NonPhysicMoveAbleObject {
 
     public Vector3f getOrientation() {
         return rotation;
+    }
+
+    public float getFov() {
+        return fov;
+    }
+
+    public void setFov(float fov) {
+        this.fov = fov;
+    }
+
+    public float getNearPlane() {
+        return nearPlane;
+    }
+
+    public void setNearPlane(float nearPlane) {
+        this.nearPlane = nearPlane;
+    }
+
+    public float getFarPlane() {
+        return farPlane;
+    }
+
+    public void setFarPlane(float farPlane) {
+        this.farPlane = farPlane;
     }
 }

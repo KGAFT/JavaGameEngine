@@ -21,14 +21,6 @@ struct DirectLight{
     float intensity;
 };
 
-struct SpotLight{
-    vec3 position;
-    vec3 direction;
-    vec3 color;
-    float intensity;
-    float cutOff;
-};
-
 
 uniform sampler2D albedoMap;
 uniform sampler2D normalMap;
@@ -43,7 +35,6 @@ uniform sampler2D aoMap;
 
 uniform PointLight pointLights[LIGHT_BLOCKS_AMOUNT];
 uniform DirectLight directLights[LIGHT_BLOCKS_AMOUNT];
-uniform SpotLight spotLights[LIGHT_BLOCKS_AMOUNT];
 
 uniform int enabledSpotLights;
 uniform int enabledDirectionalLights;
@@ -169,43 +160,6 @@ vec3 processDirectionaLight(DirectLight light, vec3 normals, vec3 worldViewVecto
     return (kD * albedo / PI + specular) * radiance * NdotL;
 }
 
-vec3 processSpotLight(SpotLight spotLight, vec3 normals, vec3 worldViewVector, vec3 startFresnelSchlick, float roughness, float metallic, vec3 albedo){
-    vec3 lightToPixel = normalize(fragmentPosition - spotLight.position);
-    float spotFactor = dot(lightToPixel, spotLight.direction);
-
-    if(spotFactor>spotLight.cutOff){
-        vec3 processedLightPos = normalize(spotLight.position - fragmentPosition);
-        vec3 halfWay = normalize(worldViewVector + processedLightPos);
-        float distance = length(spotLight.position - fragmentPosition);
-        float attenuation = 1.0 / (distance * distance);
-        vec3 radiance = spotLight.color * spotLight.intensity * attenuation;
-
-        float NDF = DistributionGGX(normals, halfWay, roughness);
-        float G   = GeometrySmith(normals, worldViewVector, processedLightPos, roughness);
-        vec3 F    = fresnelSchlick(clamp(dot(halfWay, worldViewVector), 0.0, 1.0), startFresnelSchlick);
-
-        vec3 numerator    = NDF * G * F;
-        float denominator = 4.0 * max(dot(normals, worldViewVector), 0.0) * max(dot(normals, processedLightPos), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
-        vec3 specular = numerator / denominator;
-
-        // kS is equal to Fresnel
-        vec3 kS = F;
-
-        vec3 kD = vec3(1.0) - kS;
-
-        kD *= 1.0 - metallic;
-
-        // scale light by NdotL
-        float NdotL = max(dot(normals, processedLightPos), 0.0);
-
-        vec3 result = (kD * albedo / PI + specular) * radiance * NdotL;
-
-        float spotLightIntensity = (1.0 - (1.0 - spotFactor)/(1.0 - spotLight.cutOff));
-
-        return result*spotLightIntensity;
-    }
-    return vec3(0);
-}
 
 void main()
 {
