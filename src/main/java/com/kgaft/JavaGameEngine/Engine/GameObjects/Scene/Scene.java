@@ -8,7 +8,7 @@ public class Scene {
     private List<SceneObject> sceneObjects = new ArrayList<>();
     private LightManager lightManager = new LightManager();
 
-
+    private CameraManager cameraManager = new CameraManager();
 
     public void setup(){
         sceneObjects.forEach(object->{
@@ -16,7 +16,8 @@ public class Scene {
         });
     }
 
-    protected void update(){
+    public void update(){
+        cameraManager.update();
         lightManager.update();
         sceneObjects.forEach(object->{
             if(object.enabled){
@@ -24,8 +25,17 @@ public class Scene {
             }
         });
     }
+
+    protected void addSceneObject(SceneObject sceneObject){
+        sceneObjects.add(sceneObject);
+    }
+
     protected LightManager getLightManager(){
         return lightManager;
+    }
+
+    protected CameraManager getCameraManager(){
+        return cameraManager;
     }
     protected void registerSceneObject(SceneObject object){
         sceneObjects.add(object);
@@ -43,4 +53,6 @@ public class Scene {
             object.enabled = true;
         }
     }
+
+
 }

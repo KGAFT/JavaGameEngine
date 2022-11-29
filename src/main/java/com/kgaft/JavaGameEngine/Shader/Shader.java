@@ -90,20 +90,7 @@ public class Shader {
     public static void uniformInt(int value, String varName) {
         GL33.glUniform1i(GL33.glGetUniformLocation(shaderId, varName), value);
     }
-    public static void initForPhongLight(){
-        List<String> exclude = new ArrayList<>();
-        exclude.add(PBR_LIGHT_SHADER_NAME);
-        initializeShader(exclude);
-        currentWorkMode = PHONG_MODE;
 
-    }
-    public static void initForPbrLight(){
-        List<String> exclude = new ArrayList<>();
-        exclude.add(PHONG_LIGHT_SHADER_NAME);
-        exclude.add(PHONG_ENTRY_POINT);
-        initializeShader(exclude);
-        currentWorkMode = PBR_MODE;
-    }
     public static void initializeShader(List<String> exclude) {
         List<Integer> shadersToLink = new ArrayList<>();
         File file = new File(Shader.class.getClassLoader().getResource("Shaders").getPath());

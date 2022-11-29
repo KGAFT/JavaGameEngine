@@ -33,7 +33,7 @@ public class Camera implements NonPhysicMoveAbleObject {
         this.rotation = new Vector3f(this.rotation.x+rotation.x, this.rotation.y+rotation.y, -1.0f);
 
     }
-    Matrix4f getCameraMatrix(float viewPortWidth, float viewPortHeight){
+    public Matrix4f getCameraMatrix(float viewPortWidth, float viewPortHeight){
 
         Matrix4f viewMatrix = new Matrix4f();
         viewMatrix.identity();

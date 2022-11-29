@@ -1,6 +1,7 @@
 package com.kgaft.JavaGameEngine.Engine.GraphicsObjects;
 
 
+import com.kgaft.JavaGameEngine.Engine.GameObjects.Scene.SceneObject;
 import com.kgaft.JavaGameEngine.Engine.VertexObjects.ElementBufferObject;
 import com.kgaft.JavaGameEngine.Engine.VertexObjects.VertexArrayObject;
 import com.kgaft.JavaGameEngine.Engine.VertexObjects.VertexBufferObject;
@@ -11,7 +12,7 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mesh {
+public class Mesh extends SceneObject {
 
 
     public static Mesh createMesh(float[] vertices, float[] UVs, float[] normals, int[] indices){
@@ -81,5 +82,10 @@ public class Mesh {
 
     public List<Texture> getMeshTextures() {
         return meshTextures;
+    }
+
+    @Override
+    public void draw() {
+        updateAndLoadToGameWorld();
     }
 }

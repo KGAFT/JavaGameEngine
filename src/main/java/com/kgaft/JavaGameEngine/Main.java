@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
         Window.prepareWindow(800, 600, "HelloWorld!");
         Engine engine = new Engine();
+        engine.setCurrentScene(new TestScene());
         engine.start();
     }
 }

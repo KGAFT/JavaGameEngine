@@ -13,22 +13,13 @@ public class LightManager {
     private List<ShaderStruct> pointLights = new ArrayList<>();
     private List<ShaderStruct> directLights = new ArrayList<>();
 
-    private Camera camera;
 
     protected void update() {
         Shader.uniformInt(pointLights.size(), "enabledPointLights");
         Shader.uniformInt(directLights.size(), "enabledDirectionalLights");
-        Shader.uniformVector3f(camera.getPosition(), "cameraPosition");
+
         Shader.uniformArrayOfStructs(pointLights, "pointLights");
         Shader.uniformArrayOfStructs(directLights, "directLights");
-    }
-
-    public Camera getCamera() {
-        return camera;
-    }
-
-    public void setCamera(Camera camera) {
-        this.camera = camera;
     }
 
     public void addPointLight(PointPbrLight light) {
