@@ -16,7 +16,7 @@ import java.io.IOException;
 public class TestScene extends Scene {
     @Override
     public void setup() {
-        String modelPath = Engine.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(0);
+        String modelPath = Engine.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1);
         Model model = new ModelLoader().loadModel(modelPath);
         try {
             model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_BaseColor_tga.png").getPath(), Texture.ALBEDO_TEXTURE));
@@ -38,6 +38,7 @@ public class TestScene extends Scene {
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
         getLightManager().addDirectLight(new DirectPbrLight(new Vector3f(0.5f, 0.0f, 0.5f), new Vector3f(0.1f, 0.5f, 0.4f)));
+        getCameraManager().setCurrentCamera(camera);
         super.setup();
     }
 

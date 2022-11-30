@@ -35,6 +35,7 @@ public class Engine {
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
             GL33.glClearColor(0.0f, 0.0f, 0, 1);
             Shader.attach();
+            Window.getWindow().preRenderEvents();
             currentScene.update();
             Window.getWindow().postEvents();
         }
