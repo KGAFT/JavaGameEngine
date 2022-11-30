@@ -25,6 +25,18 @@ public class Model extends SceneObject {
         meshes.forEach(mesh -> mesh.scale(scale));
     }
 
+    public void setEmissiveShininess(float emissiveShininess){
+        meshes.forEach(mesh->{
+            mesh.setEmissiveShininess(emissiveShininess);
+        });
+    }
+
+    public void setEmissiveIntensity(float emissiveIntensity){
+        meshes.forEach(mesh->{
+            mesh.setEmissiveIntensity(emissiveIntensity);
+        });
+    }
+
     public void addTexture(Texture texture){
         meshes.forEach(mesh -> {
             mesh.getMeshTextures().add(texture);

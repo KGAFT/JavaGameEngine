@@ -23,6 +23,8 @@ public class Texture {
     public static final String ROUGHNESS_TEXTURE = "roughnessMap";
 
     public static final String AMBIENT_OCCLUSION_MAP = "aoMap";
+
+    public static final String EMISSIVE_MAP = "emissiveMap";
     public static Texture loadTexture(String filePath, String textureType) throws IOException {
         PNGDecoder decoder = new PNGDecoder(new FileInputStream(filePath));
         ByteBuffer buf = ByteBuffer.allocateDirect(

@@ -24,6 +24,7 @@ public class TestScene extends Scene {
             model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_Metallic.png").getPath(), Texture.METALLIC_TEXTURE));
             model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_Roughness.png").getPath(), Texture.ROUGHNESS_TEXTURE));
             model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_Normal_tga.png").getPath(), Texture.NORMAL_MAP_TEXTURE));
+            model.addTexture(Texture.loadTexture(Engine.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_Emissive.png").getPath(), Texture.EMISSIVE_MAP));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,7 +38,7 @@ public class TestScene extends Scene {
 
         Window.getWindow().addKeyBoardCallBack(playerNonPhysicsMode);
         Window.getWindow().addMouseMoveCallBack(playerNonPhysicsMode);
-        getLightManager().addDirectLight(new DirectPbrLight(new Vector3f(0.5f, 0.0f, 0.5f), new Vector3f(0.1f, 0.5f, 0.4f)));
+          getLightManager().addDirectLight(new DirectPbrLight(new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(0.1f, 0.5f, 0.4f)));
         getCameraManager().setCurrentCamera(camera);
         super.setup();
     }

@@ -11,7 +11,7 @@ public class DirectPbrLight implements ShaderStruct {
 
     private Vector3f direction;
 
-    private float intensity = 10;
+    private float intensity = 2;
 
     public DirectPbrLight(Vector3f color, Vector3f direction) {
         this.color = color;

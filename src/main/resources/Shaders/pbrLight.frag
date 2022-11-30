@@ -27,7 +27,7 @@ uniform sampler2D normalMap;
 uniform sampler2D metallicMap;
 uniform sampler2D roughnessMap;
 uniform sampler2D aoMap;
-
+uniform sampler2D emissiveMap;
 
 
 
@@ -43,7 +43,10 @@ uniform vec3 cameraPosition;
 
 const float PI = 3.14159265359;
 
-
+uniform float emissiveIntensity;
+uniform float emissiveShininess;
+uniform float gammaCorrect;
+uniform float ambientIntensity;
 
 vec3 getNormalFromMap(vec2 uvsCoords, vec3 normals, vec3 fragmentPosition)
 {
@@ -186,14 +189,16 @@ void main()
         Lo+=processPointLight(pointLights[i], processedNormals, worldViewVector, startFresnelSchlick, roughness, metallic, albedo);
     }
 
-    vec3 ambient = vec3(0.03) * albedo * ao;
+    vec3 ambient = vec3(ambientIntensity) * albedo * ao;
 
     vec3 color = ambient + Lo;
 
+    vec4 emissive = texture(emissiveMap, UvsCoords);
+    color+=(emissive*pow(emissive.a, emissiveShininess)*emissiveIntensity).rgb;
     // HDR tonemapping
     color = color / (color + vec3(1.0));
     // gamma correct
-    color = pow(color, vec3(1.0/2.2));
+    color = pow(color, vec3(gammaCorrect));
 
     FragColor = vec4(color, 1.0);
 }

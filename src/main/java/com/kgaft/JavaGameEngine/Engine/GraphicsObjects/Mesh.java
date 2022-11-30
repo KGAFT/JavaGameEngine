@@ -41,14 +41,22 @@ public class Mesh extends SceneObject {
     private VertexArrayObject vertexArrayObject;
     private List<Texture> meshTextures = new ArrayList<>();
     private Matrix4f worldMatrix = new Matrix4f().identity();
-
     private Vector3f worldPos = new Vector3f();
 
+    private float emissiveIntensity = 2;
+    private float emissiveShininess = 1;
+
+    private float gammaCorrect = 1.0f/2.2f;
+    private float ambientIntensity = 0.03f;
     public void updateAndLoadToGameWorld() {
         Shader.attach();
         float[] worldPositionData = new float[4 * 4];
         worldMatrix.get(worldPositionData);
         Shader.uniformMatrix4f(worldPositionData, "modelMatrix");
+        Shader.uniformFloat(emissiveIntensity, "emissiveIntensity");
+        Shader.uniformFloat(emissiveShininess, "emissiveShininess");
+        Shader.uniformFloat(gammaCorrect, "gammaCorrect");
+        Shader.uniformFloat(ambientIntensity, "ambientIntensity");
         meshTextures.forEach(Texture::attach);
         vertexArrayObject.draw();
     }
@@ -82,6 +90,22 @@ public class Mesh extends SceneObject {
 
     public List<Texture> getMeshTextures() {
         return meshTextures;
+    }
+
+    public float getEmissiveIntensity() {
+        return emissiveIntensity;
+    }
+
+    public void setEmissiveIntensity(float emissiveIntensity) {
+        this.emissiveIntensity = emissiveIntensity;
+    }
+
+    public float getEmissiveShininess() {
+        return emissiveShininess;
+    }
+
+    public void setEmissiveShininess(float emissiveShininess) {
+        this.emissiveShininess = emissiveShininess;
     }
 
     @Override
