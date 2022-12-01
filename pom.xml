@@ -12,7 +12,10 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <lwjgl.version>3.3.1</lwjgl.version>
+        <joml.version>1.10.5</joml.version>
+        <lwjgl3-awt.version>0.1.8</lwjgl3-awt.version>
     </properties>
+
     <profiles>
         <profile>
             <id>lwjgl-natives-linux-amd64</id>
@@ -73,6 +76,13 @@
             <properties>
                 <lwjgl.natives>natives-macos</lwjgl.natives>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.lwjgl</groupId>
+                    <artifactId>lwjgl-vulkan</artifactId>
+                    <classifier>natives-macos</classifier>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>lwjgl-natives-macos-aarch64</id>
@@ -85,6 +95,13 @@
             <properties>
                 <lwjgl.natives>natives-macos-arm64</lwjgl.natives>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.lwjgl</groupId>
+                    <artifactId>lwjgl-vulkan</artifactId>
+                    <classifier>natives-macos-arm64</classifier>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>lwjgl-natives-windows-amd64</id>
@@ -123,6 +140,7 @@
             </properties>
         </profile>
     </profiles>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -162,6 +180,10 @@
         </dependency>
         <dependency>
             <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-vulkan</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl</artifactId>
             <classifier>${lwjgl.natives}</classifier>
         </dependency>
@@ -193,12 +215,12 @@
         <dependency>
             <groupId>org.joml</groupId>
             <artifactId>joml</artifactId>
-            <version>1.10.5</version>
+            <version>${joml.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.l33tlabs.twl</groupId>
-            <artifactId>pngdecoder</artifactId>
-            <version>1.0</version>
+            <groupId>org.lwjglx</groupId>
+            <artifactId>lwjgl3-awt</artifactId>
+            <version>${lwjgl3-awt.version}</version>
         </dependency>
     </dependencies>
 
