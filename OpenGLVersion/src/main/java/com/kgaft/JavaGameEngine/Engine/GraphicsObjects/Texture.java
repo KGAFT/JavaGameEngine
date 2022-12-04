@@ -1,12 +1,11 @@
 package com.kgaft.JavaGameEngine.Engine.GraphicsObjects;
 
 import com.kgaft.JavaGameEngine.Shader.Shader;
-import de.matthiasmann.twl.utils.PNGDecoder;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
+import de.matthiasmann.twl.utils.PNGDecoder;
 import static org.lwjgl.opengl.GL33.*;
 
 

@@ -6,10 +6,9 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.vulkan.*;
 
 
+import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toSet;
 import static org.lwjgl.glfw.GLFWVulkan.glfwGetRequiredInstanceExtensions;
@@ -29,14 +28,6 @@ public class VulkanRenderer {
     static {
         VALIDATION_LAYERS = new HashSet<>();
         VALIDATION_LAYERS.add("VK_LAYER_KHRONOS_validation");
-    }
-    private static int debugCallback(int messageSeverity, int messageType, long pCallbackData, long pUserData) {
-
-        VkDebugUtilsMessengerCallbackDataEXT callbackData = VkDebugUtilsMessengerCallbackDataEXT.create(pCallbackData);
-
-        System.err.println("Validation layer: " + callbackData.pMessageString());
-
-        return VK_FALSE;
     }
 
     public void createInstance() {
@@ -105,17 +96,42 @@ public class VulkanRenderer {
         VK13.vkGetPhysicalDeviceQueueFamilyProperties(device, familiesAmount, null);
         VkQueueFamilyProperties.Buffer queueFamilies = VkQueueFamilyProperties.create(familiesAmount[0]);
         VK13.vkGetPhysicalDeviceQueueFamilyProperties(device, familiesAmount, queueFamilies);
-        AtomicInteger suitableQueues = new AtomicInteger();
+        int graphicsFamilyIndex = -1;
         for(int c = 0; c<familiesAmount[0]; c++){
             if((queueFamilies.get().queueFlags()& VK_QUEUE_GRAPHICS_BIT)!=0){
-                suitableQueues.getAndIncrement();
+                graphicsFamilyIndex = c;
             }
         }
         PhysicalDevice physicalDevice = new PhysicalDevice(properties, features, device, score);
-        physicalDevice.setSupportedQueueFamiliesWithGraphics(suitableQueues.get());
+        physicalDevice.setGraphicsQueueFamilyIndex(graphicsFamilyIndex);
         queueFamilies.free();
         return physicalDevice;
     }
+
+    public void createLogicalDevice(PhysicalDevice sourceDevice){
+        if(sourceDevice.getGraphicsQueueFamilyIndex()>-1){
+            try(MemoryStack stack = stackPush()) {
+
+                VkDeviceQueueCreateInfo.Buffer queueCreateInfo = VkDeviceQueueCreateInfo.callocStack(1, stack);
+                queueCreateInfo.sType(VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO);
+                queueCreateInfo.queueFamilyIndex(sourceDevice.getGraphicsQueueFamilyIndex());
+                queueCreateInfo.pQueuePriorities(stack.floats(1.0f));
+                VkDeviceCreateInfo deviceCreateInfo = VkDeviceCreateInfo.callocStack(stack);
+                deviceCreateInfo.sType(VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO);
+                deviceCreateInfo.pQueueCreateInfos(queueCreateInfo);
+                deviceCreateInfo.pEnabledFeatures(sourceDevice.getFeatures());
+                deviceCreateInfo.ppEnabledLayerNames(getEnabledValidationLayers());
+                PointerBuffer pBuffer = stack.pointers(VK_NULL_HANDLE);
+                VK13.vkCreateDevice(sourceDevice.getDevice(), deviceCreateInfo, null, pBuffer);
+                VkDevice device = new VkDevice(pBuffer.get(), sourceDevice.getDevice(), deviceCreateInfo);
+                PointerBuffer queue = stack.pointers(0);
+                VK13.vkGetDeviceQueue(device, sourceDevice.getGraphicsQueueFamilyIndex(), 0, queue);
+                VkQueue graphicsQueue = new VkQueue(queue.get(), device);
+
+            }
+        }
+    }
+
     private PointerBuffer getEnabledValidationLayers() {
 
         MemoryStack stack = stackGet();

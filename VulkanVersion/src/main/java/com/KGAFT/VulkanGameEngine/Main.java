@@ -1,10 +1,8 @@
 package com.KGAFT.VulkanGameEngine;
 
+import com.KGAFT.VulkanGameEngine.VKRenderer.PhysicalDevice;
 import com.KGAFT.VulkanGameEngine.VKRenderer.VulkanRenderer;
 import com.KGAFT.VulkanGameEngine.Window.Window;
-import org.lwjgl.vulkan.VK13;
-import org.lwjgl.vulkan.VkPhysicalDevice;
-import org.lwjgl.vulkan.VkPhysicalDeviceProperties;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,9 +10,8 @@ public class Main {
         VulkanRenderer vulkanRenderer = new VulkanRenderer();
         vulkanRenderer.createInstance();
 
-        vulkanRenderer.getAvailableToRenderPhysicalDevices().forEach((device)->{
-            System.out.println(device.getSupportedQueueFamiliesWithGraphics());
-        });
+        PhysicalDevice device = vulkanRenderer.getAvailableToRenderPhysicalDevices().get(0);
+        vulkanRenderer.createLogicalDevice(device);
         while(Window.getWindow().isWindowActive()){
             Window.getWindow().postEvents();
         }

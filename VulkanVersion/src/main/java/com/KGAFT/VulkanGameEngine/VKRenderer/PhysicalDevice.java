@@ -9,7 +9,7 @@ public class PhysicalDevice {
     private VkPhysicalDeviceFeatures features;
     private VkPhysicalDevice device;
 
-    private int supportedQueueFamiliesWithGraphics;
+    private int graphicsQueueFamilyIndex = -1;
     private int score;
 
     public PhysicalDevice(VkPhysicalDeviceProperties properties, VkPhysicalDeviceFeatures features, VkPhysicalDevice device, int score) {
@@ -51,11 +51,11 @@ public class PhysicalDevice {
         this.score = score;
     }
 
-    public int getSupportedQueueFamiliesWithGraphics() {
-        return supportedQueueFamiliesWithGraphics;
+    public int getGraphicsQueueFamilyIndex() {
+        return graphicsQueueFamilyIndex;
     }
 
-    public void setSupportedQueueFamiliesWithGraphics(int supportedQueueFamiliesWithGraphics) {
-        this.supportedQueueFamiliesWithGraphics = supportedQueueFamiliesWithGraphics;
+    public void setGraphicsQueueFamilyIndex(int graphicsQueueFamilyIndex) {
+        this.graphicsQueueFamilyIndex = graphicsQueueFamilyIndex;
     }
 }
