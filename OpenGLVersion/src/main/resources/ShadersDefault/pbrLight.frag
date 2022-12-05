@@ -47,7 +47,7 @@ uniform float emissiveIntensity;
 uniform float emissiveShininess;
 uniform float gammaCorrect;
 uniform float ambientIntensity;
-
+//Try to recalculate normals with multiply by world matrix, after getting it from normal map
 vec3 getNormalFromMap(vec2 uvsCoords, vec3 normals, vec3 fragmentPosition)
 {
     vec3 tangentNormal = texture(normalMap, uvsCoords).xyz * 2.0 - 1.0;

@@ -9,6 +9,10 @@ import java.util.HashMap;
 
 
 public class Main {
+    /**
+     * @TODO Try to recalculate normals with multiply by world matrix, after getting it from normal map
+     * @param args
+     */
     public static void main(String[] args) {
         Window.prepareWindow(800, 600, "HelloWorld!");
         Engine engine = new Engine();
