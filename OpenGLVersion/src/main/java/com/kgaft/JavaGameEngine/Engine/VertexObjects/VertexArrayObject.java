@@ -85,6 +85,19 @@ public class VertexArrayObject {
         }
 
     }
+    public void putData(){
+        if(!drawEbo.destroyed) {
+            bind();
+            VBOs.keySet().forEach(GL33::glEnableVertexAttribArray);
+        }
+        else{
+            throw new RuntimeException("Error: ebo destroyed");
+        }
+    }
+    public void removeData(){
+        VBOs.keySet().forEach(GL33::glDisableVertexAttribArray);
+        GL33.glBindVertexArray(vaoId);
+    }
 
     public void unBind() {
         GL33.glBindVertexArray(0);

@@ -11,10 +11,17 @@ public class Model extends SceneObject {
     public Model(List<Mesh> meshes) {
         this.meshes = meshes;
     }
+
+    @Override
+    public void preRender() {
+        meshes.forEach(SceneObject::preRender);
+    }
+
     @Override
     public void draw(){
         meshes.forEach(Mesh::updateAndLoadToGameWorld);
     }
+
     public void rotate(Vector3f rotation){
         meshes.forEach(mesh -> mesh.rotate(rotation));
     }

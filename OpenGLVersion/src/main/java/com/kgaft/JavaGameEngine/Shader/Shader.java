@@ -10,33 +10,30 @@ import org.lwjgl.opengl.GL33;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Shader {
 
-    private static int shaderId = -1;
+    private static int currentShaderId = -1;
+    private static int shadesShaderId = -1;
 
-    private static final String PBR_LIGHT_SHADER_NAME = "pbrLight.frag";
-    private static final String PHONG_LIGHT_SHADER_NAME = "light.frag";
-    private static final String PHONG_ENTRY_POINT = "default.frag";
+    private static int defaultShaderId = -1;
 
-    public static final int PHONG_MODE = 0;
+    public static final int DEFAULT_SHADER = 0;
+    public static final int SHADES_SHADER = 1;
 
-    public static final int PBR_MODE = 1;
-
-    private static int currentWorkMode = 0;
     public static void uniformMatrix4f(float[] data, String matrixName) {
-        GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(shaderId, matrixName), false, data);
+        GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(currentShaderId, matrixName), false, data);
     }
 
     public static void uniformFloatValueInArrayOfStructs(int index, float value, String arrayName, String valueName) {
         String name = arrayName + "[" + index + "]." + valueName;
-        GL33.glUniform1f(GL33.glGetUniformLocation(shaderId, name), value);
+        GL33.glUniform1f(GL33.glGetUniformLocation(currentShaderId, name), value);
     }
-    public static void uniformArrayOfStructs(List<ShaderStruct> values, String arrayName){
+
+    public static void uniformArrayOfStructs(List<ShaderStruct> values, String arrayName) {
         for (int i = 0; i < values.size(); i++) {
-            String variableName = arrayName+"["+i+"]";
+            String variableName = arrayName + "[" + i + "]";
             uniformStruct(values.get(i), variableName);
         }
     }
@@ -61,68 +58,83 @@ public class Shader {
 
     public static void uniformVector3fInArrayOfStructs(int index, Vector3f value, String arrayName, String valueName) {
         String name = arrayName + "[" + index + "]." + valueName;
-        GL33.glUniform3f(GL33.glGetUniformLocation(shaderId, name), value.x, value.y, value.z);
+        GL33.glUniform3f(GL33.glGetUniformLocation(currentShaderId, name), value.x, value.y, value.z);
     }
 
     public static void uniformMatrix4fInArrayOfStructs(int index, Matrix4f value, String arrayName, String valueName) {
         String name = arrayName + "[" + index + "]." + valueName;
         float[] data = new float[4 * 4];
         value.get(data);
-        GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(shaderId, name), false, data);
+        GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(currentShaderId, name), false, data);
     }
 
     public static void uniformVector3f(float[] data, String vectorName) {
-        GL33.glUniform3fv(GL33.glGetUniformLocation(shaderId, vectorName), data);
+        GL33.glUniform3fv(GL33.glGetUniformLocation(currentShaderId, vectorName), data);
     }
 
     public static void uniformVector4f(Vector4f data, String vectorName) {
-        GL33.glUniform4f(GL33.glGetUniformLocation(shaderId, vectorName), data.x, data.y, data.z, data.w);
+        GL33.glUniform4f(GL33.glGetUniformLocation(currentShaderId, vectorName), data.x, data.y, data.z, data.w);
     }
 
     public static void uniformVector3f(Vector3f data, String vectorName) {
-        GL33.glUniform3f(GL33.glGetUniformLocation(shaderId, vectorName), data.x, data.y, data.z);
+        GL33.glUniform3f(GL33.glGetUniformLocation(currentShaderId, vectorName), data.x, data.y, data.z);
     }
 
     public static void uniformFloat(float value, String varName) {
-        GL33.glUniform1f(GL33.glGetUniformLocation(shaderId, varName), value);
+        GL33.glUniform1f(GL33.glGetUniformLocation(currentShaderId, varName), value);
     }
 
     public static void uniformInt(int value, String varName) {
-        GL33.glUniform1i(GL33.glGetUniformLocation(shaderId, varName), value);
+        GL33.glUniform1i(GL33.glGetUniformLocation(currentShaderId, varName), value);
     }
 
-    public static void initializeShader(List<String> exclude) {
+    public static void initializeShader(String workResourcesDirectory, int shaderType) {
         List<Integer> shadersToLink = new ArrayList<>();
-        File file = new File(Shader.class.getClassLoader().getResource("Shaders").getPath());
+        File file = new File(Shader.class.getClassLoader().getResource(workResourcesDirectory).getPath());
         for (File listFile : file.listFiles()) {
-            if(!exclude.contains(listFile.getName())){
-                int type = 0;
-                switch (IOUtil.getFileExtension(listFile.getName())) {
-                    case "frag":
-                        type = GL33.GL_FRAGMENT_SHADER;
-                        break;
-                    case "vert":
-                        type = GL33.GL_VERTEX_SHADER;
-                        break;
-                }
-                shadersToLink.add(compileShader(getShaderSourceCode("Shaders/" + listFile.getName()), type));
+            int type = 0;
+            switch (IOUtil.getFileExtension(listFile.getName())) {
+                case "frag":
+                    type = GL33.GL_FRAGMENT_SHADER;
+                    break;
+                case "vert":
+                    type = GL33.GL_VERTEX_SHADER;
+                    break;
             }
-           }
+            shadersToLink.add(compileShader(getShaderSourceCode(workResourcesDirectory+"/" + listFile.getName()), type));
+
+        }
         try {
-            shaderId = compileShaderProgram(shadersToLink);
+            switch(shaderType){
+                case DEFAULT_SHADER:
+                    defaultShaderId = compileShaderProgram(shadersToLink);
+                    break;
+                case SHADES_SHADER:
+                    shadesShaderId = compileShaderProgram(shadersToLink);
+                    break;
+            }
+
         } catch (RuntimeException e) {
             shadersToLink.forEach(GL33::glDeleteShader);
         }
+        shadersToLink.forEach(GL33::glDeleteShader);
     }
 
     public static void attach() {
-        if (shaderId != -1) {
-            GL33.glUseProgram(shaderId);
+        if (currentShaderId != -1) {
+            GL33.glUseProgram(currentShaderId);
         } else {
             throw new RuntimeException("Error: shader does not loaded");
         }
     }
 
+    public static void switchToDefaultShader() {
+        currentShaderId = defaultShaderId;
+    }
+
+    public static void switchToShadesShader() {
+        currentShaderId = shadesShaderId;
+    }
 
     private static int compileShaderProgram(List<Integer> shaders) {
         int shaderProgramId = GL33.glCreateProgram();
@@ -162,11 +174,8 @@ public class Shader {
         return null;
     }
 
-    public static int getShaderId() {
-        return shaderId;
+    public static int getCurrentShaderId() {
+        return currentShaderId;
     }
 
-    public static int getCurrentWorkMode() {
-        return currentWorkMode;
-    }
 }

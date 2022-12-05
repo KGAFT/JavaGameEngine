@@ -60,6 +60,21 @@ public class Mesh extends SceneObject {
         meshTextures.forEach(Texture::attach);
         vertexArrayObject.draw();
     }
+    public void updateAndPutData(){
+        Shader.attach();
+        float[] worldPositionData = new float[4 * 4];
+        worldMatrix.get(worldPositionData);
+        Shader.uniformMatrix4f(worldPositionData, "modelMatrix");
+        Shader.uniformFloat(emissiveIntensity, "emissiveIntensity");
+        Shader.uniformFloat(emissiveShininess, "emissiveShininess");
+        Shader.uniformFloat(gammaCorrect, "gammaCorrect");
+        Shader.uniformFloat(ambientIntensity, "ambientIntensity");
+        meshTextures.forEach(Texture::attach);
+        vertexArrayObject.putData();
+    }
+    public void removeData(){
+        vertexArrayObject.removeData();
+    }
 
     public void setPosition(Vector3f position) {
         worldMatrix.translate(position);
