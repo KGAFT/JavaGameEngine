@@ -10,10 +10,15 @@ import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.ModelLoader;
 import com.kgaft.JavaGameEngine.Engine.GraphicsObjects.Texture;
 import com.kgaft.JavaGameEngine.Window.Window;
 import org.joml.Vector3f;
+import org.ode4j.ode.DWorld;
+import org.ode4j.ode.internal.OdeInit;
+import org.ode4j.ode.OdeHelper;
 
 import java.io.IOException;
 
 public class TestScene extends Scene {
+
+
     @Override
     public void setup() {
         String modelPath = Engine.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1);
