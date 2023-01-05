@@ -231,11 +231,19 @@
             <artifactId>lwjgl3-awt</artifactId>
             <version>${lwjgl3-awt.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>org.ode4j</groupId>
-            <artifactId>core</artifactId>
-            <version>0.4.0</version>
+            <groupId>cz.advel.jbullet</groupId>
+            <artifactId>jbullet</artifactId>
+            <version>20101010-1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf -->
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

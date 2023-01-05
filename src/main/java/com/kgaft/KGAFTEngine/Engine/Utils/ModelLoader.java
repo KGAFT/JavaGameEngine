@@ -1,8 +1,7 @@
 package com.kgaft.KGAFTEngine.Engine.Utils;
 
-
-
 import com.kgaft.KGAFTEngine.Engine.GraphicalObjects.Mesh;
+import com.kgaft.KGAFTEngine.Engine.GraphicalObjects.Model;
 import com.kgaft.KGAFTEngine.Engine.VertexObjects.ElementBufferObject;
 import com.kgaft.KGAFTEngine.Engine.VertexObjects.VertexArrayObject;
 import com.kgaft.KGAFTEngine.Engine.VertexObjects.VertexBufferObject;
@@ -15,21 +14,22 @@ import java.util.List;
 
 public class ModelLoader {
 
-    public Mesh loadModel(String modelPath){
+    public Model loadModel(String modelPath){
         AIScene scene = Assimp.aiImportFile(modelPath, Assimp.aiProcess_FlipUVs | Assimp.aiProcess_Triangulate);
         System.out.println(Assimp.aiGetErrorString());
-        return processScene(scene, modelPath);
+        return processScene(scene);
     }
-    private Mesh processScene(AIScene scene, String modelPath){
+    private Model processScene(AIScene scene){
         PointerBuffer meshes = scene.mMeshes();
-        Mesh result = null;
+        List<Mesh> result = new ArrayList<>();
         for(int c = 0; c<scene.mNumMeshes(); c++){
             AIMesh mesh = AIMesh.create(meshes.get(c));
-            result = processMesh(mesh, result);
+            result.add(processMesh(mesh));
         }
-        return result;
+        Model model = new Model(result);
+        return model;
     }
-    private Mesh processMesh(AIMesh mesh, Mesh startMesh){
+    private Mesh processMesh(AIMesh mesh){
         List<Float> positions = new ArrayList<>();
         List<Float> normals = new ArrayList<>();
         List<Float> uvs = new ArrayList<>();
@@ -64,13 +64,7 @@ public class ModelLoader {
         VertexArrayObject vao = assembleDataToVao(positions, normals, uvs, indices);
         Mesh currentMesh = new Mesh(vao);
         currentMesh.setName(mesh.mName().dataString());
-        System.out.println(mesh.mName().dataString());
-        if(startMesh==null){
-            return currentMesh;
-        }else {
-            startMesh.addChild(currentMesh);
-            return startMesh;
-        }
+        return currentMesh;
     }
 
     private VertexArrayObject assembleDataToVao(List<Float> positions, List<Float> normals, List<Float> uvs, List<Integer> indices){
@@ -96,7 +90,6 @@ public class ModelLoader {
         vao.attachVbo(0, VertexBufferObject.createVbo(posRaw, 3));
         vao.attachVbo(1, VertexBufferObject.createVbo(uvsRaw, 2));
         vao.attachVbo(2, VertexBufferObject.createVbo(normalsRaw, 3));
-
         return vao;
     }
 }

@@ -1,6 +1,7 @@
 package com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Lighting;
 
 
+
 import com.kgaft.KGAFTEngine.Engine.Shader.ShaderStruct;
 import org.joml.Vector3f;
 
@@ -51,4 +52,17 @@ public class DirectPbrLight implements ShaderStruct {
         fields.put("intensity", new Float(intensity));
         return fields;
     }
+
+
+    public void setPosition(Vector3f position) {
+        this.direction = position;
+    }
+
+
+
+    public Vector3f getPosition() {
+        return direction;
+    }
+
+
 }

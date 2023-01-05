@@ -14,7 +14,6 @@ public class VertexArrayObject {
     private int vaoId;
 
 
-
     private ElementBufferObject drawEbo;
 
     private HashMap<Integer, VertexBufferObject> VBOs = new HashMap<Integer, VertexBufferObject>();
@@ -25,8 +24,8 @@ public class VertexArrayObject {
 
     public void attachVbo(int layoutLocation, VertexBufferObject vbo) {
 
-        if(!vbo.attached){
-            if(!vbo.destroyed){
+        if (!vbo.attached) {
+            if (!vbo.destroyed) {
                 bind();
                 vbo.bind();
                 GL33.glVertexAttribPointer(layoutLocation, vbo.getStride(), GL11.GL_FLOAT, false, 0, 0);
@@ -35,32 +34,28 @@ public class VertexArrayObject {
 
                 vbo.attached = true;
                 VBOs.put(layoutLocation, vbo);
-            }
-            else{
+            } else {
                 throw new RuntimeException("Error: you cannot attach destroyed vbo");
             }
-        }
-        else{
+        } else {
             throw new RuntimeException("Error: you cannot attach already attached vbo to another vao...");
         }
 
     }
 
     public void attachEbo(ElementBufferObject ebo) {
-        if(!ebo.attached){
-            if(!ebo.destroyed){
+        if (!ebo.attached) {
+            if (!ebo.destroyed) {
                 bind();
                 ebo.bind();
                 unBind();
                 ebo.unBind();
                 drawEbo = ebo;
                 ebo.attached = true;
-            }
-            else{
+            } else {
                 throw new RuntimeException("Error: you cannot attach destroyed ebo");
             }
-        }
-        else{
+        } else {
             throw new RuntimeException("Error: you cannot attach already attached ebo to another vao...");
         }
 
@@ -71,28 +66,28 @@ public class VertexArrayObject {
     }
 
     public void draw() {
-        if(!drawEbo.destroyed){
+        if (!drawEbo.destroyed) {
             bind();
             VBOs.keySet().forEach(GL33::glEnableVertexAttribArray);
             GL33.glDrawElements(GL11.GL_TRIANGLES, drawEbo.getIndicesAmount(), GL11.GL_UNSIGNED_INT, 0);
             VBOs.keySet().forEach(GL33::glDisableVertexAttribArray);
             GL33.glBindVertexArray(vaoId);
-        }
-        else{
+        } else {
             throw new RuntimeException("Error: ebo destroyed");
         }
 
     }
-    public void putData(){
-        if(!drawEbo.destroyed) {
+
+    public void putData() {
+        if (!drawEbo.destroyed) {
             bind();
             VBOs.keySet().forEach(GL33::glEnableVertexAttribArray);
-        }
-        else{
+        } else {
             throw new RuntimeException("Error: ebo destroyed");
         }
     }
-    public void removeData(){
+
+    public void removeData() {
         VBOs.keySet().forEach(GL33::glDisableVertexAttribArray);
         GL33.glBindVertexArray(vaoId);
     }
@@ -101,7 +96,7 @@ public class VertexArrayObject {
         GL33.glBindVertexArray(0);
     }
 
-    public void destroy(){
+    public void destroy() {
         GL33.glDeleteVertexArrays(vaoId);
         drawEbo.delete();
         VBOs.values().forEach(VertexBufferObject::delete);

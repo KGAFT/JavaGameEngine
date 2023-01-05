@@ -47,7 +47,7 @@ uniform float emissiveIntensity;
 uniform float emissiveShininess;
 uniform float gammaCorrect;
 uniform float ambientIntensity;
-//Try to recalculate normals with multiply by world matrix, after getting it from normal map
+
 vec3 getNormalFromMap(vec2 uvsCoords, vec3 normals, vec3 fragmentPosition)
 {
     vec3 tangentNormal = texture(normalMap, uvsCoords).xyz * 2.0 - 1.0;
@@ -56,51 +56,40 @@ vec3 getNormalFromMap(vec2 uvsCoords, vec3 normals, vec3 fragmentPosition)
     vec3 Q2  = dFdy(fragmentPosition);
     vec2 st1 = dFdx(uvsCoords);
     vec2 st2 = dFdy(uvsCoords);
-
     vec3 N   = normalize(normals);
     vec3 T  = normalize(Q1*st2.t - Q2*st1.t);
     vec3 B  = -normalize(cross(N, T));
     mat3 TBN = mat3(T, B, N);
-
     return normalize(TBN * tangentNormal);
 }
 
-// ----------------------------------------------------------------------------
-float DistributionGGX(vec3 normals, vec3 halfWayVector, float roughness)
+float distributeGGX(vec3 normals, vec3 halfWayVector, float roughness)
 {
-    float a = roughness*roughness;
-    float a2 = a*a;
-    float NdotH = max(dot(normals, halfWayVector), 0.0);
-    float NdotH2 = NdotH*NdotH;
-
-    float nom   = a2;
-    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-    denom = PI * denom * denom;
-
-    return nom / denom;
+    float roughness4 = roughness*roughness*roughness*roughness;
+    float halwayDot2 = max(dot(normals, halfWayVector), 0.0)*max(dot(normals, halfWayVector), 0.0);
+    float numerator   = roughness4;
+    float denominator = (halwayDot2 * (roughness4 - 1.0) + 1.0);
+    denominator = PI * denominator * denominator;
+    return numerator / denominator;
 }
-// ----------------------------------------------------------------------------
-float GeometrySchlickGGX(float NdotV, float roughness)
+
+float schlickGeometryGGX(float dotWorldViewVector, float roughness)
 {
-    float r = (roughness + 1.0);
-    float k = (r*r) / 8.0;
-
-    float nom   = NdotV;
-    float denom = NdotV * (1.0 - k) + k;
-
-    return nom / denom;
+    float roughnessKoef = ((roughness + 1.0)*(roughness + 1.0)) / 8.0;
+    float numerator   = dotWorldViewVector;
+    float denominator = dotWorldViewVector * (1.0 - roughnessKoef) + roughnessKoef;
+    return numerator / denominator;
 }
-// ----------------------------------------------------------------------------
-float GeometrySmith(vec3 processedNormals, vec3 worldViewVector, vec3 lightPosition, float roughness)
-{
-    float NdotV = max(dot(processedNormals, worldViewVector), 0.0);
-    float NdotL = max(dot(processedNormals, lightPosition), 0.0);
-    float ggx2 = GeometrySchlickGGX(NdotV, roughness);
-    float ggx1 = GeometrySchlickGGX(NdotL, roughness);
 
+float smithGeometry(vec3 processedNormals, vec3 worldViewVector, vec3 lightPosition, float roughness)
+{
+    float worldViewVectorDot = max(dot(processedNormals, worldViewVector), 0.0);
+    float lightDot = max(dot(processedNormals, lightPosition), 0.0);
+    float ggx2 = schlickGeometryGGX(worldViewVectorDot, roughness);
+    float ggx1 = schlickGeometryGGX(lightDot, roughness);
     return ggx1 * ggx2;
 }
-// ----------------------------------------------------------------------------
+
 vec3 fresnelSchlick(float cosTheta, vec3 startFresnelSchlick)
 {
     return startFresnelSchlick + (1.0 - startFresnelSchlick) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
@@ -112,57 +101,43 @@ vec3 processPointLight(PointLight light, vec3 normals, vec3 worldViewVector, vec
     float distance = length(light.position - fragmentPosition);
     float attenuation = 1.0 / (distance * distance);
     vec3 radiance = light.color * light.intensity * attenuation;
-
-    float NDF = DistributionGGX(normals, halfWay, roughness);
-    float G   = GeometrySmith(normals, worldViewVector, processedLightPos, roughness);
-    vec3 F    = fresnelSchlick(clamp(dot(halfWay, worldViewVector), 0.0, 1.0), startFresnelSchlick);
-
-    vec3 numerator    = NDF * G * F;
+    float halfWayGGX = distributeGGX(normals, halfWay, roughness);
+    float geometrySmith   = smithGeometry(normals, worldViewVector, processedLightPos, roughness);
+    vec3 fresnelSchlick    = fresnelSchlick(clamp(dot(halfWay, worldViewVector), 0.0, 1.0), startFresnelSchlick);
+    vec3 numerator    = halfWayGGX * geometrySmith * fresnelSchlick;
     float denominator = 4.0 * max(dot(normals, worldViewVector), 0.0) * max(dot(normals, processedLightPos), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
     vec3 specular = numerator / denominator;
-
-    // kS is equal to Fresnel
-    vec3 kS = F;
-
-    vec3 kD = vec3(1.0) - kS;
-
-    kD *= 1.0 - metallic;
-
-    // scale light by NdotL
+    vec3 finalFresnelSchlick = vec3(1.0) - fresnelSchlick;
+    finalFresnelSchlick *= 1.0 - metallic;
     float NdotL = max(dot(normals, processedLightPos), 0.0);
-
-
-    return (kD * albedo / PI + specular) * radiance * NdotL;
+    return (finalFresnelSchlick * albedo / PI + specular) * radiance * NdotL;
 }
 
 vec3 processDirectionaLight(DirectLight light, vec3 normals, vec3 worldViewVector, vec3 startFresnelSchlick, float roughness, float metallic, vec3 albedo){
     vec3 processedLightPos = normalize(-light.direction);
     vec3 halfWay = normalize(worldViewVector + processedLightPos);
-
     vec3 radiance = light.color * light.intensity;
-
-    float NDF = DistributionGGX(normals, halfWay, roughness);
-    float G   = GeometrySmith(normals, worldViewVector, processedLightPos, roughness);
-    vec3 F    = fresnelSchlick(clamp(dot(halfWay, worldViewVector), 0.0, 1.0), startFresnelSchlick);
-
-    vec3 numerator    = NDF * G * F;
+    float halfWayGGX = distributeGGX(normals, halfWay, roughness);
+    float geometrySmith   = smithGeometry(normals, worldViewVector, processedLightPos, roughness);
+    vec3 fresnelSchlick    = fresnelSchlick(clamp(dot(halfWay, worldViewVector), 0.0, 1.0), startFresnelSchlick);
+    vec3 numerator    = halfWayGGX * geometrySmith * fresnelSchlick;
     float denominator = 4.0 * max(dot(normals, worldViewVector), 0.0) * max(dot(normals, processedLightPos), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
     vec3 specular = numerator / denominator;
+    vec3 finalFresnelSchlick = vec3(1.0) - fresnelSchlick;
+    finalFresnelSchlick *= 1.0 - metallic;
 
-    // kS is equal to Fresnel
-    vec3 kS = F;
-
-    vec3 kD = vec3(1.0) - kS;
-
-    kD *= 1.0 - metallic;
-
-    // scale light by NdotL
     float NdotL = max(dot(normals, processedLightPos), 0.0);
 
 
-    return (kD * albedo / PI + specular) * radiance * NdotL;
+    return (finalFresnelSchlick * albedo / PI + specular) * radiance * NdotL;
 }
 
+vec3 postProcessColor(vec3 color){
+    color = color / (color + vec3(1.0));
+
+    color = pow(color, vec3(gammaCorrect));
+    return color;
+}
 
 void main()
 {
@@ -170,15 +145,15 @@ void main()
     float metallic = texture(metallicMap, UvsCoords).r;
     float roughness = texture(roughnessMap, UvsCoords).r;
     float ao = texture(aoMap, UvsCoords).r;
+    vec4 emissive = texture(emissiveMap, UvsCoords);
     vec3 processedNormals = normalize(getNormalFromMap(UvsCoords, Normals, fragmentPosition));
     vec3 worldViewVector = normalize(cameraPosition - fragmentPosition);
 
-    // calculate reflectance at normal incidence; if dia-electric (like plastic) use F0
-    // of 0.04 and if it's a metal, use the albedo color as F0 (metallic workflow)
+
     vec3 startFresnelSchlick = vec3(0.04);
     startFresnelSchlick = mix(startFresnelSchlick, albedo, metallic);
 
-    // reflectance equation
+
     vec3 Lo = vec3(0.0);
 
     for(int i = 0; i<enabledDirectionalLights; i++){
@@ -193,12 +168,7 @@ void main()
 
     vec3 color = ambient + Lo;
 
-    vec4 emissive = texture(emissiveMap, UvsCoords);
     color+=(emissive*pow(emissive.a, emissiveShininess)*emissiveIntensity).rgb;
-    // HDR tonemapping
-    color = color / (color + vec3(1.0));
-    // gamma correct
-    color = pow(color, vec3(gammaCorrect));
 
-    FragColor = vec4(color, 1.0);
+    FragColor = vec4(postProcessColor(color), 1.0);
 }

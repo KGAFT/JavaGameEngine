@@ -24,10 +24,12 @@ public class Window {
                 glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
                 glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
                 glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+                glfwWindowHint(GLFW_SAMPLES, 4);
+                glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
                 long windowHandle = glfwCreateWindow(width, height, windowTitle, 0, 0);
                 if (windowHandle != 0) {
                     glfwMakeContextCurrent(windowHandle);
-
+                    glfwSetWindowAttrib(windowHandle, GLFW_DECORATED, GLFW_FALSE);
                     windowInstance = new Window(windowHandle, width, height);
                 }
             }

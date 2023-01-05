@@ -1,7 +1,7 @@
 package com.kgaft.KGAFTEngine.Engine;
 
 import com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Scene;
-import com.kgaft.KGAFTEngine.Engine.GraphicalObjects.IRenderTarget;
+import com.kgaft.KGAFTEngine.Engine.GraphicalObjects.RenderTarget;
 import com.kgaft.KGAFTEngine.Engine.GraphicalObjects.Texture;
 import com.kgaft.KGAFTEngine.Engine.Shader.Shader;
 import com.kgaft.KGAFTEngine.Window.Window;
@@ -20,32 +20,33 @@ public class Engine implements WindowResizeCallBack {
         Shader.initializeShader("ShadersDefault", Shader.DEFAULT_SHADER);
         Shader.switchToDefaultShader();
     }
-    private void drawRenderTarget(IRenderTarget renderTarget){
+    private void drawRenderTarget(RenderTarget renderTarget, boolean enableTextures){
         renderTarget.update();
-        renderTarget.getTexturesToAttach().forEach(Texture::attach);
+        if(enableTextures){
+            renderTarget.getTexturesToAttach().forEach(Texture::attach);
+        }
         float[] worldPositionData = new float[4 * 4];
         renderTarget.getWorldMatrix().get(worldPositionData);
         Shader.uniformMatrix4f(worldPositionData, "modelMatrix");
         renderTarget.getVertexArrayObject().draw();
-        renderTarget.getChildren().forEach(this::drawRenderTarget);
+
     }
     public void start() throws InterruptedException {
         GL33.glEnable(GL33.GL_DEPTH_TEST);
+        GL33.glEnable(GL33.GL_MULTISAMPLE);
         currentScene.setWindow(Window.getWindow());
         currentScene.setup();
         while (Window.getWindow().isWindowActive()){
+            Shader.switchToDefaultShader();
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
-            GL33.glClearColor(0.0f, 0.5f, 0, 1);
+            GL33.glClearColor(0.0f, 0.0f, 0, 0);
             Shader.attach();
             Window.getWindow().preRenderEvents();
-            currentScene.getCameraManager().update();
-            currentScene.getLightManager().update();
-            currentScene.getTargetsToDraw().forEach(this::drawRenderTarget);
             currentScene.update();
+            currentScene.getTargetsToDraw().forEach(child->drawRenderTarget(child, true));
             Window.getWindow().postEvents();
         }
         currentScene.cleanUp();
-        Thread.sleep(5000);
     }
 
     public Scene getCurrentScene() {

@@ -1,6 +1,8 @@
 package com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Lighting;
 
 
+
+
 import com.kgaft.KGAFTEngine.Engine.Shader.ShaderStruct;
 import org.joml.Vector3f;
 
@@ -33,6 +35,7 @@ public class PointPbrLight implements ShaderStruct {
     public void setPosition(Vector3f position) {
         this.position = position;
     }
+
 
     public float getIntensity() {
         return intensity;

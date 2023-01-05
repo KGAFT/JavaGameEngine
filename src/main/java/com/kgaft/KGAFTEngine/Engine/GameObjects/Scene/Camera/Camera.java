@@ -46,13 +46,28 @@ public class Camera implements NonPhysicMoveAbleObject {
 
     }
 
+
+    public void setPosition(Vector3f position) {
+        this.position = position;
+    }
+
+
+    public void setRotation(Vector3f rotation) {
+        this.rotation = rotation;
+    }
+
+
+
+
+    public Vector3f getRotation() {
+        return rotation;
+    }
+
     public Vector3f getPosition() {
         return position;
     }
 
-    public Vector3f getOrientation() {
-        return rotation;
-    }
+
 
     public float getFov() {
         return fov;
