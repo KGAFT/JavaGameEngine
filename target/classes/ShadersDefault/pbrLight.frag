@@ -31,8 +31,6 @@ uniform sampler2D emissiveMap;
 
 
 
-
-
 uniform PointLight pointLights[LIGHT_BLOCKS_AMOUNT];
 uniform DirectLight directLights[LIGHT_BLOCKS_AMOUNT];
 
@@ -153,7 +151,6 @@ void main()
     vec3 startFresnelSchlick = vec3(0.04);
     startFresnelSchlick = mix(startFresnelSchlick, albedo, metallic);
 
-
     vec3 Lo = vec3(0.0);
 
     for(int i = 0; i<enabledDirectionalLights; i++){
@@ -169,6 +166,6 @@ void main()
     vec3 color = ambient + Lo;
 
     color+=(emissive*pow(emissive.a, emissiveShininess)*emissiveIntensity).rgb;
-
-    FragColor = vec4(postProcessColor(color), 1.0);
+    color = postProcessColor(color);
+    FragColor = vec4(color, 1.0);
 }

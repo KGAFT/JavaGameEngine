@@ -58,28 +58,6 @@ public class Texture {
         textureCount+=newSlot?1:0;
         return new Texture(textureId, textureSlot-GL_TEXTURE0, textureType);
     }
-    public static void cleanUpSamplers(){
-        if(defaultTexture==null){
-            try {
-                defaultTexture = loadTexture(Texture.class.getClassLoader().getResource("textures/baseBlackColor.png").getPath(), ALBEDO_TEXTURE);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            glActiveTexture(defaultTexture.slot);
-            Shader.uniformInt(defaultTexture.slot, ALBEDO_TEXTURE);
-            glBindTexture(GL_TEXTURE_2D, defaultTexture.textureId);
-            Shader.uniformInt(defaultTexture.slot, NORMAL_MAP_TEXTURE);
-            glBindTexture(GL_TEXTURE_2D, defaultTexture.textureId);
-            Shader.uniformInt(defaultTexture.slot, METALLIC_TEXTURE);
-            glBindTexture(GL_TEXTURE_2D, defaultTexture.textureId);
-            Shader.uniformInt(defaultTexture.slot, ROUGHNESS_TEXTURE);
-            glBindTexture(GL_TEXTURE_2D, defaultTexture.textureId);
-            Shader.uniformInt(defaultTexture.slot, AMBIENT_OCCLUSION_MAP);
-            glBindTexture(GL_TEXTURE_2D, defaultTexture.textureId);
-            Shader.uniformInt(defaultTexture.slot, EMISSIVE_MAP);
-            glBindTexture(GL_TEXTURE_2D, defaultTexture.textureId);
-        }
-    }
 
 
     private int textureId;
@@ -96,13 +74,6 @@ public class Texture {
     public void attach() {
         glActiveTexture(slot);
         glBindTexture(GL_TEXTURE_2D, textureId);
-        Shader.uniformInt(slot, samplerName);
-
-    }
-
-    public void deAttach(){
-        glActiveTexture(slot);
-        glBindTexture(GL_TEXTURE_2D, 0);
         Shader.uniformInt(slot, samplerName);
 
     }

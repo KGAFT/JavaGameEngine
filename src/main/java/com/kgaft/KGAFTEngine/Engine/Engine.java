@@ -18,6 +18,7 @@ public class Engine implements WindowResizeCallBack {
         GL33.glViewport(0, 0, Window.getWindow().getWidth(), Window.getWindow().getHeight());
         window.addResizeCallBack(this);
         Shader.initializeShader("ShadersDefault", Shader.DEFAULT_SHADER);
+        Shader.initializeShader("ShadersShadowMapping", Shader.SHADES_SHADER);
         Shader.switchToDefaultShader();
     }
     private void drawRenderTarget(RenderTarget renderTarget, boolean enableTextures){
@@ -37,12 +38,12 @@ public class Engine implements WindowResizeCallBack {
         currentScene.setWindow(Window.getWindow());
         currentScene.setup();
         while (Window.getWindow().isWindowActive()){
+            Window.getWindow().preRenderEvents();
             Shader.switchToDefaultShader();
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
             GL33.glClearColor(0.0f, 0.0f, 0, 0);
             Shader.attach();
-            Window.getWindow().preRenderEvents();
-            currentScene.update();
+            currentScene.update(true);
             currentScene.getTargetsToDraw().forEach(child->drawRenderTarget(child, true));
             Window.getWindow().postEvents();
         }

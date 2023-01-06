@@ -1,9 +1,13 @@
 package com.kgaft.KGAFTEngine.Window;
 
+import org.lwjgl.vulkan.VkInstance;
+import org.lwjgl.vulkan.VkSurfaceFormatKHR;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFWVulkan.glfwCreateWindowSurface;
 
 public class Window {
 
@@ -18,18 +22,24 @@ public class Window {
     }
 
 
-    public static void prepareWindow(int width, int height, String windowTitle) {
+    public static void prepareWindow(int width, int height, String windowTitle, boolean vulkan) {
         if (windowInstance == null) {
             if (glfwInit()) {
-                glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-                glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-                glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-                glfwWindowHint(GLFW_SAMPLES, 4);
-                glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+                if(!vulkan){
+                    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+                    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+                    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+                    glfwWindowHint(GLFW_SAMPLES, 4);
+                }
+                else{
+                    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+                }
+
+              //  glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
                 long windowHandle = glfwCreateWindow(width, height, windowTitle, 0, 0);
                 if (windowHandle != 0) {
                     glfwMakeContextCurrent(windowHandle);
-                    glfwSetWindowAttrib(windowHandle, GLFW_DECORATED, GLFW_FALSE);
+                    //glfwSetWindowAttrib(windowHandle, GLFW_DECORATED, GLFW_FALSE);
                     windowInstance = new Window(windowHandle, width, height);
                 }
             }
@@ -129,6 +139,12 @@ public class Window {
         }
 
 
+    }
+
+    public long getSurface(VkInstance instance){
+        long[] result = new long[1];
+        glfwCreateWindowSurface(instance, windowHandle, null, result);
+        return result[0];
     }
 
     public long getWindowHandle() {

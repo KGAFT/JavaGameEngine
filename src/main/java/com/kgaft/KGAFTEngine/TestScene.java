@@ -48,29 +48,29 @@ public class TestScene extends Scene implements KeyBoardCallBack {
             e.printStackTrace();
         }
         mesh = model.getMeshes().get(0);
-        model = loader.loadModel(TestScene.class.getClassLoader().getResource("Models/CoffeCup/coffee_cup_obj.obj").getPath().substring(1));
+        model = loader.loadModel(TestScene.class.getClassLoader().getResource("Models/PokeBall/Pokeball.obj").getPath().substring(1));
         try{
-            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/CoffeCup/textures/Base_color.png").getPath(), Texture.ALBEDO_TEXTURE));
-            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/CoffeCup/textures/metallic.png").getPath(), Texture.METALLIC_TEXTURE));
-            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/CoffeCup/textures/roughness.png").getPath(), Texture.ROUGHNESS_TEXTURE));
-            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/CoffeCup/textures/normal.png").getPath(), Texture.NORMAL_MAP_TEXTURE));
-            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("textures/baseBlackColor.png").getPath(), Texture.AMBIENT_OCCLUSION_MAP));
-            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("textures/baseBlackColor.png").getPath(), Texture.EMISSIVE_MAP));
+            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/PokeBall/pokeballColor.png").getPath(), Texture.ALBEDO_TEXTURE));
+            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_Metallic.png").getPath(), Texture.METALLIC_TEXTURE));
+            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_Roughness.png").getPath(), Texture.ROUGHNESS_TEXTURE));
+            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_Normal.png").getPath(), Texture.NORMAL_MAP_TEXTURE));
+            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_AO.png").getPath(), Texture.AMBIENT_OCCLUSION_MAP));
+            model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_Emissive.png").getPath(), Texture.EMISSIVE_MAP));
         }catch (Exception e){
             e.printStackTrace();
         }
         secondMesh = model.getMeshes().get(0);
-
+        secondMesh.setPosition(new Vector3f(0, 10, 130));
 
         CollisionLoader collisionLoader = new CollisionLoader();
-        List<com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Physics.RigidBody> rigidBodyList = collisionLoader.loadColission(TestScene.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1), 10, new javax.vecmath.Vector3f(0, 0, 1), new javax.vecmath.Vector3f(0, 10, 0), new Quat4f(0, 0, 0, 1));
+        List<com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Physics.RigidBody> rigidBodyList = collisionLoader.loadColission(TestScene.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1), 10, new javax.vecmath.Vector3f(0, 0, 1), new javax.vecmath.Vector3f(0, 100, 100), new Quat4f(0, 0, 0, 1));
         rigidBody = rigidBodyList.get(0);
 
         addRenderTarget(mesh);
         addRenderTarget(secondMesh);
     }
     private void setupLight(){
-        directPbrLight = new DirectPbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(-1, -1,-1));
+        directPbrLight = new DirectPbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(0, 0,1));
         getLightManager().addDirectLight(directPbrLight);
     }
     @Override
@@ -94,8 +94,8 @@ public class TestScene extends Scene implements KeyBoardCallBack {
     }
 
     @Override
-    public void update() {
-        super.update();
+    public void update(boolean withLight) {
+        super.update(withLight);
 
     }
 
