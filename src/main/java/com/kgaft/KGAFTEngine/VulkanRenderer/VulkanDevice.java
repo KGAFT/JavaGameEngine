@@ -9,13 +9,13 @@ import java.util.*;
 
 import static org.lwjgl.vulkan.KHRSurface.*;
 import static org.lwjgl.vulkan.KHRSwapchain.VK_KHR_SWAPCHAIN_EXTENSION_NAME;
+import static org.lwjgl.vulkan.VK10.*;
 
 public class VulkanDevice {
     private VkPhysicalDevice deviceToCreate;
     private VulkanInstance vulkanInstance;
     private VkQueue graphicsQueue;
     private VkQueue presentQueue;
-
     private long commandPool;
     private VkDevice vkDevice;
     public VulkanDevice(VulkanInstance vulkanInstance){
@@ -118,6 +118,11 @@ public class VulkanDevice {
         VK13.vkGetPhysicalDeviceFeatures(device, features);
         return queueFamilyIndices.getPresentFamily()>-1 && queueFamilyIndices.getGraphicsFamily()>-1 && extensionSupport && swapChainState && features.samplerAnisotropy();
     }
+
+    public QueueFamilyIndices getDeviceQueueIndices(){
+        return findDeiceQueues(deviceToCreate);
+    }
+
     private QueueFamilyIndices findDeiceQueues(VkPhysicalDevice physicalDevice){
         QueueFamilyIndices result = new QueueFamilyIndices();
         int[] queuesCount= new int[1];
@@ -143,6 +148,9 @@ public class VulkanDevice {
         properties.free();
         return result;
     }
+    public SwapChainSupportDetails getSwapChainSupportDetails(){
+        return getSwapChainSupportDetails(deviceToCreate);
+    }
     private SwapChainSupportDetails getSwapChainSupportDetails(VkPhysicalDevice device){
         SwapChainSupportDetails result = new SwapChainSupportDetails();
         result.setCapabilitiesKHR(VkSurfaceCapabilitiesKHR.malloc());
@@ -151,12 +159,11 @@ public class VulkanDevice {
         int[] formatCount = new int[1];
         vkGetPhysicalDeviceSurfaceFormatsKHR(device, vulkanInstance.getSurface(), formatCount, null);
         if(formatCount[0]>0){
-            VkSurfaceFormatKHR.Buffer surfacesBuffer = VkSurfaceFormatKHR.malloc(formatCount[0]);
+            VkSurfaceFormatKHR.Buffer surfacesBuffer = VkSurfaceFormatKHR.calloc(formatCount[0]);
             vkGetPhysicalDeviceSurfaceFormatsKHR(device, vulkanInstance.getSurface(), formatCount, surfacesBuffer);
             while(surfacesBuffer.hasRemaining()){
                 result.getSurfaceFormats().add(surfacesBuffer.get());
             }
-            surfacesBuffer.free();
         }
         int[] presentModeCount = new int[1];
         vkGetPhysicalDeviceSurfacePresentModesKHR(device, vulkanInstance.getSurface(), presentModeCount, null);
@@ -181,5 +188,62 @@ public class VulkanDevice {
         }
         propsBuffer.free();
         return false;
+    }
+    private int findMemoryType(int typeFilter, int properties){
+        VkPhysicalDeviceMemoryProperties memoryProperties = VkPhysicalDeviceMemoryProperties.malloc();
+        memoryProperties.clear();
+        vkGetPhysicalDeviceMemoryProperties(deviceToCreate, memoryProperties);
+        for (int i = 0; i < memoryProperties.memoryTypeCount(); i++) {
+            if((typeFilter & (1 << i))>=1 &&
+                    (memoryProperties.memoryTypes(i).propertyFlags() & properties) == properties){
+                memoryProperties.free();
+                return i;
+            }
+        }
+        memoryProperties.free();
+        return -1;
+    }
+
+    public VulkanInstance getVulkanInstance() {
+        return vulkanInstance;
+    }
+    public void createImageWithInfo(VkImageCreateInfo createInfo, long[] imageOutput,int memProps, long[] deviceMemory){
+        if(VK13.vkCreateImage(vkDevice, createInfo, null, imageOutput)!=VK13.VK_SUCCESS){
+            throw  new RuntimeException("Failed to create resource");
+        }
+        VkMemoryRequirements memoryRequirements = VkMemoryRequirements.malloc();
+        memoryRequirements.clear();
+        VK13.vkGetImageMemoryRequirements(vkDevice, imageOutput[0], memoryRequirements);
+
+        VkMemoryAllocateInfo allocInfo = VkMemoryAllocateInfo.malloc();
+        allocInfo.clear();
+        allocInfo.sType(VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO);
+        allocInfo.allocationSize(memoryRequirements.size());
+        allocInfo.memoryTypeIndex(findMemoryType(memoryRequirements.memoryTypeBits(), memProps));
+
+        if(VK13.vkAllocateMemory(vkDevice, allocInfo, null, deviceMemory)!=VK_SUCCESS){
+            throw new RuntimeException("Failed to allocate memory");
+        }
+        if(VK13.vkBindImageMemory(vkDevice, imageOutput[0], deviceMemory[0], 0)!=VK_SUCCESS){
+            throw new RuntimeException("Error: cannot bind image memory");
+        }
+        allocInfo.free();
+        memoryRequirements.free();
+    }
+    public VkDevice getVkDevice() {
+        return vkDevice;
+    }
+    public int findSupportedFormat(List<Integer> formats, int tiling, int features){
+        for (int format : formats) {
+            VkFormatProperties formatProperties = VkFormatProperties.malloc();
+            VK13.vkGetPhysicalDeviceFormatProperties(deviceToCreate, format, formatProperties);
+            if (tiling == VK_IMAGE_TILING_LINEAR && (formatProperties.linearTilingFeatures() & features) == features) {
+                return format;
+            } else if (
+                    tiling == VK_IMAGE_TILING_OPTIMAL && (formatProperties.optimalTilingFeatures() & features) == features) {
+                return format;
+            }
+        }
+        return -1;
     }
 }

@@ -4,6 +4,7 @@ import com.kgaft.KGAFTEngine.Engine.Engine;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanInstance;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanLogger;
+import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanSwapChain;
 import com.kgaft.KGAFTEngine.Window.Window;
 import org.lwjgl.vulkan.VkPhysicalDevice;
 
@@ -26,5 +27,7 @@ public class Main {
         VulkanDevice device = new VulkanDevice(VulkanInstance.getVulkanInstance());
         device.setDeviceToCreate((VkPhysicalDevice) device.enumerateSupportedDevices().keySet().toArray()[0]);
         System.out.println(device.load(true));
+        VulkanSwapChain swapChain = new VulkanSwapChain(device);
+        swapChain.load(true);
     }
 }
