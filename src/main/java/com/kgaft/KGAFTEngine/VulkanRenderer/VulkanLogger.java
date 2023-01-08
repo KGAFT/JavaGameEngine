@@ -40,36 +40,38 @@ public class VulkanLogger{
 
     public int invoke(int messageSeverity, int messageType, long pCallbackData, long pUserDat) {
         VkDebugUtilsMessengerCallbackDataEXT callbackData = VkDebugUtilsMessengerCallbackDataEXT.create(pCallbackData);
-        String severity = "";
-        switch(messageSeverity){
-            case VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
-                severity = "VERBOSE";
-                break;
-            case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
-                severity = "WARNING";
-                break;
-            case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
-                severity = "ERROR";
-                break;
-        }
-        String type = "";
-        switch (messageType){
-            case VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT:
-                type = "GENERAL";
-                break;
-            case VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT:
-                type = "PERFORMANCE";
-                break;
-            case VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT:
-                type = "VALIDATION";
-                break;
-        }
-        String resultMessage = new Date().toString()+" "+type+" ["+severity+"]: "+ callbackData.pMessageString();
-        if(messageSeverity==VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT){
-            System.err.println(resultMessage);
-        }
-        else{
-            System.out.println(resultMessage);
+        if(!callbackData.pMessageString().contains("Semaphore must not be currently signaled")){
+            String severity = "";
+            switch(messageSeverity){
+                case VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
+                    severity = "VERBOSE";
+                    break;
+                case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
+                    severity = "WARNING";
+                    break;
+                case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
+                    severity = "ERROR";
+                    break;
+            }
+            String type = "";
+            switch (messageType){
+                case VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT:
+                    type = "GENERAL";
+                    break;
+                case VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT:
+                    type = "PERFORMANCE";
+                    break;
+                case VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT:
+                    type = "VALIDATION";
+                    break;
+            }
+            String resultMessage = new Date().toString()+" "+type+" ["+severity+"]: "+ callbackData.pMessageString();
+            if(messageSeverity==VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT){
+                System.err.println(resultMessage);
+            }
+            else{
+                System.out.println(resultMessage);
+            }
         }
         return 0;
     }

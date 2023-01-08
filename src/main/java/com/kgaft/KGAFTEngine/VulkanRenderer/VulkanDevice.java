@@ -246,4 +246,16 @@ public class VulkanDevice {
         }
         return -1;
     }
+
+    public VkQueue getGraphicsQueue() {
+        return graphicsQueue;
+    }
+
+    public VkQueue getPresentQueue() {
+        return presentQueue;
+    }
+
+    public long getCommandPool() {
+        return commandPool;
+    }
 }

@@ -21,7 +21,6 @@ public class Window {
         return windowInstance;
     }
 
-
     public static void prepareWindow(int width, int height, String windowTitle, boolean vulkan) {
         if (windowInstance == null) {
             if (glfwInit()) {
@@ -41,6 +40,7 @@ public class Window {
                     glfwMakeContextCurrent(windowHandle);
                     //glfwSetWindowAttrib(windowHandle, GLFW_DECORATED, GLFW_FALSE);
                     windowInstance = new Window(windowHandle, width, height);
+                    windowInstance.vulkan = vulkan;
                 }
             }
         }
@@ -48,6 +48,8 @@ public class Window {
     }
 
     private long windowHandle;
+
+    private boolean vulkan;
 
     private List<WindowResizeCallBack> resizeCallBackList = new ArrayList<>();
 
@@ -157,7 +159,9 @@ public class Window {
 
 
     public void postEvents() {
-        glfwSwapBuffers(windowHandle);
+        if(!vulkan){
+            glfwSwapBuffers(windowHandle);
+        }
         glfwPollEvents();
     }
 

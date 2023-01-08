@@ -17,8 +17,8 @@ public class Engine implements WindowResizeCallBack {
         GL.createCapabilities();
         GL33.glViewport(0, 0, Window.getWindow().getWidth(), Window.getWindow().getHeight());
         window.addResizeCallBack(this);
-        Shader.initializeShader("ShadersDefault", Shader.DEFAULT_SHADER);
-        Shader.initializeShader("ShadersShadowMapping", Shader.SHADES_SHADER);
+        Shader.initializeShader("OpenGLShaders/ShadersDefault", Shader.DEFAULT_SHADER);
+        Shader.initializeShader("OpenGLShaders/ShadersShadowMapping", Shader.SHADES_SHADER);
         Shader.switchToDefaultShader();
     }
     private void drawRenderTarget(RenderTarget renderTarget, boolean enableTextures){

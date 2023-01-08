@@ -1,6 +1,7 @@
 package com.kgaft.KGAFTEngine;
 
-import com.kgaft.KGAFTEngine.Engine.Engine;
+import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.GraphicsPipeline;
+import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.PipelineConfigStruct;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanInstance;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanLogger;
@@ -21,13 +22,20 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
          */
         VulkanInstance.createInstance(new VulkanLogger());
         VulkanDevice device = new VulkanDevice(VulkanInstance.getVulkanInstance());
         device.setDeviceToCreate((VkPhysicalDevice) device.enumerateSupportedDevices().keySet().toArray()[0]);
-        System.out.println(device.load(true));
+        device.load(true);
         VulkanSwapChain swapChain = new VulkanSwapChain(device);
-        swapChain.load(true);
+        swapChain.load(false);
+        GraphicsPipeline graphicsPipeline = new GraphicsPipeline(device, swapChain);
+        graphicsPipeline.load(PipelineConfigStruct.defaultConfig(Window.getWindow(), device, swapChain));
+        graphicsPipeline.createCommandBuffers();
+
+        while(Window.getWindow().isWindowActive()){
+            graphicsPipeline.update();
+            Window.getWindow().postEvents();
+        }
     }
 }
