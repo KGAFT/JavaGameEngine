@@ -119,16 +119,24 @@ public class PipelineConfigStruct {
         configInfo.renderPass = swapChain.getRenderPass();
         configInfo.subpass = 0;
 
+        VkPushConstantRange.Buffer pushConstantRange = VkPushConstantRange.malloc(1);
+        pushConstantRange.clear();
+        pushConstantRange.stageFlags(VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT);
+        pushConstantRange.size(PushConstantData.getSize());
+        pushConstantRange.offset(0);
+
         VkPipelineLayoutCreateInfo pipelineLayoutInfo = VkPipelineLayoutCreateInfo.malloc();
         pipelineLayoutInfo.clear();
         pipelineLayoutInfo.sType(VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO);
         pipelineLayoutInfo.pSetLayouts(null);
-        pipelineLayoutInfo.pPushConstantRanges(null);
+        pipelineLayoutInfo.pPushConstantRanges(pushConstantRange);
         long[] layoutResult = new long[1];
         if(VK13.vkCreatePipelineLayout(device.getVkDevice(), pipelineLayoutInfo, null, layoutResult)!=VK_SUCCESS){
             throw new RuntimeException("Failed to create layout");
         }
         configInfo.pipelineLayout = layoutResult[0];
+
+
         return configInfo;
     }
     public VkViewport.Buffer viewport;

@@ -434,4 +434,25 @@ public class VulkanSwapChain {
     public VkExtent2D getSwapChainExtent() {
         return swapChainExtent;
     }
+
+    public void destroy(){
+        swapChainImageViews.forEach(image->{
+            vkDestroyImageView(device.getVkDevice(), image, null);
+        });swapChainImages.clear();
+        vkDestroySwapchainKHR(device.getVkDevice(), swapChainKHR, null);
+        for (int i = 0; i < depthImageViews.size(); i++) {
+            vkDestroyImageView(device.getVkDevice(), depthImageViews.get(i), null);
+            vkDestroyImage(device.getVkDevice(), depthImages.get(i), null);
+            vkFreeMemory(device.getVkDevice(), depthImagesMemories.get(i), null);
+        }
+        frameBuffers.forEach(frameBuffer->{
+            vkDestroyFramebuffer(device.getVkDevice(), frameBuffer, null);
+        });
+        vkDestroyRenderPass(device.getVkDevice(), renderPass, null);
+        for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+            vkDestroySemaphore(device.getVkDevice(), renderFinishedSemaphores.get(i), null);
+            vkDestroySemaphore(device.getVkDevice(), imageAvailableSemaphores.get(i), null);
+            vkDestroyFence(device.getVkDevice(), inFlightFences.get(i), null);
+        }
+    }
 }

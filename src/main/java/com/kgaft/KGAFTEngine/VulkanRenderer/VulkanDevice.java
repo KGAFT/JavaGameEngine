@@ -5,8 +5,10 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.vulkan.*;
 
 import java.nio.ByteBuffer;
+import java.nio.LongBuffer;
 import java.util.*;
 
+import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.vulkan.KHRSurface.*;
 import static org.lwjgl.vulkan.KHRSwapchain.VK_KHR_SWAPCHAIN_EXTENSION_NAME;
 import static org.lwjgl.vulkan.VK10.*;
@@ -22,7 +24,7 @@ public class VulkanDevice {
         this.vulkanInstance = vulkanInstance;
     }
     public HashMap<VkPhysicalDevice, VkPhysicalDeviceProperties> enumerateSupportedDevices(){
-        try(MemoryStack stack = MemoryStack.stackPush()){
+        try(MemoryStack stack = stackPush()){
             HashMap<VkPhysicalDevice, VkPhysicalDeviceProperties> result = new HashMap<>();
             int[] deviceCount = new int[1];
             VK13.vkEnumeratePhysicalDevices(vulkanInstance.getVkInstance(), deviceCount, null);
@@ -44,7 +46,7 @@ public class VulkanDevice {
         this.deviceToCreate = deviceToCreate;
     }
     public boolean load(boolean logDevice){
-        try(MemoryStack stack = MemoryStack.stackPush()){
+        try(MemoryStack stack = stackPush()){
             if(isDeviceSuitable(deviceToCreate)){
                 QueueFamilyIndices queueFamilyIndices = findDeiceQueues(deviceToCreate);
                 Set<Integer> uniqueQueues = new HashSet<>();
@@ -257,5 +259,100 @@ public class VulkanDevice {
 
     public long getCommandPool() {
         return commandPool;
+    }
+
+    public void createBuffer(long size, int usage, int properties, LongBuffer pBuffer, LongBuffer pBufferMemory) {
+
+        try(MemoryStack stack = stackPush()) {
+
+            VkBufferCreateInfo bufferInfo = VkBufferCreateInfo.callocStack(stack);
+            bufferInfo.sType(VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO);
+            bufferInfo.size(size);
+            bufferInfo.usage(usage);
+            bufferInfo.sharingMode(VK_SHARING_MODE_EXCLUSIVE);
+
+            if(vkCreateBuffer(vkDevice, bufferInfo, null, pBuffer) != VK_SUCCESS) {
+                throw new RuntimeException("Failed to create vertex buffer");
+            }
+
+            VkMemoryRequirements memRequirements = VkMemoryRequirements.mallocStack(stack);
+            vkGetBufferMemoryRequirements(vkDevice, pBuffer.get(0), memRequirements);
+
+            VkMemoryAllocateInfo allocInfo = VkMemoryAllocateInfo.callocStack(stack);
+            allocInfo.sType(VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO);
+            allocInfo.allocationSize(memRequirements.size());
+            allocInfo.memoryTypeIndex(findMemoryType(memRequirements.memoryTypeBits(), properties));
+
+            if(vkAllocateMemory(vkDevice, allocInfo, null, pBufferMemory) != VK_SUCCESS) {
+                throw new RuntimeException("Failed to allocate vertex buffer memory");
+            }
+
+            vkBindBufferMemory(vkDevice, pBuffer.get(0), pBufferMemory.get(0), 0);
+        }
+    }
+    public void storeFloatDataInBuffer(List<Float> dataToStore, long bufferMemory, int bufferSize){
+        PointerBuffer data = stackPush().mallocPointer(1);
+        vkMapMemory(vkDevice, bufferMemory, 0, bufferSize, 0, data);
+
+        ByteBuffer bb = data.getByteBuffer(0, bufferSize);
+
+        dataToStore.forEach(iData -> {
+            bb.putFloat(iData);
+        });
+
+        vkUnmapMemory(vkDevice, bufferMemory);
+    }
+
+    public void storeIntDataInBuffer(List<Integer> toStore, long bufferMemory, int bufferSize){
+        PointerBuffer data = stackPush().mallocPointer(1);
+        vkMapMemory(vkDevice, bufferMemory, 0, bufferSize, 0, data);
+
+        ByteBuffer bb = data.getByteBuffer(0, bufferSize);
+
+        toStore.forEach(iData -> {
+            bb.putInt(iData);
+        });
+
+        vkUnmapMemory(vkDevice, bufferMemory);
+    }
+
+    public void copyBuffer(long srcBuffer, long dstBuffer, long size) {
+
+        try(MemoryStack stack = stackPush()) {
+
+            VkCommandBufferAllocateInfo allocInfo = VkCommandBufferAllocateInfo.callocStack(stack);
+            allocInfo.sType(VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO);
+            allocInfo.level(VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+            allocInfo.commandPool(commandPool);
+            allocInfo.commandBufferCount(1);
+
+            PointerBuffer pCommandBuffer = stack.mallocPointer(1);
+            vkAllocateCommandBuffers(vkDevice, allocInfo, pCommandBuffer);
+            VkCommandBuffer commandBuffer = new VkCommandBuffer(pCommandBuffer.get(0), vkDevice);
+
+            VkCommandBufferBeginInfo beginInfo = VkCommandBufferBeginInfo.callocStack(stack);
+            beginInfo.sType(VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO);
+            beginInfo.flags(VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT);
+
+            vkBeginCommandBuffer(commandBuffer, beginInfo);
+            {
+                VkBufferCopy.Buffer copyRegion = VkBufferCopy.callocStack(1, stack);
+                copyRegion.size(size);
+                vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, copyRegion);
+            }
+            vkEndCommandBuffer(commandBuffer);
+
+            VkSubmitInfo submitInfo = VkSubmitInfo.callocStack(stack);
+            submitInfo.sType(VK_STRUCTURE_TYPE_SUBMIT_INFO);
+            submitInfo.pCommandBuffers(pCommandBuffer);
+
+            if(vkQueueSubmit(graphicsQueue, submitInfo, VK_NULL_HANDLE) != VK_SUCCESS) {
+                throw new RuntimeException("Failed to submit copy command buffer");
+            }
+
+            vkQueueWaitIdle(graphicsQueue);
+
+            vkFreeCommandBuffers(vkDevice, commandPool, pCommandBuffer);
+        }
     }
 }

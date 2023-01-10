@@ -28,7 +28,7 @@ public class Main {
         device.setDeviceToCreate((VkPhysicalDevice) device.enumerateSupportedDevices().keySet().toArray()[0]);
         device.load(true);
         VulkanSwapChain swapChain = new VulkanSwapChain(device);
-        swapChain.load(false);
+        swapChain.load(true);
         GraphicsPipeline graphicsPipeline = new GraphicsPipeline(device, swapChain);
         graphicsPipeline.load(PipelineConfigStruct.defaultConfig(Window.getWindow(), device, swapChain));
         graphicsPipeline.createCommandBuffers();

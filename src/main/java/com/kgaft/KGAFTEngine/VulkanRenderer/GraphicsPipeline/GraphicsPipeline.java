@@ -11,6 +11,7 @@ import org.lwjgl.vulkan.*;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.LongBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,9 @@ public class GraphicsPipeline {
     private long pipeline;
 
     private VertexBuffer vertexBuffer;
+    private IndexBuffer indexBuffer;
+
+    private PushConstant pushConstant;
 
     private List<VkCommandBuffer> commandBuffers = new ArrayList<>();
 
@@ -33,21 +37,34 @@ public class GraphicsPipeline {
         this.swapChain = swapChain;
     }
 
-    public void load(PipelineConfigStruct pipelineConfigStruct){
-        try (MemoryStack stack = stackPush()){
-           ByteBuffer bb =  IOUtil.readBinaryFile(GraphicsPipeline.class.getClassLoader().getResource("ShadersSPIR-V/vert.spv").getPath());
-           long vertexShader = createShader(vulkanDevice.getVkDevice(), bb);
-           bb.clear();
-           bb = IOUtil.readBinaryFile(GraphicsPipeline.class.getClassLoader().getResource("ShadersSPIR-V/frag.spv").getPath());
+    public void load(PipelineConfigStruct pipelineConfigStruct) {
+        try (MemoryStack stack = stackPush()) {
+            ByteBuffer bb = IOUtil.readBinaryFile(GraphicsPipeline.class.getClassLoader().getResource("ShadersSPIR-V/vert.spv").getPath());
+            long vertexShader = createShader(vulkanDevice.getVkDevice(), bb);
+            bb.clear();
+            bb = IOUtil.readBinaryFile(GraphicsPipeline.class.getClassLoader().getResource("ShadersSPIR-V/frag.spv").getPath());
 
-           List<ShaderMeshInputStruct> inputData = new ArrayList<>();
-           inputData.add(new ShaderMeshInputStruct(new Vector3f(0, 0, 0), new Vector3f(0, 0,0 ), new Vector2f(0, 0)));
-           inputData.add(new ShaderMeshInputStruct(new Vector3f(0.5f, 0, 0), new Vector3f(0, 0,0 ), new Vector2f(0, 0)));
-           inputData.add(new ShaderMeshInputStruct(new Vector3f(0, 0.5f, 0), new Vector3f(0, 0,0 ), new Vector2f(0, 0)));
+            List<ShaderMeshInputStruct> inputData = new ArrayList<>();
+            inputData.add(new ShaderMeshInputStruct(new Vector3f(0, 0, 0.5f), new Vector3f(0, 0, 0), new Vector2f(0, 0)));
+            inputData.add(new ShaderMeshInputStruct(new Vector3f(0.5f, 0, 0.5f), new Vector3f(0.5f, 0, 0), new Vector2f(0, 0)));
+            inputData.add(new ShaderMeshInputStruct(new Vector3f(0, 0.5f, 0.5f), new Vector3f(0, 0.5f, 0), new Vector2f(0, 0)));
 
-           vertexBuffer = new VertexBuffer(vulkanDevice.getVkDevice(), inputData);
+            inputData.add(new ShaderMeshInputStruct(new Vector3f(-0.5f, 0, 0.0f), new Vector3f(0, 1, 0), new Vector2f(0, 0)));
+            inputData.add(new ShaderMeshInputStruct(new Vector3f(0.5f, 0, 0.0f), new Vector3f(0.5f, 0, 0), new Vector2f(0, 0)));
+            inputData.add(new ShaderMeshInputStruct(new Vector3f(0, 0.5f, 0.0f), new Vector3f(0, 1f, 0), new Vector2f(0, 0)));
 
-           long fragmentShader = createShader(vulkanDevice.getVkDevice(), bb);
+            vertexBuffer = new VertexBuffer(vulkanDevice, inputData);
+            List<Integer> indices = new ArrayList<>();
+            indices.add(0);
+            indices.add(1);
+            indices.add(2);
+            indices.add(3);
+            indices.add(4);
+            indices.add(5);
+            indexBuffer = new IndexBuffer(indices, vulkanDevice);
+
+            long fragmentShader = createShader(vulkanDevice.getVkDevice(), bb);
+            pushConstant = new PushConstant(pipelineConfigStruct.pipelineLayout);
 
             VkPipelineShaderStageCreateInfo.Buffer shaderStageCreateInfo = VkPipelineShaderStageCreateInfo.callocStack(2, stack);
             VkPipelineShaderStageCreateInfo vertexShaderCreate = VkPipelineShaderStageCreateInfo.callocStack(stack);
@@ -107,7 +124,7 @@ public class GraphicsPipeline {
 
 
             long[] result = new long[1];
-            if(VK13.vkCreateGraphicsPipelines(vulkanDevice.getVkDevice(), VK_NULL_HANDLE, pipelineCreateInfo, null, result)!=VK_SUCCESS){
+            if (VK13.vkCreateGraphicsPipelines(vulkanDevice.getVkDevice(), VK_NULL_HANDLE, pipelineCreateInfo, null, result) != VK_SUCCESS) {
                 throw new RuntimeException("Failed to create pipeline");
             }
             pipeline = result[0];
@@ -119,7 +136,7 @@ public class GraphicsPipeline {
 
     }
 
-    public void createCommandBuffers(){
+    public void createCommandBuffers() {
         VkCommandBufferAllocateInfo allocateInfo = VkCommandBufferAllocateInfo.malloc();
         allocateInfo.clear();
         allocateInfo.sType$Default();
@@ -127,77 +144,95 @@ public class GraphicsPipeline {
         allocateInfo.commandPool(vulkanDevice.getCommandPool());
         allocateInfo.commandBufferCount(swapChain.getImageCount());
         PointerBuffer pointerBuffer = stackPush().mallocPointer(swapChain.getImageCount());
-        if(vkAllocateCommandBuffers(vulkanDevice.getVkDevice(), allocateInfo, pointerBuffer)!=VK_SUCCESS){
+        if (vkAllocateCommandBuffers(vulkanDevice.getVkDevice(), allocateInfo, pointerBuffer) != VK_SUCCESS) {
             throw new RuntimeException("Failed to allocate buffer");
         }
-        while(pointerBuffer.hasRemaining()){
-            commandBuffers.add(new VkCommandBuffer(pointerBuffer.get(),vulkanDevice.getVkDevice()));
+        while (pointerBuffer.hasRemaining()) {
+            commandBuffers.add(new VkCommandBuffer(pointerBuffer.get(), vulkanDevice.getVkDevice()));
         }
         allocateInfo.free();
 
-        for(int i =0;i<commandBuffers.size(); i++){
-            VkCommandBufferBeginInfo beginInfo = VkCommandBufferBeginInfo.malloc();
-            beginInfo.clear();
-            beginInfo.sType$Default();
-            vkBeginCommandBuffer(commandBuffers.get(i), beginInfo);
-            beginInfo.free();
+        VkCommandBufferBeginInfo beginInfo = VkCommandBufferBeginInfo.malloc();
+        beginInfo.clear();
 
-            VkRenderPassBeginInfo rndpBeginInfo = VkRenderPassBeginInfo.malloc();
-            rndpBeginInfo.clear();
+        beginInfo.sType(VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO);
 
-            rndpBeginInfo.sType$Default();
-            rndpBeginInfo.renderPass(swapChain.getRenderPass());
-            rndpBeginInfo.framebuffer(swapChain.getFrameBuffer(i));
-            VkOffset2D offset2D = VkOffset2D.malloc();
-            offset2D.clear();
-            offset2D.x(0);
-            offset2D.y(0);
-            rndpBeginInfo.renderArea().extent(swapChain.getSwapChainExtent());
-            VkClearValue.Buffer clearValues = VkClearValue.malloc(2);
-            clearValues.clear();
-            VkClearColorValue clearColorValue = VkClearColorValue.malloc();
-            clearColorValue.clear();
-            clearColorValue.float32(0, 0.5f);
-            clearColorValue.float32(1, 0.3f);
-            clearColorValue.float32(2, 0.1f);
-            clearValues.color(clearColorValue);
-            clearValues.get();
-            VkClearDepthStencilValue clearDepthStencilValue = VkClearDepthStencilValue.malloc();
-            clearDepthStencilValue.clear();
-            clearDepthStencilValue.depth(1);
-            clearDepthStencilValue.stencil(0);
-            clearValues.depthStencil(clearDepthStencilValue);
-            clearValues.rewind();
-            rndpBeginInfo.pClearValues(clearValues);
-            bind(commandBuffers.get(i));
-            vkCmdBeginRenderPass(commandBuffers.get(i), rndpBeginInfo,VK_SUBPASS_CONTENTS_INLINE );
+        VkRenderPassBeginInfo renderPassInfo = VkRenderPassBeginInfo.malloc();
+        renderPassInfo.clear();
 
-            vertexBuffer.loadDataToCommandBuffer(commandBuffers.get(i));
-            vertexBuffer.draw(commandBuffers.get(i));
-            vkCmdEndRenderPass(commandBuffers.get(i));
-            vkEndCommandBuffer(commandBuffers.get(i));
-            clearValues.free();
-            clearDepthStencilValue.free();
-            clearColorValue.free();
-            rndpBeginInfo.free();
-            offset2D.free();
+        renderPassInfo.sType(VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO);
+
+        renderPassInfo.renderPass(swapChain.getRenderPass());
+
+        VkRect2D renderArea = VkRect2D.malloc();
+        renderArea.clear();
+        renderArea.offset(VkOffset2D.malloc().set(0, 0));
+        renderArea.extent(swapChain.getSwapChainExtent());
+        renderPassInfo.renderArea(renderArea);
+
+        VkClearValue.Buffer clearValues = VkClearValue.malloc(2);
+        clearValues.clear();
+        clearValues.color().float32(stackPush().floats(0.0f, 0.0f, 0.0f, 1.0f));
+        clearValues.get();
+        VkClearDepthStencilValue clearDepthStencilValue = VkClearDepthStencilValue.malloc();
+        clearDepthStencilValue.clear();
+        clearDepthStencilValue.depth(1);
+        clearDepthStencilValue.stencil(0);
+        clearValues.depthStencil(clearDepthStencilValue);
+        clearValues.rewind();
+        clearValues.rewind();
+        renderPassInfo.pClearValues(clearValues);
+
+        for (int i = 0; i < commandBuffers.size(); i++) {
+            VkCommandBuffer commandBuffer = commandBuffers.get(i);
+
+            if (vkBeginCommandBuffer(commandBuffer, beginInfo) != VK_SUCCESS) {
+                throw new RuntimeException("Failed to begin recording command buffer");
+            }
+
+            renderPassInfo.framebuffer(swapChain.getFrameBuffer(i));
+
+
+            vkCmdBeginRenderPass(commandBuffer, renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+            {
+                vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
+                pushConstant.loadData(commandBuffer);
+                vertexBuffer.loadDataToCommandBuffer(commandBuffer);
+                indexBuffer.draw(commandBuffer);
+            }
+            vkCmdEndRenderPass(commandBuffer);
+
+
+            if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
+                throw new RuntimeException("Failed to record command buffer");
+            }
         }
+
+        clearValues.free();
+        clearDepthStencilValue.free();
+        renderArea.free();
+        renderPassInfo.free();
+        beginInfo.free();
+        allocateInfo.free();
     }
-    public void bind(VkCommandBuffer commandBuffer){
+
+    public void bind(VkCommandBuffer commandBuffer) {
         vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
     }
-    public void update(){
+
+    public void update() {
         int imageIndex = swapChain.nextImage();
         swapChain.submitCommandBuffer(commandBuffers.get(imageIndex), imageIndex);
 
     }
-    private long createShader(VkDevice device, ByteBuffer binary){
+
+    private long createShader(VkDevice device, ByteBuffer binary) {
         VkShaderModuleCreateInfo moduleCreateInfo = VkShaderModuleCreateInfo.malloc();
         moduleCreateInfo.clear();
         moduleCreateInfo.sType(VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO);
         moduleCreateInfo.pCode(binary);
         long[] result = new long[1];
-        if(VK13.vkCreateShaderModule(device, moduleCreateInfo, null, result)==VK_SUCCESS){
+        if (VK13.vkCreateShaderModule(device, moduleCreateInfo, null, result) == VK_SUCCESS) {
             moduleCreateInfo.free();
             return result[0];
         }
