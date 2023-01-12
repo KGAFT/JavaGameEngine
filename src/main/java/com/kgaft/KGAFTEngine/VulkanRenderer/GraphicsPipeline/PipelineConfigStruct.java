@@ -142,7 +142,8 @@ public class PipelineConfigStruct {
         layoutInfo.pBindings(uboLayoutBinding);
         LongBuffer result = stackPush().mallocLong(1);
         vkCreateDescriptorSetLayout(device.getVkDevice(), layoutInfo, null, result);
-
+        configInfo.descriptorSetLayout = result.get();
+        result.rewind();
         VkPipelineLayoutCreateInfo pipelineLayoutInfo = VkPipelineLayoutCreateInfo.malloc();
         pipelineLayoutInfo.clear();
         pipelineLayoutInfo.sType(VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO);
@@ -159,6 +160,8 @@ public class PipelineConfigStruct {
     }
     public VkViewport.Buffer viewport;
     public VkRect2D.Buffer scissor;
+
+    public long descriptorSetLayout;
     public VkPipelineViewportStateCreateInfo.Buffer viewportInfo;
     public VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo;
     public VkPipelineRasterizationStateCreateInfo rasterizationInfo;

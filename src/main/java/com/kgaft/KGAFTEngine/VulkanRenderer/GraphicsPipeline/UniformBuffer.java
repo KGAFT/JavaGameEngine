@@ -11,7 +11,7 @@ import java.nio.LongBuffer;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.vulkan.VK10.VK_WHOLE_SIZE;
 
-public class VulkanBuffer {
+public class UniformBuffer {
     private VulkanDevice device;
     private long instanceSize;
     private int instanceCount;
@@ -26,7 +26,7 @@ public class VulkanBuffer {
     private long bufferMemory;
     private PointerBuffer map;
 
-    public VulkanBuffer(VulkanDevice device, long instanceSize, int instanceCount, int usageFlags, int memoryPropertyFlags, long minOffsetAlignment) {
+    public UniformBuffer(VulkanDevice device, long instanceSize, int instanceCount, int usageFlags, int memoryPropertyFlags, long minOffsetAlignment) {
         this.device = device;
         this.instanceSize = instanceSize;
         this.instanceCount = instanceCount;
@@ -98,5 +98,13 @@ public class VulkanBuffer {
         mappedRange.offset(offset);
         mappedRange.size(size);
         VK13.vkInvalidateMappedMemoryRanges(device.getVkDevice(), mappedRange);
+    }
+
+    public long getBuffer() {
+        return buffer;
+    }
+
+    public long getBufferSize() {
+        return bufferSize;
     }
 }
