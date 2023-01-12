@@ -32,6 +32,8 @@ public class GraphicsPipeline {
 
     private List<VkCommandBuffer> commandBuffers = new ArrayList<>();
 
+    private List<VulkanBuffer> buffers = new ArrayList<>();
+
     public GraphicsPipeline(VulkanDevice vulkanDevice, VulkanSwapChain swapChain) {
         this.vulkanDevice = vulkanDevice;
         this.swapChain = swapChain;
@@ -65,6 +67,12 @@ public class GraphicsPipeline {
 
             long fragmentShader = createShader(vulkanDevice.getVkDevice(), bb);
             pushConstant = new PushConstant(pipelineConfigStruct.pipelineLayout);
+
+            for(int i = 0; i<3; i++){
+                buffers.add(new VulkanBuffer(vulkanDevice, Float.SIZE,  1,
+                        VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+                        VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, -1));
+            }
 
             VkPipelineShaderStageCreateInfo.Buffer shaderStageCreateInfo = VkPipelineShaderStageCreateInfo.callocStack(2, stack);
             VkPipelineShaderStageCreateInfo vertexShaderCreate = VkPipelineShaderStageCreateInfo.callocStack(stack);
@@ -182,7 +190,6 @@ public class GraphicsPipeline {
         clearValues.rewind();
         clearValues.rewind();
         renderPassInfo.pClearValues(clearValues);
-
         for (int i = 0; i < commandBuffers.size(); i++) {
             VkCommandBuffer commandBuffer = commandBuffers.get(i);
 
@@ -192,7 +199,8 @@ public class GraphicsPipeline {
 
             renderPassInfo.framebuffer(swapChain.getFrameBuffer(i));
 
-
+            buffers.get(i).getBuffer((int) Float.SIZE).putFloat(2.0f);
+            buffers.get(i).flush(VK_WHOLE_SIZE, 0);
             vkCmdBeginRenderPass(commandBuffer, renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
             {
                 vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);

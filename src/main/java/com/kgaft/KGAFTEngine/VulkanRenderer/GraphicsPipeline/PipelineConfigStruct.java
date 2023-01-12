@@ -5,6 +5,9 @@ import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanSwapChain;
 import com.kgaft.KGAFTEngine.Window.Window;
 import org.lwjgl.vulkan.*;
 
+import java.nio.LongBuffer;
+
+import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.vulkan.VK10.*;
 
 public class PipelineConfigStruct {
@@ -125,10 +128,25 @@ public class PipelineConfigStruct {
         pushConstantRange.size(PushConstantData.getSize());
         pushConstantRange.offset(0);
 
+        VkDescriptorSetLayoutBinding.Buffer uboLayoutBinding = VkDescriptorSetLayoutBinding.malloc(1);
+        uboLayoutBinding.clear();
+        uboLayoutBinding.binding(0);
+        uboLayoutBinding.descriptorType(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
+        uboLayoutBinding.descriptorCount(1);
+        uboLayoutBinding.stageFlags(VK_SHADER_STAGE_VERTEX_BIT);
+        uboLayoutBinding.pImmutableSamplers(null);
+
+        VkDescriptorSetLayoutCreateInfo layoutInfo = VkDescriptorSetLayoutCreateInfo.malloc();
+        layoutInfo.clear();
+        layoutInfo.sType(VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO);
+        layoutInfo.pBindings(uboLayoutBinding);
+        LongBuffer result = stackPush().mallocLong(1);
+        vkCreateDescriptorSetLayout(device.getVkDevice(), layoutInfo, null, result);
+
         VkPipelineLayoutCreateInfo pipelineLayoutInfo = VkPipelineLayoutCreateInfo.malloc();
         pipelineLayoutInfo.clear();
         pipelineLayoutInfo.sType(VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO);
-        pipelineLayoutInfo.pSetLayouts(null);
+        pipelineLayoutInfo.pSetLayouts(result);
         pipelineLayoutInfo.pPushConstantRanges(pushConstantRange);
         long[] layoutResult = new long[1];
         if(VK13.vkCreatePipelineLayout(device.getVkDevice(), pipelineLayoutInfo, null, layoutResult)!=VK_SUCCESS){

@@ -12,7 +12,7 @@ import org.lwjgl.vulkan.VkPhysicalDevice;
 public class Main {
     public static void main(String[] args) {
 
-        Window.prepareWindow(1920, 1080, "KGAFTEngine", true);
+        Window.prepareWindow(1024, 720, "KGAFTEngine", true);
         /*
         Engine engine = new Engine(Window.getWindow());
         TestScene testScene = new TestScene();
