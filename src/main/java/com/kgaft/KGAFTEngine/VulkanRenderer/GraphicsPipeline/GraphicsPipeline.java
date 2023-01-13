@@ -28,12 +28,10 @@ public class GraphicsPipeline {
     private IndexBuffer indexBuffer;
 
     private PushConstant pushConstant;
-
+    private DescriptorSet descriptorSet;
     private List<VkCommandBuffer> commandBuffers = new ArrayList<>();
 
-    private List<UniformBuffer> buffers = new ArrayList<>();
-
-    private DescriptorSet descriptorSet;
+    private UniformBuffer uniformBuffer ;
 
     private long pipelineLayout;
 
@@ -70,16 +68,14 @@ public class GraphicsPipeline {
 
             long fragmentShader = createShader(vulkanDevice.getVkDevice(), bb);
             pushConstant = new PushConstant(pipelineConfigStruct.pipelineLayout);
-            descriptorSet = new DescriptorSet(vulkanDevice, 3, pipelineConfigStruct.descriptorSetLayout);
-
-            for(int i = 0; i<3; i++){
-                buffers.add(new UniformBuffer(vulkanDevice, Float.SIZE,  1,
-                        VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
-                        VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, -1));
-                descriptorSet.registerBuffer(buffers.get(i).getBuffer(), buffers.get(i).getBufferSize());
-            }
-            descriptorSet.load();
-
+            uniformBuffer = new UniformBuffer(vulkanDevice, 3, Float.SIZE);
+            descriptorSet = new DescriptorSet(3);
+            descriptorSet.createDescriptorPool(vulkanDevice);
+            List<Long> sizes = new ArrayList<>();
+            sizes.add((long) Float.SIZE);
+            sizes.add((long) Float.SIZE);
+            sizes.add((long) Float.SIZE);
+            descriptorSet.createDescriptorSets(vulkanDevice, uniformBuffer.getBuffers(), sizes, pipelineConfigStruct.descriptorSetLayout);
             VkPipelineShaderStageCreateInfo.Buffer shaderStageCreateInfo = VkPipelineShaderStageCreateInfo.callocStack(2, stack);
             VkPipelineShaderStageCreateInfo vertexShaderCreate = VkPipelineShaderStageCreateInfo.callocStack(stack);
             vertexShaderCreate.clear();
@@ -204,16 +200,18 @@ public class GraphicsPipeline {
             }
 
             renderPassInfo.framebuffer(swapChain.getFrameBuffer(i));
-
-            buffers.get(i).getBuffer((int) Float.SIZE).putFloat(2.0f);
-            buffers.get(i).flush(VK_WHOLE_SIZE, 0);
+            uniformBuffer.writeToBuffer(i, Float.SIZE, 2.0f);
+            descriptorSet.bind(commandBuffer, i, pipelineLayout);
             vkCmdBeginRenderPass(commandBuffer, renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
             {
                 vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
-                descriptorSet.bindDescriptorSet(i, commandBuffer, pipelineLayout);
+
+
                 pushConstant.loadData(commandBuffer);
                 vertexBuffer.loadDataToCommandBuffer(commandBuffer);
+
                 indexBuffer.draw(commandBuffer);
+
             }
             vkCmdEndRenderPass(commandBuffer);
 

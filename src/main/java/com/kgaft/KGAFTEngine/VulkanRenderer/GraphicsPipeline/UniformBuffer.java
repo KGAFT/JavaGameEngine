@@ -1,110 +1,62 @@
 package com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline;
 
+
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
 import org.lwjgl.PointerBuffer;
-import org.lwjgl.vulkan.VK13;
-import org.lwjgl.vulkan.VkMappedMemoryRange;
+import org.lwjgl.system.MemoryStack;
 
 import java.nio.ByteBuffer;
 import java.nio.LongBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.system.MemoryStack.stackPush;
-import static org.lwjgl.vulkan.VK10.VK_WHOLE_SIZE;
+import static org.lwjgl.vulkan.VK10.*;
 
 public class UniformBuffer {
+    private List<Long> buffers;
+    private List<Long> buffersMemories;
+
     private VulkanDevice device;
-    private long instanceSize;
-    private int instanceCount;
-    private int usageFlags;
-    private int memoryPropertyFlags;
 
-    private long alignmentSize;
+    public UniformBuffer(VulkanDevice device, int bufferCount, int size) {
+        buffers = new ArrayList<>(bufferCount);
+        buffersMemories = new ArrayList<>(bufferCount);
+        try(MemoryStack stack = stackPush()) {
 
-    private long bufferSize;
 
-    private long buffer;
-    private long bufferMemory;
-    private PointerBuffer map;
+            LongBuffer pBuffer = stack.mallocLong(1);
+            LongBuffer pBufferMemory = stack.mallocLong(1);
 
-    public UniformBuffer(VulkanDevice device, long instanceSize, int instanceCount, int usageFlags, int memoryPropertyFlags, long minOffsetAlignment) {
+            for(int i = 0;i < bufferCount;i++) {
+                device.createBuffer(size,
+                        VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+                        VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+                        pBuffer,
+                        pBufferMemory);
+
+               buffers.add(pBuffer.get());
+               buffersMemories.add(pBufferMemory.get());
+               pBuffer.rewind();
+               pBufferMemory.rewind();
+            }
+
+        }
         this.device = device;
-        this.instanceSize = instanceSize;
-        this.instanceCount = instanceCount;
-        this.usageFlags = usageFlags;
-        this.memoryPropertyFlags = memoryPropertyFlags;
-        if(minOffsetAlignment == -1){
-            this.alignmentSize = getAlignment(instanceSize, 1);
-        }
-        else{
-            this.alignmentSize = getAlignment(instanceSize, minOffsetAlignment);
-        }
-
-        this.bufferSize = alignmentSize*instanceCount;
-        LongBuffer res = stackPush().mallocLong(1);
-        LongBuffer resMemory = stackPush().mallocLong(1);
-        device.createBuffer(bufferSize, usageFlags, memoryPropertyFlags, res, resMemory);
-        this.buffer = res.get();
-        this.bufferMemory = resMemory.get();
-        map(VK_WHOLE_SIZE, 0);
     }
+    public void writeToBuffer(int index, int size, float toWrite){
+        try(MemoryStack stack = stackPush()) {
 
-    private long getAlignment(long instanceSize, long minOffsetAlignment) {
-        if (minOffsetAlignment > 0) {
-            return (instanceSize + minOffsetAlignment - 1) & ~(minOffsetAlignment - 1);
-        }
-        return instanceSize;
-    }
-    private void map(long size, long offset){
-        map = stackPush().mallocPointer(1);
-        VK13.vkMapMemory(device.getVkDevice(), bufferMemory, offset, size, 0, map);
-    }
-    private void unmap(){
-        if(map!=null){
-            VK13.vkUnmapMemory(device.getVkDevice(), bufferMemory);
-            map = null;
-
+            PointerBuffer data = stack.mallocPointer(1);
+            vkMapMemory(device.getVkDevice(), buffersMemories.get(index), 0, size, 0, data);
+            {
+                data.getByteBuffer(size).putFloat(toWrite);
+            }
+            vkUnmapMemory(device.getVkDevice(), buffersMemories.get(index));
         }
     }
-    public void write(ByteBuffer data, long size, long offset){
-        if(size== VK_WHOLE_SIZE){
-            map.getByteBuffer((int) size).put(data);
-        }
-        else{
-            byte[] toPut = new byte[data.remaining()];
-            data.get(toPut, 0, data.remaining());
 
-            map.getByteBuffer((int) size).put(toPut, (int) offset, 0);
-
-        }
-    }
-    public ByteBuffer getBuffer(int size){
-        return map.getByteBuffer(size);
-    }
-    public void flush(long size, long offset){
-        VkMappedMemoryRange mappedRange = VkMappedMemoryRange.malloc();
-        mappedRange.clear();
-        mappedRange.sType$Default();
-        mappedRange.memory(bufferMemory);
-        mappedRange.offset(offset);
-        mappedRange.size(size);
-        VK13.vkFlushMappedMemoryRanges(device.getVkDevice(), mappedRange);
-
-    }
-    public void invalidate(long size, long offset) {
-        VkMappedMemoryRange mappedRange = VkMappedMemoryRange.malloc();
-        mappedRange.clear();
-        mappedRange.sType$Default();
-        mappedRange.memory(bufferMemory);
-        mappedRange.offset(offset);
-        mappedRange.size(size);
-        VK13.vkInvalidateMappedMemoryRanges(device.getVkDevice(), mappedRange);
-    }
-
-    public long getBuffer() {
-        return buffer;
-    }
-
-    public long getBufferSize() {
-        return bufferSize;
+    public List<Long> getBuffers() {
+        return buffers;
     }
 }
