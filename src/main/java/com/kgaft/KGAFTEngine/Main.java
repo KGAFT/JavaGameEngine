@@ -7,6 +7,9 @@ import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanInstance;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanLogger;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanSwapChain;
 import com.kgaft.KGAFTEngine.Window.Window;
+
+import java.net.URISyntaxException;
+
 import org.lwjgl.vulkan.VkPhysicalDevice;
 
 public class Main {
@@ -30,7 +33,12 @@ public class Main {
         VulkanSwapChain swapChain = new VulkanSwapChain(device);
         swapChain.load(true);
         GraphicsPipeline graphicsPipeline = new GraphicsPipeline(device, swapChain);
-        graphicsPipeline.load(PipelineConfigStruct.defaultConfig(Window.getWindow(), device, swapChain));
+        try {
+            graphicsPipeline.load(PipelineConfigStruct.defaultConfig(Window.getWindow(), device, swapChain));
+        } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         graphicsPipeline.createCommandBuffers();
 
         while(Window.getWindow().isWindowActive()){

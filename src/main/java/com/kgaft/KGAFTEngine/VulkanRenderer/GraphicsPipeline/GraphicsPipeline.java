@@ -1,8 +1,11 @@
 package com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline;
 
 import com.kgaft.KGAFTEngine.Engine.Utils.IOUtil;
+import com.kgaft.KGAFTEngine.VulkanRenderer.ShaderUtil;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanSwapChain;
+import com.kgaft.KGAFTEngine.VulkanRenderer.ShaderUtil.ShaderType;
+
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.PointerBuffer;
@@ -10,6 +13,7 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.vulkan.*;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,12 +44,8 @@ public class GraphicsPipeline {
         this.swapChain = swapChain;
     }
 
-    public void load(PipelineConfigStruct pipelineConfigStruct) {
+    public void load(PipelineConfigStruct pipelineConfigStruct) throws URISyntaxException {
         try (MemoryStack stack = stackPush()) {
-            ByteBuffer bb = IOUtil.readBinaryFile(GraphicsPipeline.class.getClassLoader().getResource("ShadersSPIR-V/vert.spv").getPath());
-            long vertexShader = createShader(vulkanDevice.getVkDevice(), bb);
-            bb.clear();
-            bb = IOUtil.readBinaryFile(GraphicsPipeline.class.getClassLoader().getResource("ShadersSPIR-V/frag.spv").getPath());
 
             List<ShaderMeshInputStruct> inputData = new ArrayList<>();
             inputData.add(new ShaderMeshInputStruct(new Vector3f(0, 0, 0.5f), new Vector3f(0, 0, 0), new Vector2f(0, 0)));
@@ -66,7 +66,7 @@ public class GraphicsPipeline {
             indices.add(5);
             indexBuffer = new IndexBuffer(indices, vulkanDevice);
 
-            long fragmentShader = createShader(vulkanDevice.getVkDevice(), bb);
+            
             pushConstant = new PushConstant(pipelineConfigStruct.pipelineLayout);
             uniformBuffer = new UniformBuffer(vulkanDevice, 3, Float.SIZE);
             descriptorSet = new DescriptorSet(3);
@@ -75,6 +75,14 @@ public class GraphicsPipeline {
             sizes.add((long) Float.SIZE);
             sizes.add((long) Float.SIZE);
             sizes.add((long) Float.SIZE);
+
+            ByteBuffer bb = ShaderUtil.compileShaderResource("SPIR-V/default.vert",  ShaderType.VERTEX_SHADER);
+        
+            long vertexShader = createShader(vulkanDevice.getVkDevice(), bb);
+            bb.clear();
+            bb = ShaderUtil.compileShaderResource("SPIR-V/default.frag",  ShaderType.FRAGMENT_SHADER);
+            long fragmentShader = createShader(vulkanDevice.getVkDevice(), bb);
+           
             descriptorSet.createDescriptorSets(vulkanDevice, uniformBuffer.getBuffers(), sizes, pipelineConfigStruct.descriptorSetLayout);
             VkPipelineShaderStageCreateInfo.Buffer shaderStageCreateInfo = VkPipelineShaderStageCreateInfo.callocStack(2, stack);
             VkPipelineShaderStageCreateInfo vertexShaderCreate = VkPipelineShaderStageCreateInfo.callocStack(stack);
@@ -140,9 +148,7 @@ public class GraphicsPipeline {
             pipeline = result[0];
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } 
 
     }
 
