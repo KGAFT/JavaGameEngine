@@ -11,7 +11,7 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.vulkan.VK10.*;
 
 public class PipelineConfigStruct {
-    public static PipelineConfigStruct defaultConfig(Window window, VulkanDevice device, VulkanSwapChain swapChain){
+    public static PipelineConfigStruct defaultConfig(Window window, VulkanDevice device, VulkanSwapChain swapChain) {
         PipelineConfigStruct configInfo = new PipelineConfigStruct();
         configInfo.inputAssemblyInfo = VkPipelineInputAssemblyStateCreateInfo.malloc();
         configInfo.inputAssemblyInfo.clear();
@@ -48,10 +48,10 @@ public class PipelineConfigStruct {
         configInfo.viewportInfo.pViewports(configInfo.viewport);
         configInfo.viewportInfo.scissorCount(1);
         configInfo.viewportInfo.pScissors(configInfo.scissor);
-        
+
         configInfo.rasterizationInfo = VkPipelineRasterizationStateCreateInfo.malloc();
         configInfo.rasterizationInfo.clear();
-        
+
         configInfo.rasterizationInfo.sType(VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO);
         configInfo.rasterizationInfo.depthClampEnable(false);
         configInfo.rasterizationInfo.rasterizerDiscardEnable(false);
@@ -60,9 +60,9 @@ public class PipelineConfigStruct {
         configInfo.rasterizationInfo.cullMode(VK_CULL_MODE_NONE);
         configInfo.rasterizationInfo.frontFace(VK_FRONT_FACE_CLOCKWISE);
         configInfo.rasterizationInfo.depthBiasEnable(false);
-        configInfo.rasterizationInfo.depthBiasConstantFactor(0.0f);  // Optional
-        configInfo.rasterizationInfo.depthBiasClamp(0.0f);           // Optional
-        configInfo.rasterizationInfo.depthBiasSlopeFactor(0.0f);     // Optional
+        configInfo.rasterizationInfo.depthBiasConstantFactor(0.0f); // Optional
+        configInfo.rasterizationInfo.depthBiasClamp(0.0f); // Optional
+        configInfo.rasterizationInfo.depthBiasSlopeFactor(0.0f); // Optional
 
         configInfo.multisampleInfo = VkPipelineMultisampleStateCreateInfo.malloc();
         configInfo.multisampleInfo.clear();
@@ -70,10 +70,10 @@ public class PipelineConfigStruct {
         configInfo.multisampleInfo.sType(VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO);
         configInfo.multisampleInfo.sampleShadingEnable(false);
         configInfo.multisampleInfo.rasterizationSamples(VK_SAMPLE_COUNT_1_BIT);
-        configInfo.multisampleInfo.minSampleShading(1.0f);           // Optional
-        configInfo.multisampleInfo.pSampleMask(null);             // Optional
-        configInfo.multisampleInfo.alphaToCoverageEnable(false);  // Optional
-        configInfo.multisampleInfo.alphaToOneEnable(false);       // Optional
+        configInfo.multisampleInfo.minSampleShading(1.0f); // Optional
+        configInfo.multisampleInfo.pSampleMask(null); // Optional
+        configInfo.multisampleInfo.alphaToCoverageEnable(false); // Optional
+        configInfo.multisampleInfo.alphaToOneEnable(false); // Optional
 
         configInfo.colorBlendAttachment = VkPipelineColorBlendAttachmentState.malloc(1);
         configInfo.colorBlendAttachment.clear();
@@ -82,24 +82,24 @@ public class PipelineConfigStruct {
                 VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
                         VK_COLOR_COMPONENT_A_BIT);
         configInfo.colorBlendAttachment.blendEnable(false);
-        configInfo.colorBlendAttachment.srcColorBlendFactor(VK_BLEND_FACTOR_ONE);   // Optional
-        configInfo.colorBlendAttachment.dstColorBlendFactor(VK_BLEND_FACTOR_ZERO);  // Optional
-        configInfo.colorBlendAttachment.colorBlendOp(VK_BLEND_OP_ADD);              // Optional
-        configInfo.colorBlendAttachment.srcAlphaBlendFactor(VK_BLEND_FACTOR_ONE);   // Optional
-        configInfo.colorBlendAttachment.dstAlphaBlendFactor(VK_BLEND_FACTOR_ZERO);  // Optional
-        configInfo.colorBlendAttachment.alphaBlendOp(VK_BLEND_OP_ADD);              // Optional
+        configInfo.colorBlendAttachment.srcColorBlendFactor(VK_BLEND_FACTOR_ONE); // Optional
+        configInfo.colorBlendAttachment.dstColorBlendFactor(VK_BLEND_FACTOR_ZERO); // Optional
+        configInfo.colorBlendAttachment.colorBlendOp(VK_BLEND_OP_ADD); // Optional
+        configInfo.colorBlendAttachment.srcAlphaBlendFactor(VK_BLEND_FACTOR_ONE); // Optional
+        configInfo.colorBlendAttachment.dstAlphaBlendFactor(VK_BLEND_FACTOR_ZERO); // Optional
+        configInfo.colorBlendAttachment.alphaBlendOp(VK_BLEND_OP_ADD); // Optional
 
         configInfo.colorBlendInfo = VkPipelineColorBlendStateCreateInfo.malloc();
         configInfo.colorBlendInfo.clear();
 
         configInfo.colorBlendInfo.sType(VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO);
         configInfo.colorBlendInfo.logicOpEnable(false);
-        configInfo.colorBlendInfo.logicOp(VK_LOGIC_OP_COPY);  // Optional
+        configInfo.colorBlendInfo.logicOp(VK_LOGIC_OP_COPY); // Optional
         configInfo.colorBlendInfo.pAttachments(configInfo.colorBlendAttachment);
-        configInfo.colorBlendInfo.blendConstants(0,0);  // Optional
-        configInfo.colorBlendInfo.blendConstants(1, 0);  // Optional
-        configInfo.colorBlendInfo.blendConstants(2, 0);  // Optional
-        configInfo.colorBlendInfo.blendConstants(3, 0);  // Optional
+        configInfo.colorBlendInfo.blendConstants(0, 0); // Optional
+        configInfo.colorBlendInfo.blendConstants(1, 0); // Optional
+        configInfo.colorBlendInfo.blendConstants(2, 0); // Optional
+        configInfo.colorBlendInfo.blendConstants(3, 0); // Optional
 
         configInfo.depthStencilInfo = VkPipelineDepthStencilStateCreateInfo.malloc();
         configInfo.depthStencilInfo.clear();
@@ -109,15 +109,15 @@ public class PipelineConfigStruct {
         configInfo.depthStencilInfo.depthWriteEnable(true);
         configInfo.depthStencilInfo.depthCompareOp(VK_COMPARE_OP_LESS);
         configInfo.depthStencilInfo.depthBoundsTestEnable(false);
-        configInfo.depthStencilInfo.minDepthBounds(0.0f);  // Optional
-        configInfo.depthStencilInfo.maxDepthBounds(1.0f);  // Optional
+        configInfo.depthStencilInfo.minDepthBounds(0.0f); // Optional
+        configInfo.depthStencilInfo.maxDepthBounds(1.0f); // Optional
         configInfo.depthStencilInfo.stencilTestEnable(false);
         VkStencilOpState frState = VkStencilOpState.malloc();
         frState.clear();
-        configInfo.depthStencilInfo.front(frState);  // Optional
+        configInfo.depthStencilInfo.front(frState); // Optional
         VkStencilOpState bkState = VkStencilOpState.malloc();
         bkState.clear();
-        configInfo.depthStencilInfo.back(bkState);   // Optional
+        configInfo.depthStencilInfo.back(bkState); // Optional
 
         configInfo.renderPass = swapChain.getRenderPass();
         configInfo.subpass = 0;
@@ -128,13 +128,20 @@ public class PipelineConfigStruct {
         pushConstantRange.size(PushConstantData.getSize());
         pushConstantRange.offset(0);
 
-        VkDescriptorSetLayoutBinding.Buffer uboLayoutBinding = VkDescriptorSetLayoutBinding.malloc(1);
+        VkDescriptorSetLayoutBinding.Buffer uboLayoutBinding = VkDescriptorSetLayoutBinding.malloc(2);
         uboLayoutBinding.clear();
         uboLayoutBinding.binding(0);
         uboLayoutBinding.descriptorType(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
         uboLayoutBinding.descriptorCount(1);
         uboLayoutBinding.stageFlags(VK_SHADER_STAGE_VERTEX_BIT);
         uboLayoutBinding.pImmutableSamplers(null);
+        uboLayoutBinding.get();
+        uboLayoutBinding.descriptorCount(1);
+        uboLayoutBinding.binding(1);
+        uboLayoutBinding.descriptorType(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER);
+        uboLayoutBinding.pImmutableSamplers(null);
+        uboLayoutBinding.stageFlags(VK_SHADER_STAGE_FRAGMENT_BIT);
+        uboLayoutBinding.rewind();
 
         VkDescriptorSetLayoutCreateInfo layoutInfo = VkDescriptorSetLayoutCreateInfo.malloc();
         layoutInfo.clear();
@@ -150,14 +157,14 @@ public class PipelineConfigStruct {
         pipelineLayoutInfo.pSetLayouts(result);
         pipelineLayoutInfo.pPushConstantRanges(pushConstantRange);
         long[] layoutResult = new long[1];
-        if(VK13.vkCreatePipelineLayout(device.getVkDevice(), pipelineLayoutInfo, null, layoutResult)!=VK_SUCCESS){
+        if (VK13.vkCreatePipelineLayout(device.getVkDevice(), pipelineLayoutInfo, null, layoutResult) != VK_SUCCESS) {
             throw new RuntimeException("Failed to create layout");
         }
         configInfo.pipelineLayout = layoutResult[0];
 
-
         return configInfo;
     }
+
     public VkViewport.Buffer viewport;
     public VkRect2D.Buffer scissor;
 

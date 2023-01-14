@@ -1,4 +1,4 @@
-package com.kgaft.KGAFTEngine;
+package com.kgaft.KGAFTEngine.Engine.Utils;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
