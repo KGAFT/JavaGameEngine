@@ -11,7 +11,7 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.vulkan.VK10.*;
 
 public class PipelineConfigStruct {
-    public static PipelineConfigStruct defaultConfig(Window window, VulkanDevice device, VulkanSwapChain swapChain) {
+    public static PipelineConfigStruct defaultConfig(Window window, VulkanDevice device, VulkanSwapChain swapChain, int textureSamplersCount) {
         PipelineConfigStruct configInfo = new PipelineConfigStruct();
         configInfo.inputAssemblyInfo = VkPipelineInputAssemblyStateCreateInfo.malloc();
         configInfo.inputAssemblyInfo.clear();
@@ -128,19 +128,22 @@ public class PipelineConfigStruct {
         pushConstantRange.size(PushConstantData.getSize());
         pushConstantRange.offset(0);
 
-        VkDescriptorSetLayoutBinding.Buffer uboLayoutBinding = VkDescriptorSetLayoutBinding.malloc(2);
+        VkDescriptorSetLayoutBinding.Buffer uboLayoutBinding = VkDescriptorSetLayoutBinding.malloc(1+textureSamplersCount);
         uboLayoutBinding.clear();
         uboLayoutBinding.binding(0);
         uboLayoutBinding.descriptorType(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
         uboLayoutBinding.descriptorCount(1);
-        uboLayoutBinding.stageFlags(VK_SHADER_STAGE_VERTEX_BIT);
-        uboLayoutBinding.pImmutableSamplers(null);
-        uboLayoutBinding.get();
-        uboLayoutBinding.descriptorCount(1);
-        uboLayoutBinding.binding(1);
-        uboLayoutBinding.descriptorType(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER);
-        uboLayoutBinding.pImmutableSamplers(null);
         uboLayoutBinding.stageFlags(VK_SHADER_STAGE_FRAGMENT_BIT);
+        uboLayoutBinding.pImmutableSamplers(null);
+        for(int counter = 0; counter<textureSamplersCount; counter++){
+            uboLayoutBinding.get();
+            uboLayoutBinding.descriptorCount(1);
+            uboLayoutBinding.binding(1+counter);
+            uboLayoutBinding.descriptorType(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER);
+            uboLayoutBinding.pImmutableSamplers(null);
+            uboLayoutBinding.stageFlags(VK_SHADER_STAGE_FRAGMENT_BIT);
+        }
+        
         uboLayoutBinding.rewind();
 
         VkDescriptorSetLayoutCreateInfo layoutInfo = VkDescriptorSetLayoutCreateInfo.malloc();

@@ -51,7 +51,7 @@ public class VulkanRenderingContext implements WindowResizeCallBack {
         window.addResizeCallBack(this);
         graphicsPipeline = new GraphicsPipeline(device, swapChain);
         try {
-            graphicsPipeline.load(PipelineConfigStruct.defaultConfig(window, device, swapChain));
+            graphicsPipeline.load(PipelineConfigStruct.defaultConfig(window, device, swapChain, 6));
         } catch (URISyntaxException e) {
             throw new RuntimeException("Failed to load graphics pipeline");
         }
@@ -73,9 +73,9 @@ public class VulkanRenderingContext implements WindowResizeCallBack {
         
         graphicsPipeline = new GraphicsPipeline(device, swapChain);
         try {
-            graphicsPipeline.load(PipelineConfigStruct.defaultConfig(window, device, swapChain));
+            graphicsPipeline.load(PipelineConfigStruct.defaultConfig(window, device, swapChain, 6));
         } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
+            
             throw new RuntimeException("Failed to recreate graphics pipeline");
         }
         graphicsPipeline.createCommandBuffers();

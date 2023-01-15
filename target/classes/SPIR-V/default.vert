@@ -12,21 +12,20 @@ layout(push_constant) uniform PushConstant{
     mat4 modelMatrix;
     mat4 cameraMatrix;
 } push;
-layout(set = 0, binding=0) uniform ubo{
-    float data;
-} gubo;
+
 
 vec3 repairCoord(vec3 inputCoord){
     inputCoord.y = inputCoord.y*-1;
     return inputCoord;
 }
+vec2 repairCoordV2(vec2 inputC){
+    inputC.y*=-1;
+    return inputC;
+}
 
 void main() {
 
     gl_Position = vec4(repairCoord(position), 1.0);
-    if(gubo.data==2){
-        gl_Position.x*=0.5f;
-    }
-    normals = Normals;
-    UV = uv;
+    normals = repairCoord(Normals);
+    UV = repairCoordV2(uv);
 }
