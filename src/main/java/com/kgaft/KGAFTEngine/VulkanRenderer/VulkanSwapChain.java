@@ -21,6 +21,7 @@ public class VulkanSwapChain {
     private static final int MAX_FRAMES_IN_FLIGHT = 2;
     private long swapChainKHR;
     private VulkanDevice device;
+    private Window window;
     private long renderPass;
     private int swapChainImageFormat;
     private VkExtent2D swapChainExtent;
@@ -35,7 +36,7 @@ public class VulkanSwapChain {
     private List<Long> renderFinishedSemaphores = new ArrayList<>();
     private List<Long> inFlightFences = new ArrayList<>();
     private List<Long> imagesInFlight = new ArrayList<>();
-    private Window window;
+
     private int currentFrame = 0;
 
     public VulkanSwapChain(VulkanDevice device, Window window) {
@@ -357,15 +358,6 @@ public class VulkanSwapChain {
         vkAcquireNextImageKHR(device.getVkDevice(), swapChainKHR, Long.MAX_VALUE, imageAvailableSemaphores.get(currentFrame), VK_NULL_HANDLE, nextImage);
         return nextImage[0];
     }
-    public void waitFences(){
-        try{
-            VK13.vkWaitForFences(device.getVkDevice(), inFlightFences.get(currentFrame), true, Long.MAX_VALUE);
-            VK13.vkWaitForFences(device.getVkDevice(), imagesInFlight.get(currentFrame), true, Long.MAX_VALUE);
-        }catch(Exception e){
-
-        }
-        
-    }
 
     public void submitCommandBuffer(VkCommandBuffer commandBuffer, int imageIndex) {
         try(MemoryStack stack = stackPush()){
@@ -373,7 +365,7 @@ public class VulkanSwapChain {
                 vkWaitForFences(device.getVkDevice(),  imagesInFlight.get(imageIndex), true, Long.MAX_VALUE);
             }
             imagesInFlight.add(imageIndex, inFlightFences.get(currentFrame));
-            VkSubmitInfo submitInfo = VkSubmitInfo.malloc();
+            VkSubmitInfo submitInfo = VkSubmitInfo.callocStack(stack);
             submitInfo.clear();
             submitInfo.sType$Default();
             LongBuffer waitSemaphores = stack.mallocLong(1);
@@ -402,10 +394,10 @@ public class VulkanSwapChain {
             if(vkQueueSubmit(device.getGraphicsQueue(), submitInfo, inFlightFences.get(currentFrame))!=VK_SUCCESS){
                 throw new RuntimeException("Failed to submit queues");
             }
-            
-            MemoryStack secondStack = stackPush();
 
-            VkPresentInfoKHR presentInfoKHR = VkPresentInfoKHR.malloc();
+
+
+            VkPresentInfoKHR presentInfoKHR = VkPresentInfoKHR.callocStack(stack);
             presentInfoKHR.clear();
             presentInfoKHR.sType$Default();
             signalSemaphores.clear();
@@ -416,11 +408,11 @@ public class VulkanSwapChain {
             presentInfoKHR.pWaitSemaphores(signalSemaphores);
 
             presentInfoKHR.swapchainCount(1);
-            LongBuffer swapChains = secondStack.mallocLong(1);
+            LongBuffer swapChains = stack.mallocLong(1);
             swapChains.put(swapChainKHR);
             swapChains.rewind();
             presentInfoKHR.pSwapchains(swapChains);
-            IntBuffer imageIndices = secondStack.mallocInt(1);
+            IntBuffer imageIndices = stack.mallocInt(1);
             imageIndices.put(imageIndex);
             imageIndices.rewind();
 
@@ -429,8 +421,6 @@ public class VulkanSwapChain {
             vkQueuePresentKHR(device.getPresentQueue(), presentInfoKHR);
 
             currentFrame = (currentFrame+1)%MAX_FRAMES_IN_FLIGHT;
-            submitInfo.free();
-            presentInfoKHR.free();
         }
 
 

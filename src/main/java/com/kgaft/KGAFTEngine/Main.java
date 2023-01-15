@@ -5,7 +5,7 @@ import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.PipelineConfigStruc
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanInstance;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanLogger;
-import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanRenderingContext;
+import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanRenderContext;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanSwapChain;
 import com.kgaft.KGAFTEngine.Window.Window;
 
@@ -20,29 +20,27 @@ public class Main {
 
         Window.prepareWindow(1024, 720, "KGAFTEngine", true);
         /*
-         * Engine engine = new Engine(Window.getWindow());
-         * TestScene testScene = new TestScene();
-         * engine.setCurrentScene(testScene);
-         * try {
-         * engine.start();
-         * } catch (InterruptedException e) {
-         * e.printStackTrace();
-         * }
+        Engine engine = new Engine(Window.getWindow());
+        TestScene testScene = new TestScene();
+        engine.setCurrentScene(testScene);
+        try {
+            engine.start();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
          */
-
-        VulkanRenderingContext renderingContext = new VulkanRenderingContext(true);
+        VulkanRenderContext renderContext = new VulkanRenderContext(true);
         VkPhysicalDevice physicalDevice = null;
-        for (Map.Entry<VkPhysicalDevice, VkPhysicalDeviceProperties> entry : renderingContext.enumerateSupportedGPUS()
+        for (Map.Entry<VkPhysicalDevice, VkPhysicalDeviceProperties> entry : renderContext.enumerateSupportedGPUS()
                 .entrySet()) {
             if (physicalDevice == null) {
                 physicalDevice = entry.getKey();
             }
             System.out.println(entry.getValue().deviceNameString());
         }
-        renderingContext.initialize(false, physicalDevice, Window.getWindow());
-        renderingContext.updateDrawData();
-        while (Window.getWindow().isWindowActive()) {
-            renderingContext.update();
+        renderContext.initialize(true, physicalDevice, Window.getWindow());
+        while(Window.getWindow().isWindowActive()){
+            renderContext.update();
             Window.getWindow().postEvents();
         }
     }

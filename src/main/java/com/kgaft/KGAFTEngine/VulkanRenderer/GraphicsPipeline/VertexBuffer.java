@@ -2,11 +2,14 @@
 package com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline;
 
 
+import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.ShaderMeshInputStruct;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
+import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.vulkan.*;
 
-
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.nio.LongBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -107,6 +110,20 @@ public class VertexBuffer {
 
     public void draw(VkCommandBuffer commandBuffer) {
         vkCmdDraw(commandBuffer, vertexCount, 1, 0, 0);
+    }
+
+    private int findMemoryType(VkPhysicalDevice device, int typeFilter, int properties) {
+
+        VkPhysicalDeviceMemoryProperties memProperties = VkPhysicalDeviceMemoryProperties.mallocStack();
+        vkGetPhysicalDeviceMemoryProperties(device, memProperties);
+
+        for (int i = 0; i < memProperties.memoryTypeCount(); i++) {
+            if ((typeFilter & (1 << i)) != 0 && (memProperties.memoryTypes(i).propertyFlags() & properties) == properties) {
+                return i;
+            }
+        }
+
+        throw new RuntimeException("Failed to find suitable memory type");
     }
 
 }

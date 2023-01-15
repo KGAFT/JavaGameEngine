@@ -34,7 +34,7 @@ public class GraphicsPipeline {
     private PushConstant pushConstant;
     private DescriptorSet descriptorSet;
     private List<VkCommandBuffer> commandBuffers = new ArrayList<>();
-    private List<Long> shaders = new ArrayList<>();
+
     private UniformBuffer uniformBuffer;
 
     private long pipelineLayout;
@@ -48,7 +48,7 @@ public class GraphicsPipeline {
 
     public void load(PipelineConfigStruct pipelineConfigStruct) throws URISyntaxException {
         try (MemoryStack stack = stackPush()) {
-            /* 
+
             List<ShaderMeshInputStruct> inputData = new ArrayList<>();
             inputData.add(
                     new ShaderMeshInputStruct(new Vector3f(0, 0, 0.5f), new Vector3f(0, 0, 0), new Vector2f(0, 0)));
@@ -82,22 +82,18 @@ public class GraphicsPipeline {
             sizes.add((long) Float.SIZE);
             sizes.add((long) Float.SIZE);
             sizes.add((long) Float.SIZE);
-            */
+
             ByteBuffer bb = ShaderUtil.compileShaderResource("SPIR-V/default.vert", ShaderType.VERTEX_SHADER);
 
             long vertexShader = createShader(vulkanDevice.getVkDevice(), bb);
-            shaders.add(vertexShader);
             bb.clear();
             bb = ShaderUtil.compileShaderResource("SPIR-V/default.frag", ShaderType.FRAGMENT_SHADER);
             long fragmentShader = createShader(vulkanDevice.getVkDevice(), bb);
-            shaders.add(fragmentShader);
-            /* 
             texture = new Texture();
             texture.createTextureImage(GraphicsPipeline.class.getClassLoader()
                     .getResource("Models/grind/textures/Main_baseColor.png").getPath().substring(1), vulkanDevice);
             descriptorSet.createDescriptorSets(vulkanDevice, uniformBuffer.getBuffers(), sizes,
                     pipelineConfigStruct.descriptorSetLayout, texture);
-                    */
             VkPipelineShaderStageCreateInfo.Buffer shaderStageCreateInfo = VkPipelineShaderStageCreateInfo
                     .callocStack(2, stack);
             VkPipelineShaderStageCreateInfo vertexShaderCreate = VkPipelineShaderStageCreateInfo.callocStack(stack);
@@ -183,7 +179,10 @@ public class GraphicsPipeline {
             commandBuffers.add(new VkCommandBuffer(pointerBuffer.get(), vulkanDevice.getVkDevice()));
         }
         allocateInfo.free();
-        /* 
+
+    }
+    public void renderCommandBuffers(){
+        VK13.vkDeviceWaitIdle(vulkanDevice.getVkDevice());
         VkCommandBufferBeginInfo beginInfo = VkCommandBufferBeginInfo.malloc();
         beginInfo.clear();
 
@@ -240,15 +239,23 @@ public class GraphicsPipeline {
                 throw new RuntimeException("Failed to record command buffer");
             }
         }
-        */
-    
+
+        clearValues.free();
+        clearDepthStencilValue.free();
+        renderArea.free();
+        renderPassInfo.free();
+        beginInfo.free();
     }
 
     public void bind(VkCommandBuffer commandBuffer) {
         vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
     }
 
-    
+    public void update() {
+        int imageIndex = swapChain.nextImage();
+        swapChain.submitCommandBuffer(commandBuffers.get(imageIndex), imageIndex);
+
+    }
 
     private long createShader(VkDevice device, ByteBuffer binary) {
         VkShaderModuleCreateInfo moduleCreateInfo = VkShaderModuleCreateInfo.malloc();
@@ -263,28 +270,4 @@ public class GraphicsPipeline {
         moduleCreateInfo.free();
         return -1;
     }
-
-    public List<VkCommandBuffer> getCommandBuffers() {
-        return commandBuffers;
-    }
-
-    public long getPipeline() {
-        return pipeline;
-    }
-    public void destroy(){
-        PointerBuffer pb = stackPush().mallocPointer(commandBuffers.size());
-        pb.clear();
-        commandBuffers.forEach(commandBuffer->{
-            pb.put(commandBuffer.address());
-        });
-        pb.rewind();
-        VK13.vkFreeCommandBuffers(vulkanDevice.getVkDevice(), vulkanDevice.getCommandPool(), pb);
-        vkDestroyPipeline(vulkanDevice.getVkDevice(), pipeline, null);
-        shaders.forEach(shader->{
-            vkDestroyShaderModule(vulkanDevice.getVkDevice(), shader, null);
-        });
-        
-    }
-    
-
 }

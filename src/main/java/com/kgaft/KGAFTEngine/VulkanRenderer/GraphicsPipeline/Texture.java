@@ -38,13 +38,12 @@ public class Texture {
     private VulkanDevice device;
     private long textureImageView;
     private long textureSampler;
-    private int dstBinding;
 
-    public void createTextureImage(String texturePath, VulkanDevice device, int dstBinding) {
+    public void createTextureImage(String texturePath, VulkanDevice device) {
         this.device = device;
-        this.dstBinding = dstBinding;
+
         try (MemoryStack stack = MemoryStack.stackPush()) {
-            
+
             IntBuffer pWidth = stack.mallocInt(1);
             IntBuffer pHeight = stack.mallocInt(1);
             IntBuffer pChannels = stack.mallocInt(1);
@@ -239,7 +238,7 @@ public class Texture {
                 imageInfo.sampler(textureSampler);
         toAdd.get();
         toAdd.sType(VK13.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET);
-        toAdd.dstBinding(dstBinding);
+        toAdd.dstBinding(1);
         toAdd.dstArrayElement(0);
         toAdd.descriptorType(VK13.VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER);
         toAdd.descriptorCount(1);
