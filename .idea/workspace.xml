@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="125094e9-00dd-4402-9ce4-0c1fd0d297e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/AlignmentUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/DescriptorSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/DescriptorSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/GraphicsPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/GraphicsPipeline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/PipelineConfigStruct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/PipelineConfigStruct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/VulkanRenderer/VulkanDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/VulkanRenderer/VulkanDevice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/SPIR-V/default.frag" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/SPIR-V/default.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SPIR-V/default.frag" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SPIR-V/default.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/AlignmentUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/DescriptorSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/DescriptorSet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/GraphicsPipeline.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/GraphicsPipeline.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/PipelineConfigStruct.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/VulkanRenderer/GraphicsPipeline/PipelineConfigStruct.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/VulkanRenderer/VulkanDevice.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/VulkanRenderer/VulkanDevice.class" afterDir="false" />
-    </list>
+    <list default="true" id="125094e9-00dd-4402-9ce4-0c1fd0d297e3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,14 +25,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -55,8 +42,12 @@
       <option name="presentableId" value="Default" />
       <updated>1673733005808</updated>
       <workItem from="1673733008415" duration="17000" />
+      <workItem from="1673775711690" duration="50000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
