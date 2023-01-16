@@ -1,15 +1,8 @@
 package com.kgaft.KGAFTEngine;
 
-import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.GraphicsPipeline;
-import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.PipelineConfigStruct;
-import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
-import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanInstance;
-import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanLogger;
-import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanRenderContext;
-import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanSwapChain;
-import com.kgaft.KGAFTEngine.Window.Window;
 
-import java.net.URISyntaxException;
+import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanRenderContext;
+import com.kgaft.KGAFTEngine.Window.Window;
 import java.util.Map;
 
 import org.lwjgl.vulkan.VkPhysicalDevice;

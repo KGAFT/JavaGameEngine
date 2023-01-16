@@ -1,6 +1,6 @@
 package com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline;
 
-import com.kgaft.KGAFTEngine.Engine.Utils.IOUtil;
+
 import com.kgaft.KGAFTEngine.VulkanRenderer.ShaderUtil;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanSwapChain;
@@ -12,7 +12,6 @@ import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.vulkan.*;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -28,18 +27,11 @@ public class GraphicsPipeline {
     private VulkanSwapChain swapChain;
     private long pipeline;
 
-    private VertexBuffer vertexBuffer;
-    private IndexBuffer indexBuffer;
-
-    private PushConstant pushConstant;
-    private DescriptorSet descriptorSet;
+    
     private List<VkCommandBuffer> commandBuffers = new ArrayList<>();
-
-    private UniformBuffer uniformBuffer;
-
     private long pipelineLayout;
 
-    private Texture texture;
+   
 
     public GraphicsPipeline(VulkanDevice vulkanDevice, VulkanSwapChain swapChain) {
         this.vulkanDevice = vulkanDevice;
@@ -48,52 +40,14 @@ public class GraphicsPipeline {
 
     public void load(PipelineConfigStruct pipelineConfigStruct) throws URISyntaxException {
         try (MemoryStack stack = stackPush()) {
-
-            List<ShaderMeshInputStruct> inputData = new ArrayList<>();
-            inputData.add(
-                    new ShaderMeshInputStruct(new Vector3f(0, 0, 0.5f), new Vector3f(0, 0, 0), new Vector2f(0, 0)));
-            inputData.add(new ShaderMeshInputStruct(new Vector3f(0.5f, 0, 0.5f), new Vector3f(0.5f, 0, 0),
-                    new Vector2f(0, 0)));
-            inputData.add(new ShaderMeshInputStruct(new Vector3f(0, 0.5f, 0.5f), new Vector3f(0, 0.5f, 0),
-                    new Vector2f(0, 0)));
-
-            inputData.add(
-                    new ShaderMeshInputStruct(new Vector3f(-0.5f, 0, 0.0f), new Vector3f(0, 1, 0), new Vector2f(0, 0)));
-            inputData.add(new ShaderMeshInputStruct(new Vector3f(0.5f, 0, 0.0f), new Vector3f(0.5f, 0, 0),
-                    new Vector2f(0, 0)));
-            inputData.add(
-                    new ShaderMeshInputStruct(new Vector3f(0, 0.5f, 0.0f), new Vector3f(0, 1f, 0), new Vector2f(0, 0)));
             this.pipelineLayout = pipelineConfigStruct.pipelineLayout;
-            vertexBuffer = new VertexBuffer(vulkanDevice, inputData);
-            List<Integer> indices = new ArrayList<>();
-            indices.add(0);
-            indices.add(1);
-            indices.add(2);
-            indices.add(3);
-            indices.add(4);
-            indices.add(5);
-            indexBuffer = new IndexBuffer(indices, vulkanDevice);
-
-            pushConstant = new PushConstant(pipelineConfigStruct.pipelineLayout);
-            uniformBuffer = new UniformBuffer(vulkanDevice, 3, Float.SIZE);
-            descriptorSet = new DescriptorSet(3);
-            descriptorSet.createDescriptorPool(vulkanDevice);
-            List<Long> sizes = new ArrayList<>();
-            sizes.add((long) Float.SIZE);
-            sizes.add((long) Float.SIZE);
-            sizes.add((long) Float.SIZE);
-
             ByteBuffer bb = ShaderUtil.compileShaderResource("SPIR-V/default.vert", ShaderType.VERTEX_SHADER);
 
             long vertexShader = createShader(vulkanDevice.getVkDevice(), bb);
             bb.clear();
             bb = ShaderUtil.compileShaderResource("SPIR-V/default.frag", ShaderType.FRAGMENT_SHADER);
             long fragmentShader = createShader(vulkanDevice.getVkDevice(), bb);
-            texture = new Texture();
-            texture.createTextureImage(GraphicsPipeline.class.getClassLoader()
-                    .getResource("Models/grind/textures/Main_baseColor.png").getPath().substring(1), vulkanDevice);
-            descriptorSet.createDescriptorSets(vulkanDevice, uniformBuffer.getBuffers(), sizes,
-                    pipelineConfigStruct.descriptorSetLayout, texture);
+            
             VkPipelineShaderStageCreateInfo.Buffer shaderStageCreateInfo = VkPipelineShaderStageCreateInfo
                     .callocStack(2, stack);
             VkPipelineShaderStageCreateInfo vertexShaderCreate = VkPipelineShaderStageCreateInfo.callocStack(stack);
@@ -182,71 +136,16 @@ public class GraphicsPipeline {
 
     }
     public void renderCommandBuffers(){
-        VK13.vkDeviceWaitIdle(vulkanDevice.getVkDevice());
-        VkCommandBufferBeginInfo beginInfo = VkCommandBufferBeginInfo.malloc();
-        beginInfo.clear();
-
-        beginInfo.sType(VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO);
-
-        VkRenderPassBeginInfo renderPassInfo = VkRenderPassBeginInfo.malloc();
-        renderPassInfo.clear();
-
-        renderPassInfo.sType(VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO);
-
-        renderPassInfo.renderPass(swapChain.getRenderPass());
-
-        VkRect2D renderArea = VkRect2D.malloc();
-        renderArea.clear();
-        renderArea.offset(VkOffset2D.malloc().set(0, 0));
-        renderArea.extent(swapChain.getSwapChainExtent());
-        renderPassInfo.renderArea(renderArea);
-
-        VkClearValue.Buffer clearValues = VkClearValue.malloc(2);
-        clearValues.clear();
-        clearValues.color().float32(stackPush().floats(0.0f, 0.0f, 0.0f, 1.0f));
-        clearValues.get();
-        VkClearDepthStencilValue clearDepthStencilValue = VkClearDepthStencilValue.malloc();
-        clearDepthStencilValue.clear();
-        clearDepthStencilValue.depth(1);
-        clearDepthStencilValue.stencil(0);
-        clearValues.depthStencil(clearDepthStencilValue);
-        clearValues.rewind();
-        clearValues.rewind();
-        renderPassInfo.pClearValues(clearValues);
-        for (int i = 0; i < commandBuffers.size(); i++) {
-            VkCommandBuffer commandBuffer = commandBuffers.get(i);
-
-            if (vkBeginCommandBuffer(commandBuffer, beginInfo) != VK_SUCCESS) {
-                throw new RuntimeException("Failed to begin recording command buffer");
-            }
-
-            renderPassInfo.framebuffer(swapChain.getFrameBuffer(i));
-            uniformBuffer.writeToBuffer(i, Float.SIZE, 2.0f);
-            descriptorSet.bind(commandBuffer, i, pipelineLayout);
-            vkCmdBeginRenderPass(commandBuffer, renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-            {
-                vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
-
-                pushConstant.loadData(commandBuffer);
-                vertexBuffer.loadDataToCommandBuffer(commandBuffer);
-
-                indexBuffer.draw(commandBuffer);
-
-            }
-            vkCmdEndRenderPass(commandBuffer);
-
-            if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
-                throw new RuntimeException("Failed to record command buffer");
-            }
-        }
-
-        clearValues.free();
-        clearDepthStencilValue.free();
-        renderArea.free();
-        renderPassInfo.free();
-        beginInfo.free();
+       
+        
+        
     }
-
+    public long getPipeline(){
+        return pipeline;
+    }
+    public List<VkCommandBuffer> getCommandBuffers(){
+        return commandBuffers;
+    }
     public void bind(VkCommandBuffer commandBuffer) {
         vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
     }
