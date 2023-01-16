@@ -4,6 +4,7 @@ package com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryStack;
+import org.lwjgl.vulkan.VkCommandBuffer;
 
 import java.nio.LongBuffer;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class UniformBuffer {
     private int binding;
     private VulkanDevice device;
     private int size;
+    private DescriptorSet descriptorSet;
     public UniformBuffer(VulkanDevice device, int bufferCount, int size, int binding) {
         buffers = new ArrayList<>(bufferCount);
         buffersMemories = new ArrayList<>(bufferCount);
@@ -54,7 +56,10 @@ public class UniformBuffer {
             vkUnmapMemory(device.getVkDevice(), buffersMemories.get(index));
         }
     }
-
+    
+    protected void setDescriptorSet(DescriptorSet descriptorSet) {
+        this.descriptorSet = descriptorSet;
+    }
     public List<Long> getBuffers() {
         return buffers;
     }
@@ -63,6 +68,9 @@ public class UniformBuffer {
     }
     public int getBinding() {
         return binding;
+    }
+    public void attach(VkCommandBuffer commandBuffer, int index, long pipelineLayout){
+        descriptorSet.bind(commandBuffer, index, pipelineLayout);
     }
     
 }

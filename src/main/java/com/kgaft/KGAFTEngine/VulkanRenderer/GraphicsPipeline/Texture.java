@@ -30,7 +30,7 @@ public class Texture {
         toAdd.get();
         toAdd.type(VK13.VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER);
         toAdd.descriptorCount(instancesCount);
-        toAdd.rewind();
+        
     }
 
     private long textureImage;
@@ -38,7 +38,7 @@ public class Texture {
     private VulkanDevice device;
     private long textureImageView;
     private long textureSampler;
-
+    private DescriptorSet descriptorSet;
     public void createTextureImage(String texturePath, VulkanDevice device) {
         this.device = device;
 
@@ -231,19 +231,25 @@ public class Texture {
         textureImageView = device.createImageView(textureImage, VK13.VK_FORMAT_R8G8B8A8_SRGB);
     }
 
-    public void loadToWrite(VkWriteDescriptorSet.Buffer toAdd) {
+    public void loadToWrite(VkWriteDescriptorSet.Buffer toAdd, int binding) {
         VkDescriptorImageInfo.Buffer imageInfo = VkDescriptorImageInfo.callocStack(1, MemoryStack.stackPush());
                 imageInfo.imageLayout(VK13.VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
                 imageInfo.imageView(textureImageView);
                 imageInfo.sampler(textureSampler);
         toAdd.get();
         toAdd.sType(VK13.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET);
-        toAdd.dstBinding(1);
+        toAdd.dstBinding(binding);
         toAdd.dstArrayElement(0);
         toAdd.descriptorType(VK13.VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER);
         toAdd.descriptorCount(1);
         toAdd.pImageInfo(imageInfo);
         toAdd.rewind();
+    }
+
+    
+
+    protected void setDescriptorSet(DescriptorSet descriptorSet) {
+        this.descriptorSet = descriptorSet;
     }
 
     private void createTextureSampler() {

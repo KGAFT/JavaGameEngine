@@ -12,115 +12,15 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.vulkan.VK10.*;
 
 public class DescriptorSet {
+    private List<Long> descriptorSets;
 
-    private int imageCount;
+    
 
-    private long descriptorPool;
-
-    private ArrayList<Long> descriptorSets = new ArrayList<>();
-
-    private VulkanDevice device;
-
-    public DescriptorSet(int imageCount) {
-        this.imageCount = imageCount;
+    protected DescriptorSet(List<Long> descriptorSets) {
+        this.descriptorSets = descriptorSets;
     }
 
-    public void createDescriptorPool(VulkanDevice device) {
 
-        try (MemoryStack stack = stackPush()) {
-            this.device = device;
-            VkDescriptorPoolSize.Buffer poolSize = VkDescriptorPoolSize.callocStack(2, stack);
-            poolSize.type(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
-            poolSize.descriptorCount(imageCount);
-            Texture.getSizeForDescriptorPool(poolSize, imageCount);
-            VkDescriptorPoolCreateInfo poolInfo = VkDescriptorPoolCreateInfo.callocStack(stack);
-            poolInfo.sType(VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO);
-            poolInfo.pPoolSizes(poolSize);
-            poolInfo.maxSets(imageCount);
-
-            LongBuffer pDescriptorPool = stack.mallocLong(1);
-
-            if (vkCreateDescriptorPool(device.getVkDevice(), poolInfo, null, pDescriptorPool) != VK_SUCCESS) {
-                throw new RuntimeException("Failed to create descriptor pool");
-            }
-
-            descriptorPool = pDescriptorPool.get(0);
-        }
-    }
-
-    public void createDescriptorSets(List<UniformBuffer> uniformBuffers,
-            long descriptorSetLayout, Texture texture) {
-
-        try (MemoryStack stack = stackPush()) {
-
-            LongBuffer layouts = stack.mallocLong(imageCount);
-            for (int i = 0; i < layouts.capacity(); i++) {
-                layouts.put(i, descriptorSetLayout);
-            }
-
-            VkDescriptorSetAllocateInfo allocInfo = VkDescriptorSetAllocateInfo.callocStack(stack);
-            allocInfo.sType(VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO);
-            allocInfo.descriptorPool(descriptorPool);
-            allocInfo.pSetLayouts(layouts);
-
-            LongBuffer pDescriptorSets = stack.mallocLong(imageCount);
-
-            if (vkAllocateDescriptorSets(device.getVkDevice(), allocInfo, pDescriptorSets) != VK_SUCCESS) {
-                throw new RuntimeException("Failed to allocate descriptor sets");
-            }
-
-            descriptorSets = new ArrayList<>(pDescriptorSets.capacity());
-
-            VkDescriptorBufferInfo.Buffer bufferInfo = VkDescriptorBufferInfo.callocStack(1, stack);
-            bufferInfo.offset(0);
-
-            VkWriteDescriptorSet.Buffer descriptorWrite = VkWriteDescriptorSet.callocStack(uniformBuffers.size() + 1,
-                    stack);
-            descriptorWrite.sType(VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET);
-            descriptorWrite.dstBinding(0);
-            descriptorWrite.dstArrayElement(0);
-            descriptorWrite.descriptorType(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
-            descriptorWrite.descriptorCount(1);
-            descriptorWrite.pBufferInfo(bufferInfo);
-            texture.loadToWrite(descriptorWrite);
-
-            for (int i = 0; i < pDescriptorSets.capacity(); i++) {
-
-                long descriptorSet = pDescriptorSets.get(i);
-
-                bufferInfo.buffer(uniformBuffers.get(i));
-                bufferInfo.range(size.get(i));
-                while (descriptorWrite.hasRemaining()) {
-                    descriptorWrite.dstSet(descriptorSet);
-                    descriptorWrite.get();
-                }
-                descriptorWrite.rewind();
-
-                vkUpdateDescriptorSets(device.getVkDevice(), descriptorWrite, null);
-
-                descriptorSets.add(descriptorSet);
-            }
-        }
-
-    }
-
-    private void updateUniformBuffes(UniformBuffer uBuffer, LongBuffer pDescriptorSets, VkWriteDescriptorSet.Buffer descriptorWrite, VkDescriptorBufferInfo.Buffer bufferInfo) {
-        for(int i = 0; i<uBuffer.getBuffers().size(); i++){
-            long descriptorSet = pDescriptorSets.get(i);
-
-            bufferInfo.buffer(uBuffer.getBuffers().get(i));
-            bufferInfo.range(uBuffer.getSize());
-            while (descriptorWrite.hasRemaining()) {
-                descriptorWrite.dstSet(descriptorSet);
-                descriptorWrite.get();
-            }
-            descriptorWrite.rewind();
-
-            vkUpdateDescriptorSets(device.getVkDevice(), descriptorWrite, null);
-
-            descriptorSets.add(descriptorSet);
-        }
-    }
 
     public void bind(VkCommandBuffer commandBuffer, int index, long pipelineLayout) {
         try (MemoryStack stack = stackPush()) {

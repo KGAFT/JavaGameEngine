@@ -24,7 +24,7 @@ vec3 repairCoord(vec3 inputCoord){
 void main() {
 
     gl_Position = vec4(repairCoord(position), 1.0);
-    if(gubo.data==2){
+    if(gubo.data==1){
         gl_Position.x*=0.5f;
     }
     normals = Normals;

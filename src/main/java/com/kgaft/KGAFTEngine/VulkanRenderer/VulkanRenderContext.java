@@ -20,6 +20,7 @@ import org.lwjgl.vulkan.VkPhysicalDeviceProperties;
 import org.lwjgl.vulkan.VkRect2D;
 import org.lwjgl.vulkan.VkRenderPassBeginInfo;
 
+import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.DescriptorPool;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.DescriptorSet;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.GraphicsPipeline;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.IndexBuffer;
@@ -43,7 +44,7 @@ public class VulkanRenderContext {
     private VertexBuffer vertexBuffer;
     private IndexBuffer indexBuffer;
     private PushConstant pushConstant;
-    private DescriptorSet descriptorSet;
+    private DescriptorPool descriptorPool;
     private UniformBuffer uniformBuffer;
     private Texture texture;
     private PipelineConfigStruct pipelineConfigStruct;
@@ -94,7 +95,7 @@ public class VulkanRenderContext {
 
             renderPassInfo.framebuffer(swapChain.getFrameBuffer(i));
             uniformBuffer.writeToBuffer(i, Float.SIZE, 2.0f);
-            descriptorSet.bind(commandBuffer, i, pipelineConfigStruct.pipelineLayout);
+            uniformBuffer.attach(commandBuffer, i, pipelineConfigStruct.pipelineLayout);
             VK13.vkCmdBeginRenderPass(commandBuffer, renderPassInfo, VK13.VK_SUBPASS_CONTENTS_INLINE);
             {
                 VK13.vkCmdBindPipeline(commandBuffer, VK13.VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline.getPipeline());
@@ -168,11 +169,12 @@ public class VulkanRenderContext {
             indices.add(3);
             indices.add(0);
             indexBuffer = new IndexBuffer(indices, device);
+            descriptorPool = DescriptorPool.createInstance(device, 3, pipelineConfigStruct.descriptorSetLayout);
 
             pushConstant = new PushConstant(pipelineConfigStruct.pipelineLayout);
-            uniformBuffer = new UniformBuffer(device, 3, Float.SIZE);
-            descriptorSet = new DescriptorSet(3);
-            descriptorSet.createDescriptorPool(device);
+            uniformBuffer = new UniformBuffer(device, 3, Float.SIZE, 0);
+            descriptorPool.registerUniformBuffer(uniformBuffer, 0);
+                    
             List<Long> sizes = new ArrayList<>();
             sizes.add((long) Float.SIZE);
             sizes.add((long) Float.SIZE);
@@ -180,7 +182,7 @@ public class VulkanRenderContext {
             texture = new Texture();
             texture.createTextureImage(VulkanRenderContext.class.getClassLoader()
                     .getResource("textures/baseWhiteColor.png").getPath().substring(1), device);
-            descriptorSet.createDescriptorSets(device, uniformBuffer.getBuffers(), sizes,
-                    pipelineConfigStruct.descriptorSetLayout, texture);
+            descriptorPool.registerTexture(texture, 1, 3);
+            
     }
 }
