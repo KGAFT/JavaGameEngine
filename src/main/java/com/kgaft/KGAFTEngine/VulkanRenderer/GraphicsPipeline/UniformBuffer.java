@@ -5,7 +5,6 @@ import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryStack;
 
-import java.nio.ByteBuffer;
 import java.nio.LongBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +15,15 @@ import static org.lwjgl.vulkan.VK10.*;
 public class UniformBuffer {
     private List<Long> buffers;
     private List<Long> buffersMemories;
-
+    private int binding;
     private VulkanDevice device;
-
-    public UniformBuffer(VulkanDevice device, int bufferCount, int size) {
+    private int size;
+    public UniformBuffer(VulkanDevice device, int bufferCount, int size, int binding) {
         buffers = new ArrayList<>(bufferCount);
         buffersMemories = new ArrayList<>(bufferCount);
+        this.binding = binding;
+        this.size = size;
         try(MemoryStack stack = stackPush()) {
-
-
             LongBuffer pBuffer = stack.mallocLong(1);
             LongBuffer pBufferMemory = stack.mallocLong(1);
 
@@ -59,4 +58,11 @@ public class UniformBuffer {
     public List<Long> getBuffers() {
         return buffers;
     }
+    public int getSize(){
+        return size;
+    }
+    public int getBinding() {
+        return binding;
+    }
+    
 }

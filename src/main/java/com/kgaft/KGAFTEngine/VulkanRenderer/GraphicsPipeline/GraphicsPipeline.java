@@ -4,6 +4,7 @@ package com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline;
 import com.kgaft.KGAFTEngine.VulkanRenderer.ShaderUtil;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanSwapChain;
+import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.PipelineConfiguration.PipelineConfigStruct;
 import com.kgaft.KGAFTEngine.VulkanRenderer.ShaderUtil.ShaderType;
 
 import org.joml.Vector2f;

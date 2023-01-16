@@ -1,7 +1,8 @@
-package com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline;
+package com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.PipelineConfiguration;
 
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanDevice;
 import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanSwapChain;
+import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.PushConstantData;
 import com.kgaft.KGAFTEngine.Window.Window;
 import org.lwjgl.vulkan.*;
 

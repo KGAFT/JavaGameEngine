@@ -19,6 +19,8 @@ public class DescriptorSet {
 
     private ArrayList<Long> descriptorSets = new ArrayList<>();
 
+    private VulkanDevice device;
+
     public DescriptorSet(int imageCount) {
         this.imageCount = imageCount;
     }
@@ -26,7 +28,7 @@ public class DescriptorSet {
     public void createDescriptorPool(VulkanDevice device) {
 
         try (MemoryStack stack = stackPush()) {
-
+            this.device = device;
             VkDescriptorPoolSize.Buffer poolSize = VkDescriptorPoolSize.callocStack(2, stack);
             poolSize.type(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
             poolSize.descriptorCount(imageCount);
@@ -46,7 +48,7 @@ public class DescriptorSet {
         }
     }
 
-    public void createDescriptorSets(VulkanDevice device, List<Long> uniformBuffers, List<Long> size,
+    public void createDescriptorSets(List<UniformBuffer> uniformBuffers,
             long descriptorSetLayout, Texture texture) {
 
         try (MemoryStack stack = stackPush()) {
@@ -72,7 +74,8 @@ public class DescriptorSet {
             VkDescriptorBufferInfo.Buffer bufferInfo = VkDescriptorBufferInfo.callocStack(1, stack);
             bufferInfo.offset(0);
 
-            VkWriteDescriptorSet.Buffer descriptorWrite = VkWriteDescriptorSet.callocStack(2, stack);
+            VkWriteDescriptorSet.Buffer descriptorWrite = VkWriteDescriptorSet.callocStack(uniformBuffers.size() + 1,
+                    stack);
             descriptorWrite.sType(VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET);
             descriptorWrite.dstBinding(0);
             descriptorWrite.dstArrayElement(0);
@@ -97,6 +100,25 @@ public class DescriptorSet {
 
                 descriptorSets.add(descriptorSet);
             }
+        }
+
+    }
+
+    private void updateUniformBuffes(UniformBuffer uBuffer, LongBuffer pDescriptorSets, VkWriteDescriptorSet.Buffer descriptorWrite, VkDescriptorBufferInfo.Buffer bufferInfo) {
+        for(int i = 0; i<uBuffer.getBuffers().size(); i++){
+            long descriptorSet = pDescriptorSets.get(i);
+
+            bufferInfo.buffer(uBuffer.getBuffers().get(i));
+            bufferInfo.range(uBuffer.getSize());
+            while (descriptorWrite.hasRemaining()) {
+                descriptorWrite.dstSet(descriptorSet);
+                descriptorWrite.get();
+            }
+            descriptorWrite.rewind();
+
+            vkUpdateDescriptorSets(device.getVkDevice(), descriptorWrite, null);
+
+            descriptorSets.add(descriptorSet);
         }
     }
 

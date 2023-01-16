@@ -23,12 +23,12 @@ import org.lwjgl.vulkan.VkRenderPassBeginInfo;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.DescriptorSet;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.GraphicsPipeline;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.IndexBuffer;
-import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.PipelineConfigStruct;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.PushConstant;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.ShaderMeshInputStruct;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.Texture;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.UniformBuffer;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.VertexBuffer;
+import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.PipelineConfiguration.PipelineConfigStruct;
 import com.kgaft.KGAFTEngine.Window.Window;
 
 
