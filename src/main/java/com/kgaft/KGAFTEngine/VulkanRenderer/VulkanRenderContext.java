@@ -30,6 +30,7 @@ import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.Texture;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.UniformBuffer;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.VertexBuffer;
 import com.kgaft.KGAFTEngine.VulkanRenderer.GraphicsPipeline.PipelineConfiguration.PipelineConfigStruct;
+import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanLogger.VulkanLogger;
 import com.kgaft.KGAFTEngine.Window.Window;
 
 
@@ -96,6 +97,8 @@ public class VulkanRenderContext {
             renderPassInfo.framebuffer(swapChain.getFrameBuffer(i));
             uniformBuffer.writeToBuffer(i, Float.SIZE, 2.0f);
             uniformBuffer.attach(commandBuffer, i, pipelineConfigStruct.pipelineLayout);
+            texture.attach(commandBuffer, i, pipelineConfigStruct.pipelineLayout);
+            
             VK13.vkCmdBeginRenderPass(commandBuffer, renderPassInfo, VK13.VK_SUBPASS_CONTENTS_INLINE);
             {
                 VK13.vkCmdBindPipeline(commandBuffer, VK13.VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline.getPipeline());
@@ -134,7 +137,7 @@ public class VulkanRenderContext {
     private VkClearValue.Buffer prepareClearValues(){
         VkClearValue.Buffer clearValues = VkClearValue.malloc(2);
         clearValues.clear();
-        clearValues.color().float32(MemoryStack.stackPush().floats(0.8f, 0.5f, 0.2f, 1.0f));
+        clearValues.color().float32(MemoryStack.stackPush().floats(0.33f, 0.0f, 0.67f, 1.0f));
         clearValues.get();
         VkClearDepthStencilValue clearDepthStencilValue = VkClearDepthStencilValue.malloc();
         clearDepthStencilValue.clear();

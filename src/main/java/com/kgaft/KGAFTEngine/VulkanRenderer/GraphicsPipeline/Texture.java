@@ -27,10 +27,10 @@ public class Texture {
     private static VkImageCreateInfo imageInfo;
 
     public static void getSizeForDescriptorPool(VkDescriptorPoolSize.Buffer toAdd, int instancesCount) {
-        toAdd.get();
+
         toAdd.type(VK13.VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER);
         toAdd.descriptorCount(instancesCount);
-        
+
     }
 
     private long textureImage;
@@ -39,6 +39,7 @@ public class Texture {
     private long textureImageView;
     private long textureSampler;
     private DescriptorSet descriptorSet;
+
     public void createTextureImage(String texturePath, VulkanDevice device) {
         this.device = device;
 
@@ -233,20 +234,18 @@ public class Texture {
 
     public void loadToWrite(VkWriteDescriptorSet.Buffer toAdd, int binding) {
         VkDescriptorImageInfo.Buffer imageInfo = VkDescriptorImageInfo.callocStack(1, MemoryStack.stackPush());
-                imageInfo.imageLayout(VK13.VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
-                imageInfo.imageView(textureImageView);
-                imageInfo.sampler(textureSampler);
-        toAdd.get();
+        imageInfo.imageLayout(VK13.VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+        imageInfo.imageView(textureImageView);
+        imageInfo.sampler(textureSampler);
+
         toAdd.sType(VK13.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET);
-        toAdd.dstBinding(binding);
+        toAdd.dstBinding(1);
         toAdd.dstArrayElement(0);
         toAdd.descriptorType(VK13.VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER);
-        toAdd.descriptorCount(1);
+        toAdd.descriptorCount(binding);
         toAdd.pImageInfo(imageInfo);
-        toAdd.rewind();
-    }
 
-    
+    }
 
     protected void setDescriptorSet(DescriptorSet descriptorSet) {
         this.descriptorSet = descriptorSet;
@@ -279,6 +278,10 @@ public class Texture {
 
             textureSampler = pTextureSampler.get(0);
         }
+    }
+    public void attach(VkCommandBuffer commandBuffer, int index, long pipelineLayout){
+        descriptorSet.bind(commandBuffer, index, pipelineLayout);
+        
     }
 
 }

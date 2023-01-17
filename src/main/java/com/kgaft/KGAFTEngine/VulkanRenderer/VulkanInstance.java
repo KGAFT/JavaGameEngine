@@ -1,5 +1,6 @@
 package com.kgaft.KGAFTEngine.VulkanRenderer;
 
+import com.kgaft.KGAFTEngine.VulkanRenderer.VulkanLogger.VulkanLogger;
 import com.kgaft.KGAFTEngine.Window.Window;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryStack;

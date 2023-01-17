@@ -40,17 +40,22 @@ public class DescriptorPool {
     private void createDescriptorPool(VulkanDevice device, int imageCount) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
             this.device = device;
-            VkDescriptorPoolSize.Buffer poolSize = VkDescriptorPoolSize.callocStack(1 + TEXTURE_BLOCK_AMOUNT, stack);
-            poolSize.type(VK13.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
-            poolSize.descriptorCount(imageCount * UNIFORM_BUFFERS_AMOUNT);
+            VkDescriptorPoolSize.Buffer poolSize = VkDescriptorPoolSize.callocStack(UNIFORM_BUFFERS_AMOUNT+ TEXTURE_BLOCK_AMOUNT, stack);
+            for(int i = 0; i<UNIFORM_BUFFERS_AMOUNT; i++){
+                poolSize.type(VK13.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER);
+                poolSize.descriptorCount(imageCount * UNIFORM_BUFFERS_AMOUNT);
+                poolSize.get();
+            }
+            
             for (int i = 0; i < TEXTURE_BLOCK_AMOUNT; i++) {
                 Texture.getSizeForDescriptorPool(poolSize, imageCount);
+                poolSize.get();
             }
             poolSize.rewind();
             VkDescriptorPoolCreateInfo poolInfo = VkDescriptorPoolCreateInfo.callocStack(stack);
             poolInfo.sType(VK13.VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO);
             poolInfo.pPoolSizes(poolSize);
-            poolInfo.maxSets(imageCount);
+            poolInfo.maxSets(UNIFORM_BUFFERS_AMOUNT+TEXTURE_BLOCK_AMOUNT);
 
             LongBuffer pDescriptorPool = stack.mallocLong(1);
 
@@ -99,20 +104,16 @@ public class DescriptorPool {
             for (int i = 0; i < uniformBuffer.getBuffers().size(); i++) {
 
                 long descriptorSet = pDescriptorSets.get(i);
-
                 bufferInfo.buffer(uniformBuffer.getBuffers().get(i));
-                bufferInfo.range(uniformBuffer.getSize());
-                while (descriptorWrite.hasRemaining()) {
-                    descriptorWrite.dstSet(descriptorSet);
-                    descriptorWrite.get();
-                }
-                descriptorWrite.rewind();
-
+                bufferInfo.range(VK13.VK_WHOLE_SIZE);
+                descriptorWrite.dstSet(descriptorSet);
+                
                 VK13.vkUpdateDescriptorSets(device.getVkDevice(), descriptorWrite, null);
 
                 descriptorSets.add(descriptorSet);
             }
             uniformBuffer.setDescriptorSet(new DescriptorSet(descriptorSets));
+           
         }
 
     }
@@ -123,15 +124,20 @@ public class DescriptorPool {
             for (int i = 0; i < layouts.capacity(); i++) {
                 layouts.put(i, descriptorSetLayout);
             }
-
+            
             VkDescriptorSetAllocateInfo allocInfo = VkDescriptorSetAllocateInfo.callocStack(stack);
+            allocInfo.clear();
             allocInfo.sType(VK13.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO);
             allocInfo.descriptorPool(descriptorPool);
             allocInfo.pSetLayouts(layouts);
 
             LongBuffer pDescriptorSets = stack.mallocLong(imageCount);
-
-            if (VK13.vkAllocateDescriptorSets(device.getVkDevice(), allocInfo, pDescriptorSets) != VK13.VK_SUCCESS) {
+            int result = VK13.vkAllocateDescriptorSets(device.getVkDevice(), allocInfo, pDescriptorSets);
+            if (result != VK13.VK_SUCCESS) {
+                System.out.println(result == VK13.VK_ERROR_OUT_OF_HOST_MEMORY);
+                System.out.println(result == VK13.VK_ERROR_OUT_OF_DEVICE_MEMORY);
+                System.out.println(result == VK13.VK_ERROR_FRAGMENTED_POOL);
+                System.out.println(result == VK13.VK_ERROR_OUT_OF_POOL_MEMORY);
                 throw new RuntimeException("Failed to allocate descriptor sets");
             }
 
@@ -141,9 +147,15 @@ public class DescriptorPool {
             bufferInfo.offset(0);
 
             VkWriteDescriptorSet.Buffer descriptorWrite = VkWriteDescriptorSet.callocStack(1, stack);
-            descriptorWrite.sType(VK13.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET);
             texture.loadToWrite(descriptorWrite, binding);
-            VK13.vkUpdateDescriptorSets(device.getVkDevice(), descriptorWrite, null);
+            for (int i = 0; i < imageCount; i++) {
+
+                long descriptorSet = pDescriptorSets.get(i);
+                descriptorWrite.dstSet(descriptorSet);
+                VK13.vkUpdateDescriptorSets(device.getVkDevice(), descriptorWrite, null);
+                descriptorSets.add(descriptorSet);
+            }
+            
             texture.setDescriptorSet(new DescriptorSet(descriptorSets));
         }
     }
