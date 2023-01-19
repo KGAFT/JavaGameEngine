@@ -40,10 +40,10 @@ void main()
 {    
     
     position = fragmentPosition;
-    normals = normalize(getNormalFromMap(UvsCoords, Normals, fragmentPosition))
+    normals = normalize(getNormalFromMap(UvsCoords, Normals, fragmentPosition));
     albedo = texture(albedoMap, UvsCoords);
     metallic = texture(metallicMap, UvsCoords);
-    roughness = texture(roughness, UvsCoords);
+    roughness = texture(roughnessMap, UvsCoords);
     ao = texture(aoMap, UvsCoords);
-    emissive = texture(emissiveMap, UvsCoords)
+    emissive = texture(emissiveMap, UvsCoords);
 }

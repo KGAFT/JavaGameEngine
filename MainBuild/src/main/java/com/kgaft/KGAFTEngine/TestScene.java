@@ -60,10 +60,10 @@ public class TestScene extends Scene implements KeyBoardCallBack {
             e.printStackTrace();
         }
         secondMesh = model.getMeshes().get(0);
-        secondMesh.setPosition(new Vector3f(0, 10, 130));
+        secondMesh.setPosition(new Vector3f(0, -10, 130));
 
         CollisionLoader collisionLoader = new CollisionLoader();
-        List<com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Physics.RigidBody> rigidBodyList = collisionLoader.loadColission(TestScene.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1), 10, new javax.vecmath.Vector3f(0, 0, 1), new javax.vecmath.Vector3f(0, 100, 100), new Quat4f(0, 0, 0, 1));
+        List<com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Physics.RigidBody> rigidBodyList = collisionLoader.loadColission(TestScene.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1), 10, new javax.vecmath.Vector3f(0, 0, 1), new javax.vecmath.Vector3f(0, -100, 100), new Quat4f(0, 0, 0, 1));
         rigidBody = rigidBodyList.get(0);
 
         addRenderTarget(mesh);

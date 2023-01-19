@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL33.*;
 
 public class Texture {
 
-    private static List<Integer> freeSlots = new ArrayList<>();
+    public static List<Integer> freeSlots = new ArrayList<>();
     public static int textureCount = 0;
     public static final String NORMAL_MAP_TEXTURE = "normalMap";
     public static final String ALBEDO_TEXTURE = "albedoMap";

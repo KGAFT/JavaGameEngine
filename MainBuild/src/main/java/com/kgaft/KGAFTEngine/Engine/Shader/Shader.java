@@ -21,7 +21,7 @@ public class Shader {
     private static int defaultShaderId = -1;
 
     public static final int DEFAULT_SHADER = 0;
-    public static final int SHADES_SHADER = 1;
+    public static final int GBUFFER_SHADER = 1;
 
     public static void uniformMatrix4f(float[] data, String matrixName) {
         GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(currentShaderId, matrixName), false, data);
@@ -110,7 +110,7 @@ public class Shader {
                 case DEFAULT_SHADER:
                     defaultShaderId = compileShaderProgram(shadersToLink);
                     break;
-                case SHADES_SHADER:
+                case GBUFFER_SHADER:
                     shadesShaderId = compileShaderProgram(shadersToLink);
                     break;
             }

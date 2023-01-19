@@ -2,9 +2,9 @@
 
 #define LIGHT_BLOCKS_AMOUNT 100
 
-in vec3 Normals;
+vec3 Normals;
 in vec2 UvsCoords;
-in vec3 fragmentPosition;
+vec3 fragmentPosition;
 
 out vec4 FragColor;
 
@@ -28,7 +28,7 @@ uniform sampler2D metallicMap;
 uniform sampler2D roughnessMap;
 uniform sampler2D aoMap;
 uniform sampler2D emissiveMap;
-
+uniform sampler2D positionsMap;
 
 
 uniform PointLight pointLights[LIGHT_BLOCKS_AMOUNT];
@@ -46,20 +46,6 @@ uniform float emissiveShininess;
 uniform float gammaCorrect;
 uniform float ambientIntensity;
 
-vec3 getNormalFromMap(vec2 uvsCoords, vec3 normals, vec3 fragmentPosition)
-{
-    vec3 tangentNormal = texture(normalMap, uvsCoords).xyz * 2.0 - 1.0;
-
-    vec3 Q1  = dFdx(fragmentPosition);
-    vec3 Q2  = dFdy(fragmentPosition);
-    vec2 st1 = dFdx(uvsCoords);
-    vec2 st2 = dFdy(uvsCoords);
-    vec3 N   = normalize(normals);
-    vec3 T  = normalize(Q1*st2.t - Q2*st1.t);
-    vec3 B  = -normalize(cross(N, T));
-    mat3 TBN = mat3(T, B, N);
-    return normalize(TBN * tangentNormal);
-}
 
 float distributeGGX(vec3 normals, vec3 halfWayVector, float roughness)
 {
@@ -144,9 +130,11 @@ void main()
     float roughness = texture(roughnessMap, UvsCoords).r;
     float ao = texture(aoMap, UvsCoords).r;
     vec4 emissive = texture(emissiveMap, UvsCoords);
-    vec3 processedNormals = normalize(getNormalFromMap(UvsCoords, Normals, fragmentPosition));
+    Normals = texture(normalMap, UvsCoords).xyz;
+    fragmentPosition = texture(positionsMap, UvsCoords).xyz;
+    vec3 processedNormals = normalize(Normals);
     vec3 worldViewVector = normalize(cameraPosition - fragmentPosition);
-
+    
 
     vec3 startFresnelSchlick = vec3(0.04);
     startFresnelSchlick = mix(startFresnelSchlick, albedo, metallic);
@@ -168,4 +156,5 @@ void main()
     color+=(emissive*pow(emissive.a, emissiveShininess)*emissiveIntensity).rgb;
     color = postProcessColor(color);
     FragColor = vec4(color, 1.0);
+    FragColor.x = metallic;
 }
