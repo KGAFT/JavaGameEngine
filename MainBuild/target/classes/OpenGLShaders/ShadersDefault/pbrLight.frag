@@ -156,5 +156,4 @@ void main()
     color+=(emissive*pow(emissive.a, emissiveShininess)*emissiveIntensity).rgb;
     color = postProcessColor(color);
     FragColor = vec4(color, 1.0);
-    FragColor.x = metallic;
 }
