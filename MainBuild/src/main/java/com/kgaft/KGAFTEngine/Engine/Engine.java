@@ -49,10 +49,9 @@ public class Engine implements WindowResizeCallBack {
             Shader.attach();
             currentScene.getCameraManager().update();
             gBuffer.render(currentScene.getTargetsToDraw());
-            
             Shader.switchToDefaultShader();
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
-            GL33.glClearColor(0.0f, 0.0f, 0, 0);
+            GL33.glClearColor(0.0f, 0.0f, 0, 1);
             Shader.attach();
             currentScene.getLightManager().update();
             currentScene.getPhysicsManager().update();
