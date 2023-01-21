@@ -9,6 +9,7 @@ import com.bulletphysics.linearmath.MotionState;
 import com.bulletphysics.linearmath.Transform;
 import com.kgaft.KGAFTEngine.Engine.GameObjects.PlayerNonPhysicsMode;
 import com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Lighting.DirectPbrLight;
+import com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Lighting.PointPbrLight;
 import com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.PhysicsMoveAbleObject;
 import com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Scene;
 import com.kgaft.KGAFTEngine.Engine.GraphicalObjects.Mesh;
@@ -48,6 +49,7 @@ public class TestScene extends Scene implements KeyBoardCallBack {
             e.printStackTrace();
         }
         mesh = model.getMeshes().get(0);
+        mesh.setPosition(new Vector3f(0, -10, 180));
         model = loader.loadModel(TestScene.class.getClassLoader().getResource("Models/PokeBall/Pokeball.obj").getPath().substring(1));
         try{
             model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/PokeBall/pokeballColor.png").getPath(), Texture.ALBEDO_TEXTURE));
@@ -59,19 +61,22 @@ public class TestScene extends Scene implements KeyBoardCallBack {
         }catch (Exception e){
             e.printStackTrace();
         }
-       // secondMesh = model.getMeshes().get(0);
-        //secondMesh.setPosition(new Vector3f(0, -10, 130));
+        secondMesh = model.getMeshes().get(0);
+        secondMesh.setPosition(new Vector3f(0, -10, 170));
 
         CollisionLoader collisionLoader = new CollisionLoader();
-        List<com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Physics.RigidBody> rigidBodyList = collisionLoader.loadColission(TestScene.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1), 10, new javax.vecmath.Vector3f(0, 0, 1), new javax.vecmath.Vector3f(0, -100, 100), new Quat4f(0, 0, 0, 1));
-        rigidBody = rigidBodyList.get(0);
-
+        //List<com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Physics.RigidBody> rigidBodyList = collisionLoader.loadColission(TestScene.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1), 10, new javax.vecmath.Vector3f(0, 0, 1), new javax.vecmath.Vector3f(0, -100, 100), new Quat4f(0, 0, 0, 1));
+        //rigidBody = rigidBodyList.get(0);
+        addRenderTarget(secondMesh);
         addRenderTarget(mesh);
-        //addRenderTarget(secondMesh);
+
     }
     private void setupLight(){
-        directPbrLight = new DirectPbrLight(new Vector3f(1f, 1f, 1f), new Vector3f(0, 0,1));
-        getLightManager().addDirectLight(directPbrLight);
+        PointPbrLight pointPbrLight = new PointPbrLight(new Vector3f(1, 0, 1), new Vector3f(0, -10, 200));
+        directPbrLight = new DirectPbrLight(new Vector3f(1, 1, 1), new Vector3f(-1, -1, -1));
+        directPbrLight.setIntensity(20);
+        pointPbrLight.setIntensity(1000);
+        getLightManager().addPointLight(pointPbrLight);
     }
     @Override
     public void setup() {
@@ -89,7 +94,7 @@ public class TestScene extends Scene implements KeyBoardCallBack {
         RigidBody groundRigidBody = new RigidBody(groundBodyConstructionInfo);
         PhysicsMoveAbleObject physicsMoveAbleObject = new PhysicsMoveAbleObject(null, new com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Physics.RigidBody(groundMotionState, groundRigidBody, groundBodyConstructionInfo));
         physicsMoveAbleObject.setExclude(true);
-        getPhysicsManager().addPhysicsObject(new PhysicsMoveAbleObject(mesh, rigidBody));
+        //getPhysicsManager().addPhysicsObject(new PhysicsMoveAbleObject(mesh, rigidBody));
         getPhysicsManager().addPhysicsObject(physicsMoveAbleObject);
     }
 

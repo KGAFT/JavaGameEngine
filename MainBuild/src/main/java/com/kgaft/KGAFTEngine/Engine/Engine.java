@@ -26,6 +26,7 @@ public class Engine implements WindowResizeCallBack {
         Shader.initializeShader("OpenGLShaders/GBufferShaders", Shader.GBUFFER_SHADER);
         Shader.switchToDefaultShader();
         gBuffer = new GBuffer(window);
+        window.addResizeCallBack(gBuffer);
     }
     private void drawRenderTarget(RenderTarget renderTarget, boolean enableTextures){
         renderTarget.update();
@@ -49,12 +50,15 @@ public class Engine implements WindowResizeCallBack {
             Shader.attach();
             currentScene.getCameraManager().update();
             gBuffer.render(currentScene.getTargetsToDraw());
+            
             Shader.switchToDefaultShader();
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
-            GL33.glClearColor(0.0f, 0.0f, 0, 1);
+            GL33.glClearColor(0.0f, 0.0f, 0, 0);
             Shader.attach();
             currentScene.getLightManager().update();
             currentScene.getPhysicsManager().update();
+            currentScene.getCameraManager().update();
+            currentScene.getTargetsToDraw().forEach(renderTarget -> renderTarget.update());
             gBuffer.loadDataToShader();
             Window.getWindow().postEvents();
         }

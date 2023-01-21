@@ -3,7 +3,7 @@
 #define LIGHT_BLOCKS_AMOUNT 100
 
 vec3 Normals;
-in vec2 UvsCoords;
+vec2 UvsCoords;
 vec3 fragmentPosition;
 
 out vec4 FragColor;
@@ -38,7 +38,7 @@ uniform int enabledSpotLights;
 uniform int enabledDirectionalLights;
 uniform int enabledPointLights;
 uniform vec3 cameraPosition;
-
+uniform vec2 screenSize;
 const float PI = 3.14159265359;
 
 uniform float emissiveIntensity;
@@ -122,9 +122,12 @@ vec3 postProcessColor(vec3 color){
     color = pow(color, vec3(gammaCorrect));
     return color;
 }
-
+vec2 prepareUvCoord(){
+    return gl_FragCoord.xy/screenSize;
+}
 void main()
 {
+    UvsCoords = prepareUvCoord();
     vec3 albedo = pow(texture(albedoMap, UvsCoords).rgb, vec3(2.2));
     float metallic = texture(metallicMap, UvsCoords).r;
     float roughness = texture(roughnessMap, UvsCoords).r;
@@ -132,7 +135,7 @@ void main()
     vec4 emissive = texture(emissiveMap, UvsCoords);
     Normals = texture(normalMap, UvsCoords).xyz;
     fragmentPosition = texture(positionsMap, UvsCoords).xyz;
-    vec3 processedNormals = normalize(Normals);
+    vec3 processedNormals = Normals;
     vec3 worldViewVector = normalize(cameraPosition - fragmentPosition);
     
 
@@ -155,5 +158,5 @@ void main()
 
     color+=(emissive*pow(emissive.a, emissiveShininess)*emissiveIntensity).rgb;
     color = postProcessColor(color);
-    FragColor = vec4(color, 1.0);
+    FragColor = vec4(color, 1.0f);
 }

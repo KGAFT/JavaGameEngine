@@ -72,7 +72,9 @@ public class Shader {
     public static void uniformVector3f(float[] data, String vectorName) {
         GL33.glUniform3fv(GL33.glGetUniformLocation(currentShaderId, vectorName), data);
     }
-
+    public static void uniformVector2f(float[] data, String vectorName){
+        GL33.glUniform2fv(GL33.glGetUniformLocation(currentShaderId, vectorName), data);
+    }
     public static void uniformVector4f(Vector4f data, String vectorName) {
         GL33.glUniform4f(GL33.glGetUniformLocation(currentShaderId, vectorName), data.x, data.y, data.z, data.w);
     }

@@ -16,6 +16,7 @@ import static org.lwjgl.opengl.GL33.*;
 public class Texture {
 
     public static List<Integer> freeSlots = new ArrayList<>();
+    public static int textureCount = 0;
     public static final String NORMAL_MAP_TEXTURE = "normalMap";
     public static final String ALBEDO_TEXTURE = "albedoMap";
     public static final String METALLIC_TEXTURE = "metallicMap";
@@ -26,6 +27,8 @@ public class Texture {
 
 
     public static Texture loadTexture(String filePath, String textureType) throws IOException {
+
+
         PNGDecoder decoder = new PNGDecoder(new FileInputStream(filePath));
         ByteBuffer buf = ByteBuffer.allocateDirect(
                 4 * decoder.getWidth() * decoder.getHeight());
@@ -33,7 +36,7 @@ public class Texture {
         buf.flip();
 
         int textureId = glGenTextures();
-        glActiveTexture(GL_TEXTURE0+acquireTextureSlot(textureType));
+        glActiveTexture(acquireTextureSlot(textureType));
         glBindTexture(GL_TEXTURE_2D, textureId);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, decoder.getWidth(),
@@ -41,9 +44,10 @@ public class Texture {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glGenerateMipmap(GL_TEXTURE_2D);
-      
+
         return new Texture(textureId, acquireTextureSlot(textureType), textureType);
     }
+
     private static int acquireTextureSlot(String samplerName){
         switch(samplerName){
             case NORMAL_MAP_TEXTURE:
@@ -61,7 +65,6 @@ public class Texture {
         }
         return -1;
     }
-
 
     private int textureId;
     private int slot;
