@@ -72,10 +72,10 @@ public class TestScene extends Scene implements KeyBoardCallBack {
 
     }
     private void setupLight(){
-        PointPbrLight pointPbrLight = new PointPbrLight(new Vector3f(1, 0, 1), new Vector3f(0, -10, 200));
+        PointPbrLight pointPbrLight = new PointPbrLight(new Vector3f(1, 0, 1), new Vector3f(10, 50, 200));
         directPbrLight = new DirectPbrLight(new Vector3f(1, 1, 1), new Vector3f(-1, -1, -1));
-        directPbrLight.setIntensity(20);
-        pointPbrLight.setIntensity(1000);
+        directPbrLight.setIntensity(3);
+        pointPbrLight.setIntensity(50000);
         getLightManager().addPointLight(pointPbrLight);
     }
     @Override

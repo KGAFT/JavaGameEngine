@@ -29,8 +29,10 @@ uniform sampler2D roughnessMap;
 uniform sampler2D aoMap;
 uniform sampler2D emissiveMap;
 uniform sampler2D positionsMap;
+uniform sampler2D shadowMap;
 
-
+uniform mat4 lightView;
+uniform vec3 lightDir;
 uniform PointLight pointLights[LIGHT_BLOCKS_AMOUNT];
 uniform DirectLight directLights[LIGHT_BLOCKS_AMOUNT];
 
@@ -137,7 +139,6 @@ void main()
     fragmentPosition = texture(positionsMap, UvsCoords).xyz;
     vec3 processedNormals = Normals;
     vec3 worldViewVector = normalize(cameraPosition - fragmentPosition);
-    
 
     vec3 startFresnelSchlick = vec3(0.04);
     startFresnelSchlick = mix(startFresnelSchlick, albedo, metallic);

@@ -8,7 +8,6 @@ import com.kgaft.KGAFTEngine.Engine.Shader.Shader;
 import com.kgaft.KGAFTEngine.Window.Window;
 import com.kgaft.KGAFTEngine.Window.WindowResizeCallBack;
 
-import java.util.spi.CurrencyNameProvider;
 
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL33;
@@ -17,6 +16,7 @@ public class Engine implements WindowResizeCallBack {
     private Window outputWindow;
     private Scene currentScene;
     private GBuffer gBuffer;
+
     public Engine(Window window){
         this.outputWindow = window;
         GL.createCapabilities();
@@ -24,7 +24,8 @@ public class Engine implements WindowResizeCallBack {
         window.addResizeCallBack(this);
         Shader.initializeShader("OpenGLShaders/ShadersDefault", Shader.DEFAULT_SHADER);
         Shader.initializeShader("OpenGLShaders/GBufferShaders", Shader.GBUFFER_SHADER);
-        Shader.switchToDefaultShader();
+        Shader.initializeShader("OpenGLShaders/ShadowMappingShader", Shader.SHADOW_MAPPING_SHADER);
+        Shader.switchShader(Shader.DEFAULT_SHADER);
         gBuffer = new GBuffer(window);
         window.addResizeCallBack(gBuffer);
     }
@@ -46,12 +47,11 @@ public class Engine implements WindowResizeCallBack {
         currentScene.setup();
         while (Window.getWindow().isWindowActive()){
             Window.getWindow().preRenderEvents();
-            Shader.switchToShadesShader();
+            Shader.switchShader(gBuffer.getShaderType());
             Shader.attach();
             currentScene.getCameraManager().update();
             gBuffer.render(currentScene.getTargetsToDraw());
-            
-            Shader.switchToDefaultShader();
+            Shader.switchShader(Shader.DEFAULT_SHADER);
             GL33.glClear(GL33.GL_COLOR_BUFFER_BIT | GL33.GL_DEPTH_BUFFER_BIT);
             GL33.glClearColor(0.0f, 0.0f, 0, 0);
             Shader.attach();

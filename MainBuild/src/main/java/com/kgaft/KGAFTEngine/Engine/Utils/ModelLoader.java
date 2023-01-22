@@ -30,66 +30,70 @@ public class ModelLoader {
         return model;
     }
     private Mesh processMesh(AIMesh mesh){
-        List<Float> positions = new ArrayList<>();
-        List<Float> normals = new ArrayList<>();
-        List<Float> uvs = new ArrayList<>();
-        List<Integer> indices = new ArrayList<>();
+
         AIVector3D.Buffer verticesBuf = mesh.mVertices();
+        AIVector3D.Buffer normalsBuf = mesh.mNormals();
+        AIVector3D.Buffer uvsBuffer = mesh.mTextureCoords(0);
+        AIFace.Buffer buffer = mesh.mFaces();
+
+        int indicesCapacity = 0;
+        while (buffer.remaining()>0){
+            indicesCapacity+=buffer.get().mIndices().remaining();
+        }
+        buffer.rewind();
+        float[] positions = new float[verticesBuf.remaining()*3];
+        float[] normals = new float[normalsBuf.remaining()*3];
+        float[] uvs = new float[uvsBuffer.remaining()*2];
+        int[] indices = new int[indicesCapacity];
+        int counter = 0;
         while(verticesBuf.remaining()>0){
             AIVector3D vector3D = verticesBuf.get();
-            positions.add(vector3D.x());
-            positions.add(vector3D.y());
-            positions.add(vector3D.z());
+            positions[counter] = vector3D.x();
+            positions[counter+1] = vector3D.y();
+            positions[counter+2] = vector3D.z();
+            counter+=3;
         }
-        AIVector3D.Buffer normalsBuf = mesh.mNormals();
+        counter = 0;
         while(normalsBuf.remaining()>0){
             AIVector3D normal = normalsBuf.get();
-            normals.add(normal.x());
-            normals.add(normal.y());
-            normals.add(normal.z());
+            normals[counter] = normal.x();
+            normals[counter+1] = normal.y();
+            normals[counter+2] = normal.z();
+            counter+=3;
         }
-        AIVector3D.Buffer uvsBuffer = mesh.mTextureCoords(0);
+        counter = 0;
         while(uvsBuffer.remaining()>0){
             AIVector3D vector3D = uvsBuffer.get();
-            uvs.add(vector3D.x());
-            uvs.add(vector3D.y());
+            uvs[counter] = vector3D.x();
+            uvs[counter+1] = vector3D.y();
+            counter+=2;
         }
-        AIFace.Buffer buffer = mesh.mFaces();
+
+
+        counter = 0;
         while (buffer.remaining()>0){
             IntBuffer index = buffer.get().mIndices();
             while(index.remaining()>0){
-                indices.add(index.get());
+                indices[counter]=index.get();
+                counter++;
             }
         }
+
         VertexArrayObject vao = assembleDataToVao(positions, normals, uvs, indices);
         Mesh currentMesh = new Mesh(vao);
         currentMesh.setName(mesh.mName().dataString());
         return currentMesh;
     }
 
-    private VertexArrayObject assembleDataToVao(List<Float> positions, List<Float> normals, List<Float> uvs, List<Integer> indices){
+    private VertexArrayObject assembleDataToVao(float[] positions, float[] normals, float[] uvs,  int[] indices){
         VertexArrayObject vao = VertexArrayObject.createVao();
-        float[] posRaw = new float[positions.size()];
-        float[] normalsRaw = new float[normals.size()];
-        float[] uvsRaw = new float[uvs.size()];
-        int[] indRaw = new int[indices.size()];
-        for (int i = 0; i < positions.size(); i++) {
-            posRaw[i] = positions.get(i);
-        }
-        for (int i = 0; i < normals.size(); i++) {
-            normalsRaw[i] = normals.get(i);
-        }
-        for (int i = 0; i < uvs.size(); i++) {
-            uvsRaw[i] = uvs.get(i);
-        }
-        for (int i = 0; i < indices.size(); i++) {
-            indRaw[i] = indices.get(i);
-        }
 
-        vao.attachEbo(ElementBufferObject.createEbo(indRaw));
-        vao.attachVbo(0, VertexBufferObject.createVbo(posRaw, 3));
-        vao.attachVbo(1, VertexBufferObject.createVbo(uvsRaw, 2));
-        vao.attachVbo(2, VertexBufferObject.createVbo(normalsRaw, 3));
+
+        vao.attachEbo(ElementBufferObject.createEbo(indices));
+        vao.attachVbo(0, VertexBufferObject.createVbo(positions, 3));
+        vao.attachVbo(1, VertexBufferObject.createVbo(uvs, 2));
+        vao.attachVbo(2, VertexBufferObject.createVbo(normals, 3));
+
         return vao;
     }
 }

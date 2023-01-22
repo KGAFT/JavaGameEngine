@@ -11,17 +11,18 @@ import org.lwjgl.opengl.GL33;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Shader {
 
     private static int currentShaderId = -1;
-    private static int shadesShaderId = -1;
 
-    private static int defaultShaderId = -1;
+    private static HashMap<Integer, Integer> shaders = new HashMap<>();
 
     public static final int DEFAULT_SHADER = 0;
     public static final int GBUFFER_SHADER = 1;
+    public static final int SHADOW_MAPPING_SHADER = 2;
 
     public static void uniformMatrix4f(float[] data, String matrixName) {
         GL33.glUniformMatrix4fv(GL33.glGetUniformLocation(currentShaderId, matrixName), false, data);
@@ -72,9 +73,11 @@ public class Shader {
     public static void uniformVector3f(float[] data, String vectorName) {
         GL33.glUniform3fv(GL33.glGetUniformLocation(currentShaderId, vectorName), data);
     }
-    public static void uniformVector2f(float[] data, String vectorName){
+
+    public static void uniformVector2f(float[] data, String vectorName) {
         GL33.glUniform2fv(GL33.glGetUniformLocation(currentShaderId, vectorName), data);
     }
+
     public static void uniformVector4f(Vector4f data, String vectorName) {
         GL33.glUniform4f(GL33.glGetUniformLocation(currentShaderId, vectorName), data.x, data.y, data.z, data.w);
     }
@@ -104,18 +107,11 @@ public class Shader {
                     type = GL33.GL_VERTEX_SHADER;
                     break;
             }
-            shadersToLink.add(compileShader(getShaderSourceCode(workResourcesDirectory+"/" + listFile.getName()), type));
+            shadersToLink.add(compileShader(getShaderSourceCode(workResourcesDirectory + "/" + listFile.getName()), type));
 
         }
         try {
-            switch(shaderType){
-                case DEFAULT_SHADER:
-                    defaultShaderId = compileShaderProgram(shadersToLink);
-                    break;
-                case GBUFFER_SHADER:
-                    shadesShaderId = compileShaderProgram(shadersToLink);
-                    break;
-            }
+           shaders.put(shaderType, compileShaderProgram(shadersToLink));
 
         } catch (RuntimeException e) {
             shadersToLink.forEach(GL33::glDeleteShader);
@@ -131,12 +127,8 @@ public class Shader {
         }
     }
 
-    public static void switchToDefaultShader() {
-        currentShaderId = defaultShaderId;
-    }
-
-    public static void switchToShadesShader() {
-        currentShaderId = shadesShaderId;
+    public static void switchShader(int shaderType) {
+        currentShaderId = shaders.get(shaderType);
     }
 
     private static int compileShaderProgram(List<Integer> shaders) {

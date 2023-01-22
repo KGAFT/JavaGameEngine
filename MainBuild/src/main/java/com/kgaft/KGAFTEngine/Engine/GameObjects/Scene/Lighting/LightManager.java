@@ -12,7 +12,6 @@ public class LightManager {
     private List<ShaderStruct> pointLights = new ArrayList<>();
     private List<ShaderStruct> directLights = new ArrayList<>();
 
-
     public void update() {
         Shader.uniformInt(pointLights.size(), "enabledPointLights");
         Shader.uniformInt(directLights.size(), "enabledDirectionalLights");
@@ -36,4 +35,5 @@ public class LightManager {
     public void removeDirectLight(DirectPbrLight light) {
         this.directLights.remove(light);
     }
+
 }

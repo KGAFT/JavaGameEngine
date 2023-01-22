@@ -135,13 +135,13 @@ public class GBuffer implements IFrameBuffer, WindowResizeCallBack{
 
         id = GL33.glGenFramebuffers();
         GL33.glBindFramebuffer(GL33.GL_FRAMEBUFFER, id);
-        positionsTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT0);
-        normalTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT1);
-        albedoTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT2);
-        metallicTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT3);
-        roughnessTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT4);
-        aoTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT5);
-        emissiveTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT6);
+        positionsTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT0, null);
+        normalTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT1, null);
+        albedoTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT2, null);
+        metallicTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT3, null);
+        roughnessTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT4, null);
+        aoTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT5, null);
+        emissiveTexture = FrameBufferTexture.createTexture(id, width, height, GL33.GL_COLOR_ATTACHMENT6, null);
         GL33.glDrawBuffers(new int[]{GL33.GL_COLOR_ATTACHMENT0, GL33.GL_COLOR_ATTACHMENT1, GL33.GL_COLOR_ATTACHMENT2,  GL33.GL_COLOR_ATTACHMENT3, GL33.GL_COLOR_ATTACHMENT4, GL33.GL_COLOR_ATTACHMENT5, GL33.GL_COLOR_ATTACHMENT6});
         rboDepth=GL33.glGenRenderbuffers();
         GL33.glBindRenderbuffer(GL33.GL_RENDERBUFFER, rboDepth);
