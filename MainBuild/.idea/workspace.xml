@@ -9,7 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="125094e9-00dd-4402-9ce4-0c1fd0d297e3" name="Changes" comment="" />
+    <list default="true" id="125094e9-00dd-4402-9ce4-0c1fd0d297e3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/ShaderBuffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/ShaderBuffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/OpenGLShaders/GBufferShaders/default.frag" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/OpenGLShaders/GBufferShaders/default.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/OpenGLShaders/GBufferShaders/default.vert" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/OpenGLShaders/GBufferShaders/default.vert" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
