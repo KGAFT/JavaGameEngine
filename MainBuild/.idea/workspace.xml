@@ -9,25 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="125094e9-00dd-4402-9ce4-0c1fd0d297e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/Engine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Lighting/LightManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Lighting/LightManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/FrameBufferTexture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/FrameBufferTexture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/Shader/Shader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/Shader/Shader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/Utils/ModelLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/Utils/ModelLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/TestScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/TestScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/OpenGLShaders/ShadersDefault/pbrLight.frag" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/OpenGLShaders/ShadersDefault/pbrLight.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OpenGLShaders/ShadersDefault/pbrLight.frag" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OpenGLShaders/ShadersDefault/pbrLight.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/Engine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/Engine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Lighting/LightManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Lighting/LightManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/FrameBufferTexture.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/FrameBufferTexture.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/Shader/Shader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/Shader/Shader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/Utils/ModelLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/Engine/Utils/ModelLoader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/TestScene.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kgaft/KGAFTEngine/TestScene.class" afterDir="false" />
-    </list>
+    <list default="true" id="125094e9-00dd-4402-9ce4-0c1fd0d297e3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="GLSL Shader" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -66,8 +48,8 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/documents/projects/GitHub/JavaGameEngine/MainBuild&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/daniil/Documents/JavaGameEngine/MainBuild&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
@@ -75,6 +57,8 @@
 }</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../jdk/graalvm-ce-java11-22.3.0" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.kgaft.KGAFTEngine.Main" />
       <module name="MainBuild" />
       <extension name="coverage">

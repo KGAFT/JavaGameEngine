@@ -37,7 +37,7 @@ public class TestScene extends Scene implements KeyBoardCallBack {
     }
     private void loadModels(){
         ModelLoader loader = new ModelLoader();
-        Model model = loader.loadModel(TestScene.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1));
+        Model model = loader.loadModel(TestScene.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath());
         try {
             model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/pokedex/Pokedex_LowPoly_Pokedex_BaseColor_tga.png").getPath(), Texture.ALBEDO_TEXTURE));
             model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/pokedex/Pokedex_T_ao.png").getPath(), Texture.AMBIENT_OCCLUSION_MAP));
@@ -50,7 +50,7 @@ public class TestScene extends Scene implements KeyBoardCallBack {
         }
         mesh = model.getMeshes().get(0);
         mesh.setPosition(new Vector3f(0, -10, 180));
-        model = loader.loadModel(TestScene.class.getClassLoader().getResource("Models/PokeBall/Pokeball.obj").getPath().substring(1));
+        model = loader.loadModel(TestScene.class.getClassLoader().getResource("Models/PokeBall/Pokeball.obj").getPath());
         try{
             model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/PokeBall/pokeballColor.png").getPath(), Texture.ALBEDO_TEXTURE));
             model.addTexture(Texture.loadTexture(TestScene.class.getClassLoader().getResource("Models/PokeBall/Pokeball_Pokeball_Metallic.png").getPath(), Texture.METALLIC_TEXTURE));
@@ -62,7 +62,7 @@ public class TestScene extends Scene implements KeyBoardCallBack {
             e.printStackTrace();
         }
         secondMesh = model.getMeshes().get(0);
-        secondMesh.setPosition(new Vector3f(0, -10, 170));
+        secondMesh.setPosition(new Vector3f(0, -10, 200));
 
         CollisionLoader collisionLoader = new CollisionLoader();
         //List<com.kgaft.KGAFTEngine.Engine.GameObjects.Scene.Physics.RigidBody> rigidBodyList = collisionLoader.loadColission(TestScene.class.getClassLoader().getResource("Models/pokedex/pokedex.gltf").getPath().substring(1), 10, new javax.vecmath.Vector3f(0, 0, 1), new javax.vecmath.Vector3f(0, -100, 100), new Quat4f(0, 0, 0, 1));

@@ -1,4 +1,12 @@
 {
 	"folders": [],
-	"settings": {}
+	"settings": {},
+	"java.configuration.runtimes": [
+		
+		{
+		  "name": "GraalVM-11",
+		  "path": "/home/daniil/Documents/jdk/graalvm-ce-java11-22.3.0",
+		}
+		
+	  ]
 }

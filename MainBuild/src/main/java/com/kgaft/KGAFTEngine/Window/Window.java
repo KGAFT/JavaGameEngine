@@ -39,8 +39,10 @@ public class Window {
                 if (windowHandle != 0) {
                     glfwMakeContextCurrent(windowHandle);
                     //glfwSetWindowAttrib(windowHandle, GLFW_DECORATED, GLFW_FALSE);
+                    glfwSwapInterval(0);
                     windowInstance = new Window(windowHandle, width, height);
                     windowInstance.vulkan = vulkan;
+                    windowInstance.windowTitle = windowTitle;
                 }
             }
         }
@@ -57,13 +59,15 @@ public class Window {
 
     private List<MouseMovementCallBack> mouseCallBacks = new ArrayList<>();
 
+    private double lastTime;
+
     private double lastMouseX;
     private double lastMouseY;
     private int width;
     private int height;
-
+    private int counter;
     private int cursorMode = FIXED_HIDDEN_CURSOR_MODE;
-
+    private String windowTitle;
     private Window(long windowHandle, int width, int height) {
         this.windowHandle = windowHandle;
         this.width = width;
@@ -95,6 +99,15 @@ public class Window {
     public void preRenderEvents(){
         checkMouseCallBacks();
         checkKeyBoardsCallBacks();
+        double currentTime = glfwGetTime();
+        double timeDiff = currentTime-lastTime;
+        counter++;
+        if (timeDiff >= 1.0 / 30.0){
+            double fps = (1.0 / timeDiff) * counter;
+            glfwSetWindowTitle(windowHandle, windowTitle+" FPS: "+(int)fps+" ms: "+(int)((timeDiff / counter) * 1000));
+            lastTime = currentTime;
+            counter = 0;
+        }
     }
     private void checkMouseCallBacks() {
         if (cursorMode == FIXED_HIDDEN_CURSOR_MODE) {
@@ -155,6 +168,7 @@ public class Window {
 
     public void setWindowTitle(String title) {
         glfwSetWindowTitle(windowHandle, title);
+        windowTitle = title;
     }
 
 
