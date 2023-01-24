@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="MainBuild:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="125094e9-00dd-4402-9ce4-0c1fd0d297e3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/MainBuild/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/.idea/artifacts/MainBuild_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Editor/EditorMain.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Editor/EditorMain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Editor/SceneEditor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/Engine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/NonPhysicMoveAbleObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/PlayerNonPhysicsMode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Camera/Camera.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Camera/CameraManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Lighting/DirectPbrLight.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Lighting/LightManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Lighting/PointPbrLight.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Physics/IObjectWithPhysic.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Physics/PhysicsManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Physics/RigidBody.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/PhysicsMoveAbleObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Scene.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/FrameBufferTexture.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/IFrameBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/ShaderBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/Mesh.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/Model.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/RenderTarget.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/Texture.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/Shader/Shader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/Shader/ShaderStruct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/Utils/AlignmentUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/Utils/CollisionLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/Utils/IOUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/Utils/MatrixUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/Utils/ModelLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/VertexObjects/ElementBufferObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/VertexObjects/VertexArrayObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Engine/VertexObjects/VertexBufferObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/TestScene.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Window/KeyBoardCallBack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Window/MouseMovementCallBack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Window/Window.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/java/com/kgaft/KGAFTEngine/Window/WindowResizeCallBack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/CoffeCup/coffee_cup_obj.mtl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/CoffeCup/coffee_cup_obj.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/CoffeCup/textures/Base_color.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/CoffeCup/textures/metallic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/CoffeCup/textures/normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/CoffeCup/textures/roughness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/PokeBall/Pokeball.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/PokeBall/Pokeball_Pokeball_AO.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/PokeBall/Pokeball_Pokeball_Emissive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/PokeBall/Pokeball_Pokeball_Metallic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/PokeBall/Pokeball_Pokeball_Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/PokeBall/Pokeball_Pokeball_Roughness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/PokeBall/pokeballColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/grind/scene.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/grind/scene.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/grind/textures/Main_baseColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/grind/textures/Main_metallicRoughness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/grind/textures/Main_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/pokedex/Pokedex_FInalMesh_RM.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/pokedex/Pokedex_LowPoly_Pokedex_BaseColor_tga.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/pokedex/Pokedex_LowPoly_Pokedex_Emissive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/pokedex/Pokedex_LowPoly_Pokedex_Metallic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/pokedex/Pokedex_LowPoly_Pokedex_Normal_tga.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/pokedex/Pokedex_LowPoly_Pokedex_Roughness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/pokedex/Pokedex_T_ao.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/Models/pokedex/pokedex.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/OpenGLShaders/GBufferShaders/default.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/OpenGLShaders/GBufferShaders/default.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/OpenGLShaders/ShadersDefault/default.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/OpenGLShaders/ShadersDefault/pbrLight.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/OpenGLShaders/ShadowMappingShader/default.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/OpenGLShaders/ShadowMappingShader/default.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/SPIR-V/default.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/SPIR-V/default.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/textures/Texture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/textures/baseBlackColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/textures/baseWhiteColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/textures/secondTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/src/main/resources/textures/thirdTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/CoffeCup/coffee_cup_obj.mtl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/CoffeCup/coffee_cup_obj.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/CoffeCup/textures/Base_color.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/CoffeCup/textures/metallic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/CoffeCup/textures/normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/CoffeCup/textures/roughness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/PokeBall/Pokeball.obj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/PokeBall/Pokeball_Pokeball_AO.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/PokeBall/Pokeball_Pokeball_Emissive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/PokeBall/Pokeball_Pokeball_Metallic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/PokeBall/Pokeball_Pokeball_Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/PokeBall/Pokeball_Pokeball_Roughness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/PokeBall/pokeballColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/grind/scene.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/grind/scene.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/grind/textures/Main_baseColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/grind/textures/Main_metallicRoughness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/grind/textures/Main_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/pokedex/Pokedex_FInalMesh_RM.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/pokedex/Pokedex_LowPoly_Pokedex_BaseColor_tga.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/pokedex/Pokedex_LowPoly_Pokedex_Emissive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/pokedex/Pokedex_LowPoly_Pokedex_Metallic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/pokedex/Pokedex_LowPoly_Pokedex_Normal_tga.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/pokedex/Pokedex_LowPoly_Pokedex_Roughness.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/pokedex/Pokedex_T_ao.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/Models/pokedex/pokedex.gltf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/OpenGLShaders/GBufferShaders/default.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/OpenGLShaders/GBufferShaders/default.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/OpenGLShaders/ShadersDefault/default.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/OpenGLShaders/ShadersDefault/pbrLight.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/OpenGLShaders/ShadowMappingShader/default.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/OpenGLShaders/ShadowMappingShader/default.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/SPIR-V/default.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/SPIR-V/default.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Editor/EditorMain$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Editor/EditorMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Editor/SceneEditor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/Engine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/NonPhysicMoveAbleObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/PlayerNonPhysicsMode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Camera/Camera.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Camera/CameraManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Lighting/DirectPbrLight.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Lighting/LightManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Lighting/PointPbrLight.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Physics/IObjectWithPhysic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Physics/PhysicsManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Physics/RigidBody.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/PhysicsMoveAbleObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GameObjects/Scene/Scene.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/FrameBufferTexture.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/IFrameBuffer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/Mesh.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/Model.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/RenderTarget.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/Texture.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/Shader/Shader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/Shader/ShaderStruct.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/Utils/AlignmentUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/Utils/CollisionLoader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/Utils/IOUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/Utils/MatrixUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/Utils/ModelLoader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/VertexObjects/ElementBufferObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/VertexObjects/VertexArrayObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Engine/VertexObjects/VertexBufferObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/TestScene.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Window/KeyBoardCallBack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Window/MouseMovementCallBack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Window/Window.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/com/kgaft/KGAFTEngine/Window/WindowResizeCallBack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/textures/Texture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/textures/baseBlackColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/textures/baseWhiteColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/textures/secondTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/target/classes/textures/thirdTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainBuild/workspace.code-workspace" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/DescriptorPool.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/DescriptorSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/GraphicsPipeline.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/IndexBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/PipelineConfiguration/PipelineConfigStruct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/PushConstant.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/PushConstantData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/ShaderMeshInputStruct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/Texture.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/UniformBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/VertexBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/QueueFamilyIndices.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/ShaderUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/SwapChainSupportDetails.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/VulkanDevice.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/VulkanInstance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/VulkanLogger/VulkanLogInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/VulkanLogger/VulkanLogger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/VulkanRenderContext.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/VulkanContext/VulkanSwapChain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/Window/KeyBoardCallBack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/Window/MouseMovementCallBack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/Window/Window.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/java/com/kgaft/VulkanRenderer/Window/WindowResizeCallBack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/resources/SPIR-V/default.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/resources/SPIR-V/default.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/resources/textures/Texture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/resources/textures/baseBlackColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/resources/textures/baseWhiteColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/resources/textures/secondTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/src/main/resources/textures/thirdTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/SPIR-V/default.frag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/SPIR-V/default.vert" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/DescriptorPool.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/DescriptorSet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/GraphicsPipeline.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/IndexBuffer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/PipelineConfiguration/PipelineConfigStruct.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/PushConstant.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/PushConstantData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/ShaderMeshInputStruct.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/Texture.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/UniformBuffer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/GraphicsPipeline/VertexBuffer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/QueueFamilyIndices.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/ShaderUtil$ShaderType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/ShaderUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/SwapChainSupportDetails.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/VulkanDevice.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/VulkanInstance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/VulkanLogger/VulkanLogInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/VulkanLogger/VulkanLogger.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/VulkanRenderContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/VulkanContext/VulkanSwapChain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/Window/KeyBoardCallBack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/Window/MouseMovementCallBack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/Window/Window.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/com/kgaft/VulkanRenderer/Window/WindowResizeCallBack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/textures/Texture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/textures/baseBlackColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/textures/baseWhiteColor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/textures/secondTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/target/classes/textures/thirdTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/DescriptorPool.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/DescriptorSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/GraphicsPipeline.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/IndexBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/PipelineConfiguration/PipelineConfigStruct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/PushConstant.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/PushConstantData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/ShaderMeshInputStruct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/Texture.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/UniformBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/GraphicsPipeline/VertexBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/QueueFamilyIndices.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/ShaderUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/SwapChainSupportDetails.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/VulkanDevice.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/VulkanInstance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/VulkanLogger/VulkanLogInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/VulkanLogger/VulkanLogger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/VulkanRenderContext.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VulkanRenderer/vulkanrenderer/VulkanRenderer/VulkanSwapChain.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="GLSL Shader" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2KKpCAaujN5ELYs1A1Jwp842CCO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/daniil/Documents/JavaGameEngine",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../jdk/graalvm-ce-java11-22.3.0" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.kgaft.KGAFTEngine.Main" />
+      <module name="JavaGameEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.kgaft.KGAFTEngine.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="125094e9-00dd-4402-9ce4-0c1fd0d297e3" name="Changes" comment="" />
+      <created>1673733005808</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673733005808</updated>
+      <workItem from="1673733008415" duration="17000" />
+      <workItem from="1674235834201" duration="3999000" />
+      <workItem from="1674292244276" duration="1770000" />
+      <workItem from="1674294408654" duration="1208000" />
+      <workItem from="1674321521702" duration="2716000" />
+      <workItem from="1674394703609" duration="2942000" />
+      <workItem from="1674412197607" duration="3074000" />
+      <workItem from="1674415304439" duration="14000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/kgaft/KGAFTEngine/Engine/GraphicalObjects/FrameBuffer/GBuffer.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
