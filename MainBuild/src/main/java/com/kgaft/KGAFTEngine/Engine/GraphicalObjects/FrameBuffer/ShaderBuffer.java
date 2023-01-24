@@ -6,7 +6,6 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL33;
 
-import java.awt.*;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL33.*;
@@ -18,6 +17,11 @@ public class ShaderBuffer implements IFrameBuffer {
     private int height = 4096;
     private Matrix4f lightView;
     private Vector3f lightPos;
+
+
+    public ShaderBuffer(){
+        create();
+    }
 
     private void create() {
         id = glGenFramebuffers();
@@ -72,4 +76,11 @@ public class ShaderBuffer implements IFrameBuffer {
     public int getShaderType() {
         return Shader.SHADOW_MAPPING_SHADER;
     }
+    public Vector3f getLightPos() {
+        return lightPos;
+    }
+    public void setLightPos(Vector3f lightPos) {
+        this.lightPos = lightPos;
+    }
+    
 }

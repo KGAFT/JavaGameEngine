@@ -38,7 +38,7 @@ vec3 getNormalFromMap(vec2 uvsCoords, vec3 normals, vec3 fragmentPosition)
     return normalize(TBN * tangentNormal);
 }
 
-float calcShadow(){
+float calcShadow(vec3 normal){
 
     vec3 projCoords = FragPosLightSpace.xyz / FragPosLightSpace.w;
 
@@ -71,7 +71,7 @@ void main()
 
     position = fragmentPosition;
     normals = normalize(getNormalFromMap(UvsCoords, Normals, fragmentPosition));
-    albedo = texture(albedoMap, UvsCoords)*calcShadow();
+    albedo = texture(albedoMap, UvsCoords)*calcShadow(normals);
     metallic = texture(metallicMap, UvsCoords);
     roughness = texture(roughnessMap, UvsCoords);
     ao = texture(aoMap, UvsCoords);
