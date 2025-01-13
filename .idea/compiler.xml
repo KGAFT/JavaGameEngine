@@ -10,5 +10,13 @@
         <module name="MainBuild" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="VulkanLib" target="23" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="JavaGameEngine" options="--enable-preview" />
+    </option>
   </component>
 </project>

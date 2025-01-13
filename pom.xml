@@ -10,19 +10,51 @@
 
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <lwjgl.version>3.3.1</lwjgl.version>
-        <joml.version>1.10.5</joml.version>
+        <maven.compiler.source>23</maven.compiler.source>
+        <maven.compiler.target>23</maven.compiler.target>
+        <lwjgl.version>3.3.6</lwjgl.version>
+        <joml.version>1.10.7</joml.version>
+        <joml-primitives.version>1.10.0</joml-primitives.version>
         <lwjgl3-awt.version>0.1.8</lwjgl3-awt.version>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>23</source>
+                    <target>23</target>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
     <profiles>
+        <profile>
+            <id>lwjgl-natives-freebsd-amd64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>freebsd</name>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <lwjgl.natives>natives-freebsd</lwjgl.natives>
+            </properties>
+        </profile>
         <profile>
             <id>lwjgl-natives-linux-amd64</id>
             <activation>
                 <os>
                     <family>unix</family>
+                    <name>linux</name>
                     <arch>amd64</arch>
                 </os>
             </activation>
@@ -35,6 +67,7 @@
             <activation>
                 <os>
                     <family>unix</family>
+                    <name>linux</name>
                     <arch>aarch64</arch>
                 </os>
             </activation>
@@ -47,6 +80,7 @@
             <activation>
                 <os>
                     <family>unix</family>
+                    <name>linux</name>
                     <arch>arm</arch>
                 </os>
             </activation>
@@ -59,11 +93,38 @@
             <activation>
                 <os>
                     <family>unix</family>
+                    <name>linux</name>
                     <arch>arm32</arch>
                 </os>
             </activation>
             <properties>
                 <lwjgl.natives>natives-linux-arm32</lwjgl.natives>
+            </properties>
+        </profile>
+        <profile>
+            <id>lwjgl-natives-linux-ppc64le</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>linux</name>
+                    <arch>ppc64le</arch>
+                </os>
+            </activation>
+            <properties>
+                <lwjgl.natives>natives-linux-ppc64le</lwjgl.natives>
+            </properties>
+        </profile>
+        <profile>
+            <id>lwjgl-natives-linux-riscv64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>linux</name>
+                    <arch>riscv64</arch>
+                </os>
+            </activation>
+            <properties>
+                <lwjgl.natives>natives-linux-riscv64</lwjgl.natives>
             </properties>
         </profile>
         <profile>
@@ -156,23 +217,31 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.kgaft</groupId>
+            <artifactId>VulkanLib</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/VulkanLib/target/VulkanLib-1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.l33tlabs.twl/pngdecoder -->
-        <dependency>
-            <groupId>org.l33tlabs.twl</groupId>
-            <artifactId>pngdecoder</artifactId>
-            <version>1.0</version>
-        </dependency>
-
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-assimp</artifactId>
         </dependency>
         <dependency>
             <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-freetype</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-glfw</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-jawt</artifactId>
         </dependency>
         <dependency>
             <groupId>org.lwjgl</groupId>
@@ -182,7 +251,6 @@
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-opengl</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-stb</artifactId>
@@ -203,6 +271,11 @@
         </dependency>
         <dependency>
             <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-freetype</artifactId>
+            <classifier>${lwjgl.natives}</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl-glfw</artifactId>
             <classifier>${lwjgl.natives}</classifier>
         </dependency>
@@ -221,45 +294,20 @@
             <artifactId>lwjgl-stb</artifactId>
             <classifier>${lwjgl.natives}</classifier>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.lwjgl.lwjgl/lwjgl_util -->
-        <dependency>
-            <groupId>org.lwjgl.lwjgl</groupId>
-            <artifactId>lwjgl_util</artifactId>
-            <version>2.9.1</version>
-        </dependency>
-
         <dependency>
             <groupId>org.joml</groupId>
             <artifactId>joml</artifactId>
             <version>${joml.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.joml</groupId>
+            <artifactId>joml-primitives</artifactId>
+            <version>${joml-primitives.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.lwjglx</groupId>
             <artifactId>lwjgl3-awt</artifactId>
             <version>${lwjgl3-awt.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>cz.advel.jbullet</groupId>
-            <artifactId>jbullet</artifactId>
-            <version>20101010-1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf -->
-        <dependency>
-            <groupId>com.formdev</groupId>
-            <artifactId>flatlaf</artifactId>
-            <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.lwjgl</groupId>
-            <artifactId>lwjgl-shaderc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.lwjgl</groupId>
-            <artifactId>lwjgl-shaderc</artifactId>
-            <classifier>${lwjgl.natives}</classifier>
-        </dependency>
-
     </dependencies>
-
 </project>
