@@ -1,163 +1,315 @@
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Searching for implicit layer manifest files
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    In following locations:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/vulkan/implicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/kdedefaults/vulkan/implicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /etc/xdg/vulkan/implicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /etc/vulkan/implicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/implicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/flatpak/exports/share/vulkan/implicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /var/lib/flatpak/exports/share/vulkan/implicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/local/share/vulkan/implicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/implicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /etc/eselect/wine/share/vulkan/implicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    Found the following files:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /etc/vulkan/implicit_layer.d/renderdoc_capture.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/implicit_layer.d/steamoverlay_i386.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/implicit_layer.d/steamoverlay_x86_64.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/implicit_layer.d/steamfossilize_i386.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/implicit_layer.d/steamfossilize_x86_64.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /etc/vulkan/implicit_layer.d/renderdoc_capture.json (file version 1.1.2)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /home/kgaft/.local/share/vulkan/implicit_layer.d/steamoverlay_i386.json (file version 1.0.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /home/kgaft/.local/share/vulkan/implicit_layer.d/steamoverlay_x86_64.json (file version 1.0.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /home/kgaft/.local/share/vulkan/implicit_layer.d/steamfossilize_i386.json (file version 1.0.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /home/kgaft/.local/share/vulkan/implicit_layer.d/steamfossilize_x86_64.json (file version 1.0.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /usr/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json (file version 1.0.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Searching for explicit layer manifest files
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    In following locations:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/kdedefaults/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /etc/xdg/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /etc/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/flatpak/exports/share/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /var/lib/flatpak/exports/share/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/local/share/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /etc/eselect/wine/share/vulkan/explicit_layer.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    Found the following files:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_api_dump.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_synchronization2.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_crash_diagnostic.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_profiles.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_monitor.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_gfxreconstruct.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_screenshot.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_shader_object.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/explicit_layer.d/VkLayer_MESA_overlay.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_api_dump.json (file version 1.2.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_synchronization2.json (file version 1.2.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json (file version 1.2.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_crash_diagnostic.json (file version 1.2.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_profiles.json (file version 1.2.1)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_monitor.json (file version 1.0.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_gfxreconstruct.json (file version 1.2.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_screenshot.json (file version 1.2.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_shader_object.json (file version 1.2.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /usr/share/vulkan/explicit_layer.d/VkLayer_MESA_overlay.json (file version 1.0.0)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Searching for driver manifest files
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    In following locations:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/vulkan/icd.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/kdedefaults/vulkan/icd.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /etc/xdg/vulkan/icd.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /etc/vulkan/icd.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/icd.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/flatpak/exports/share/vulkan/icd.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /var/lib/flatpak/exports/share/vulkan/icd.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/local/share/vulkan/icd.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/icd.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /etc/eselect/wine/share/vulkan/icd.d
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    Found the following files:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/icd.d/dzn_icd.x86_64.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/icd.d/dzn_icd.i686.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/icd.d/radeon_icd.x86_64.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/icd.d/radeon_icd.i686.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found ICD manifest file /usr/share/vulkan/icd.d/dzn_icd.x86_64.json, version 1.0.0
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Searching for ICD drivers named /usr/lib64/libvulkan_dzn.so
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found ICD manifest file /usr/share/vulkan/icd.d/dzn_icd.i686.json, version 1.0.0
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Searching for ICD drivers named /usr/lib/libvulkan_dzn.so
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] /usr/lib/libvulkan_dzn.so: wrong ELF class: ELFCLASS32
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Requested ICD /usr/lib/libvulkan_dzn.so was wrong bit-type. Ignoring this JSON
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found ICD manifest file /usr/share/vulkan/icd.d/radeon_icd.x86_64.json, version 1.0.0
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Searching for ICD drivers named /usr/lib64/libvulkan_radeon.so
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Found ICD manifest file /usr/share/vulkan/icd.d/radeon_icd.i686.json, version 1.0.0
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Searching for ICD drivers named /usr/lib/libvulkan_radeon.so
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] /usr/lib/libvulkan_radeon.so: wrong ELF class: ELFCLASS32
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Requested ICD /usr/lib/libvulkan_radeon.so was wrong bit-type. Ignoring this JSON
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Loading layer library libVkLayer_khronos_validation.so
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Insert instance layer "VK_LAYER_KHRONOS_validation" (libVkLayer_khronos_validation.so)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Loading layer library libVkLayer_MESA_device_select.so
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Insert instance layer "VK_LAYER_MESA_device_select" (libVkLayer_MESA_device_select.so)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] vkCreateInstance layer callstack setup to:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    <Application>
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      ||
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    <Loader>
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      ||
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    VK_LAYER_MESA_device_select
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            Type: Implicit
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]                Disable Env Var:  NODEVICE_SELECT
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            Manifest: /usr/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            Library:  libVkLayer_MESA_device_select.so
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      ||
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    VK_LAYER_KHRONOS_validation
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            Type: Explicit
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            Manifest: /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            Library:  libVkLayer_khronos_validation.so
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      ||
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    <Drivers>
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [WARNING] terminator_CreateInstance: Received return code -3 from call to vkCreateInstance in ICD /usr/lib64/libvulkan_dzn.so. Skipping this driver.
-Mon Jan 13 13:30:41 MSK 2025 VULKAN VALIDATION [INFO] Validation Information: [ WARNING-CreateInstance-status-message ] Object 0: handle = 0x7f96644493a0, type = VK_OBJECT_TYPE_INSTANCE; | MessageID = 0x23dfd876 | vkCreateInstance():  Khronos Validation Layer Active:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] No valid vk_loader_settings.json file found, no loader settings will be active
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Searching for implicit layer manifest files
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    In following locations:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/vulkan/implicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/kdedefaults/vulkan/implicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /etc/xdg/vulkan/implicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /etc/vulkan/implicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/implicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/flatpak/exports/share/vulkan/implicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /var/lib/flatpak/exports/share/vulkan/implicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/local/share/vulkan/implicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/implicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /etc/eselect/wine/share/vulkan/implicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    Found the following files:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /etc/vulkan/implicit_layer.d/renderdoc_capture.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/implicit_layer.d/steamoverlay_i386.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/implicit_layer.d/steamoverlay_x86_64.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/implicit_layer.d/steamfossilize_i386.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/implicit_layer.d/steamfossilize_x86_64.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /etc/vulkan/implicit_layer.d/renderdoc_capture.json (file version 1.1.2)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /home/kgaft/.local/share/vulkan/implicit_layer.d/steamoverlay_i386.json (file version 1.0.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /home/kgaft/.local/share/vulkan/implicit_layer.d/steamoverlay_x86_64.json (file version 1.0.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /home/kgaft/.local/share/vulkan/implicit_layer.d/steamfossilize_i386.json (file version 1.0.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /home/kgaft/.local/share/vulkan/implicit_layer.d/steamfossilize_x86_64.json (file version 1.0.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /usr/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json (file version 1.0.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Searching for explicit layer manifest files
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    In following locations:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/kdedefaults/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /etc/xdg/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /etc/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/flatpak/exports/share/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /var/lib/flatpak/exports/share/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/local/share/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /etc/eselect/wine/share/vulkan/explicit_layer.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    Found the following files:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_api_dump.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_synchronization2.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_crash_diagnostic.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_profiles.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_monitor.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_gfxreconstruct.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_screenshot.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_shader_object.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/explicit_layer.d/VkLayer_MESA_overlay.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_api_dump.json (file version 1.2.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_synchronization2.json (file version 1.2.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json (file version 1.2.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_crash_diagnostic.json (file version 1.2.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_profiles.json (file version 1.2.1)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_monitor.json (file version 1.0.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_gfxreconstruct.json (file version 1.2.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_screenshot.json (file version 1.2.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_shader_object.json (file version 1.2.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found manifest file /usr/share/vulkan/explicit_layer.d/VkLayer_MESA_overlay.json (file version 1.0.0)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Searching for driver manifest files
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    In following locations:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/vulkan/icd.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.config/kdedefaults/vulkan/icd.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /etc/xdg/vulkan/icd.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /etc/vulkan/icd.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/vulkan/icd.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /home/kgaft/.local/share/flatpak/exports/share/vulkan/icd.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /var/lib/flatpak/exports/share/vulkan/icd.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/local/share/vulkan/icd.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/icd.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /etc/eselect/wine/share/vulkan/icd.d
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    Found the following files:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/icd.d/dzn_icd.x86_64.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/icd.d/dzn_icd.i686.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/icd.d/radeon_icd.x86_64.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]       /usr/share/vulkan/icd.d/radeon_icd.i686.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found ICD manifest file /usr/share/vulkan/icd.d/dzn_icd.x86_64.json, version 1.0.0
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [VERBOSE] Searching for ICD drivers named /usr/lib64/libvulkan_dzn.so
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found ICD manifest file /usr/share/vulkan/icd.d/dzn_icd.i686.json, version 1.0.0
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [VERBOSE] Searching for ICD drivers named /usr/lib/libvulkan_dzn.so
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] /usr/lib/libvulkan_dzn.so: wrong ELF class: ELFCLASS32
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Requested ICD /usr/lib/libvulkan_dzn.so was wrong bit-type. Ignoring this JSON
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found ICD manifest file /usr/share/vulkan/icd.d/radeon_icd.x86_64.json, version 1.0.0
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [VERBOSE] Searching for ICD drivers named /usr/lib64/libvulkan_radeon.so
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Found ICD manifest file /usr/share/vulkan/icd.d/radeon_icd.i686.json, version 1.0.0
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [VERBOSE] Searching for ICD drivers named /usr/lib/libvulkan_radeon.so
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] /usr/lib/libvulkan_radeon.so: wrong ELF class: ELFCLASS32
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Requested ICD /usr/lib/libvulkan_radeon.so was wrong bit-type. Ignoring this JSON
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [VERBOSE] Loading layer library libVkLayer_khronos_validation.so
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Insert instance layer "VK_LAYER_KHRONOS_validation" (libVkLayer_khronos_validation.so)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [VERBOSE] Loading layer library libVkLayer_MESA_device_select.so
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] Insert instance layer "VK_LAYER_MESA_device_select" (libVkLayer_MESA_device_select.so)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] vkCreateInstance layer callstack setup to:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    <Application>
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]      ||
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    <Loader>
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]      ||
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    VK_LAYER_MESA_device_select
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            Type: Implicit
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            Enabled By: Implicit Layer
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]                Disable Env Var:  NODEVICE_SELECT
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            Manifest: /usr/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            Library:  libVkLayer_MESA_device_select.so
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]      ||
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    VK_LAYER_KHRONOS_validation
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            Type: Explicit
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            Enabled By: By the Application
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            Manifest: /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            Library:  libVkLayer_khronos_validation.so
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]      ||
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]    <Drivers>
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [WARNING] terminator_CreateInstance: Received return code -3 from call to vkCreateInstance in ICD /usr/lib64/libvulkan_dzn.so. Skipping this driver.
+Fri May 02 15:47:53 MSK 2025 VULKAN VALIDATION [INFO] vkCreateInstance(): Khronos Validation Layer Active:
     Current Enables: None.
     Current Disables: None.
 
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Original order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Original order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Copying old device 0 into new device 0
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Original order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Copying old device 0 into new device 0
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Original order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Copying old device 0 into new device 0
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Original order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Copying old device 0 into new device 0
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Original order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [VERBOSE] Copying old device 0 into new device 0
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Inserted device layer "VK_LAYER_KHRONOS_validation" (libVkLayer_khronos_validation.so)
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] Failed to find vkGetDeviceProcAddr in layer "libVkLayer_MESA_device_select.so"
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO] vkCreateDevice layer callstack setup to:
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    <Application>
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      ||
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    <Loader>
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      ||
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    VK_LAYER_KHRONOS_validation
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            Type: Explicit
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            Manifest: /opt/vulkan_sdk/1.3.296.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]            Library:  libVkLayer_khronos_validation.so
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]      ||
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]    <Device>
-Mon Jan 13 13:30:41 MSK 2025 VULKAN GENERAL [INFO]        Using "AMD Radeon RX 6800 XT (RADV NAVI21)" with driver: "/usr/lib64/libvulkan_radeon.so"
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]      Original order:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]      Original order:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
+Fri May 02 15:47:53 MSK 2025 VULKAN GENERAL [VERBOSE] Copying old device 0 into new device 0
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      Original order:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [VERBOSE] Copying old device 0 into new device 0
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      Original order:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [VERBOSE] Copying old device 0 into new device 0
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      Original order:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [VERBOSE] Copying old device 0 into new device 0
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO] linux_read_sorted_physical_devices:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      Original order:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      Sorted order:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            [0] AMD Radeon RX 6800 XT (RADV NAVI21)  
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [VERBOSE] Copying old device 0 into new device 0
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO] Inserted device layer "VK_LAYER_KHRONOS_validation" (libVkLayer_khronos_validation.so)
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO] Failed to find vkGetDeviceProcAddr in layer "libVkLayer_MESA_device_select.so"
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO] vkCreateDevice layer callstack setup to:
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]    <Application>
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      ||
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]    <Loader>
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      ||
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]    VK_LAYER_KHRONOS_validation
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            Type: Explicit
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            Enabled By: By the Application
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            Manifest: /opt/vulkan_sdk/1.4.309.0/x86_64/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]            Library:  libVkLayer_khronos_validation.so
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]      ||
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]    <Device>
+Fri May 02 15:47:54 MSK 2025 VULKAN GENERAL [INFO]        Using "AMD Radeon RX 6800 XT (RADV NAVI21)" with driver: "/usr/lib64/libvulkan_radeon.so"
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBindBufferMemory(): allocationSize (12) minus memoryOffset (0) is 12 but must be at least as large as VkMemoryRequirements::size value 16, returned from a call to vkGetBufferMemoryRequirements with buffer.
+The Vulkan spec states: The size member of the VkMemoryRequirements structure returned from a call to vkGetBufferMemoryRequirements with buffer must be less than or equal to the size of memory minus memoryOffset (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/resources.html#VUID-vkBindBufferMemory-size-01037)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the last bound pipeline has pVertexBindingDescriptions[0].binding (0) which didn't have a buffer bound from any vkCmdBindVertexBuffers call in this command buffer.
+The Vulkan spec states: All vertex input bindings accessed via vertex input variables declared in the vertex shader entry point's interface must have either valid or VK_NULL_HANDLE buffers bound (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-04007)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): Shader in VK_SHADER_STAGE_FRAGMENT_BIT uses push-constant statically but vkCmdPushConstants was not called yet for pipeline layout VkPipelineLayout 0xb991fa0000000024.
+The Vulkan spec states: If the maintenance4 feature is not enabled, then for each push constant that is statically used by a bound shader, a push constant value must have been set for the same pipeline bind point, with a VkPipelineLayout that is compatible for push constants, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout and VkPushConstantRange arrays used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-maintenance4-08602)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the last bound pipeline has pVertexBindingDescriptions[0].binding (0) which didn't have a buffer bound from any vkCmdBindVertexBuffers call in this command buffer.
+The Vulkan spec states: All vertex input bindings accessed via vertex input variables declared in the vertex shader entry point's interface must have either valid or VK_NULL_HANDLE buffers bound (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-04007)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): Shader in VK_SHADER_STAGE_FRAGMENT_BIT uses push-constant statically but vkCmdPushConstants was not called yet for pipeline layout VkPipelineLayout 0xb991fa0000000024.
+The Vulkan spec states: If the maintenance4 feature is not enabled, then for each push constant that is statically used by a bound shader, a push constant value must have been set for the same pipeline bind point, with a VkPipelineLayout that is compatible for push constants, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout and VkPushConstantRange arrays used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-maintenance4-08602)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkQueueSubmit(): pSubmits[0].pCommandBuffers[0] command buffer VkCommandBuffer 0x7f7184c27380 expects VkImage 0xcb3ee80000000007 (subresource: aspectMask = VK_IMAGE_ASPECT_COLOR_BIT, mipLevel = 0, arrayLayer = 0) to be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR--instead, current layout is VK_IMAGE_LAYOUT_UNDEFINED.
+The Vulkan spec states: If a descriptor with type equal to any of VK_DESCRIPTOR_TYPE_SAMPLE_WEIGHT_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_BLOCK_MATCH_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, or VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT is accessed as a result of this command, all image subresources identified by that descriptor must be in the image layout identified when the descriptor was written (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-09600)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the last bound pipeline has pVertexBindingDescriptions[0].binding (0) which didn't have a buffer bound from any vkCmdBindVertexBuffers call in this command buffer.
+The Vulkan spec states: All vertex input bindings accessed via vertex input variables declared in the vertex shader entry point's interface must have either valid or VK_NULL_HANDLE buffers bound (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-04007)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): Shader in VK_SHADER_STAGE_FRAGMENT_BIT uses push-constant statically but vkCmdPushConstants was not called yet for pipeline layout VkPipelineLayout 0xb991fa0000000024.
+The Vulkan spec states: If the maintenance4 feature is not enabled, then for each push constant that is statically used by a bound shader, a push constant value must have been set for the same pipeline bind point, with a VkPipelineLayout that is compatible for push constants, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout and VkPushConstantRange arrays used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-maintenance4-08602)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkQueueSubmit(): pSubmits[0].pCommandBuffers[0] command buffer VkCommandBuffer 0x7f7184c2c390 expects VkImage 0xead9370000000008 (subresource: aspectMask = VK_IMAGE_ASPECT_COLOR_BIT, mipLevel = 0, arrayLayer = 0) to be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR--instead, current layout is VK_IMAGE_LAYOUT_UNDEFINED.
+The Vulkan spec states: If a descriptor with type equal to any of VK_DESCRIPTOR_TYPE_SAMPLE_WEIGHT_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_BLOCK_MATCH_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, or VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT is accessed as a result of this command, all image subresources identified by that descriptor must be in the image layout identified when the descriptor was written (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-09600)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the last bound pipeline has pVertexBindingDescriptions[0].binding (0) which didn't have a buffer bound from any vkCmdBindVertexBuffers call in this command buffer.
+The Vulkan spec states: All vertex input bindings accessed via vertex input variables declared in the vertex shader entry point's interface must have either valid or VK_NULL_HANDLE buffers bound (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-04007)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): Shader in VK_SHADER_STAGE_FRAGMENT_BIT uses push-constant statically but vkCmdPushConstants was not called yet for pipeline layout VkPipelineLayout 0xb991fa0000000024.
+The Vulkan spec states: If the maintenance4 feature is not enabled, then for each push constant that is statically used by a bound shader, a push constant value must have been set for the same pipeline bind point, with a VkPipelineLayout that is compatible for push constants, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout and VkPushConstantRange arrays used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-maintenance4-08602)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkQueueSubmit(): pSubmits[0].pCommandBuffers[0] command buffer VkCommandBuffer 0x7f7184c313a0 expects VkImage 0xee647e0000000009 (subresource: aspectMask = VK_IMAGE_ASPECT_COLOR_BIT, mipLevel = 0, arrayLayer = 0) to be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR--instead, current layout is VK_IMAGE_LAYOUT_UNDEFINED.
+The Vulkan spec states: If a descriptor with type equal to any of VK_DESCRIPTOR_TYPE_SAMPLE_WEIGHT_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_BLOCK_MATCH_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, or VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT is accessed as a result of this command, all image subresources identified by that descriptor must be in the image layout identified when the descriptor was written (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-09600)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the last bound pipeline has pVertexBindingDescriptions[0].binding (0) which didn't have a buffer bound from any vkCmdBindVertexBuffers call in this command buffer.
+The Vulkan spec states: All vertex input bindings accessed via vertex input variables declared in the vertex shader entry point's interface must have either valid or VK_NULL_HANDLE buffers bound (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-04007)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): Shader in VK_SHADER_STAGE_FRAGMENT_BIT uses push-constant statically but vkCmdPushConstants was not called yet for pipeline layout VkPipelineLayout 0xb991fa0000000024.
+The Vulkan spec states: If the maintenance4 feature is not enabled, then for each push constant that is statically used by a bound shader, a push constant value must have been set for the same pipeline bind point, with a VkPipelineLayout that is compatible for push constants, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout and VkPushConstantRange arrays used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-maintenance4-08602)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkQueueSubmit(): pSubmits[0].pCommandBuffers[0] command buffer VkCommandBuffer 0x7f7184c365c0 expects VkImage 0xcfef35000000000a (subresource: aspectMask = VK_IMAGE_ASPECT_COLOR_BIT, mipLevel = 0, arrayLayer = 0) to be in layout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR--instead, current layout is VK_IMAGE_LAYOUT_UNDEFINED.
+The Vulkan spec states: If a descriptor with type equal to any of VK_DESCRIPTOR_TYPE_SAMPLE_WEIGHT_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_BLOCK_MATCH_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, or VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT is accessed as a result of this command, all image subresources identified by that descriptor must be in the image layout identified when the descriptor was written (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-09600)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBeginCommandBuffer(): on active VkCommandBuffer 0x7f7184c27380 before it has completed. You must check command buffer fence before this call.
+The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the last bound pipeline has pVertexBindingDescriptions[0].binding (0) which didn't have a buffer bound from any vkCmdBindVertexBuffers call in this command buffer.
+The Vulkan spec states: All vertex input bindings accessed via vertex input variables declared in the vertex shader entry point's interface must have either valid or VK_NULL_HANDLE buffers bound (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-04007)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): Shader in VK_SHADER_STAGE_FRAGMENT_BIT uses push-constant statically but vkCmdPushConstants was not called yet for pipeline layout VkPipelineLayout 0xb991fa0000000024.
+The Vulkan spec states: If the maintenance4 feature is not enabled, then for each push constant that is statically used by a bound shader, a push constant value must have been set for the same pipeline bind point, with a VkPipelineLayout that is compatible for push constants, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout and VkPushConstantRange arrays used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-maintenance4-08602)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBeginCommandBuffer(): on active VkCommandBuffer 0x7f7184c2c390 before it has completed. You must check command buffer fence before this call.
+The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the last bound pipeline has pVertexBindingDescriptions[0].binding (0) which didn't have a buffer bound from any vkCmdBindVertexBuffers call in this command buffer.
+The Vulkan spec states: All vertex input bindings accessed via vertex input variables declared in the vertex shader entry point's interface must have either valid or VK_NULL_HANDLE buffers bound (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-04007)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): Shader in VK_SHADER_STAGE_FRAGMENT_BIT uses push-constant statically but vkCmdPushConstants was not called yet for pipeline layout VkPipelineLayout 0xb991fa0000000024.
+The Vulkan spec states: If the maintenance4 feature is not enabled, then for each push constant that is statically used by a bound shader, a push constant value must have been set for the same pipeline bind point, with a VkPipelineLayout that is compatible for push constants, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout and VkPushConstantRange arrays used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-maintenance4-08602)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBeginCommandBuffer(): on active VkCommandBuffer 0x7f7184c313a0 before it has completed. You must check command buffer fence before this call.
+The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the last bound pipeline has pVertexBindingDescriptions[0].binding (0) which didn't have a buffer bound from any vkCmdBindVertexBuffers call in this command buffer.
+The Vulkan spec states: All vertex input bindings accessed via vertex input variables declared in the vertex shader entry point's interface must have either valid or VK_NULL_HANDLE buffers bound (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-04007)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): Shader in VK_SHADER_STAGE_FRAGMENT_BIT uses push-constant statically but vkCmdPushConstants was not called yet for pipeline layout VkPipelineLayout 0xb991fa0000000024.
+The Vulkan spec states: If the maintenance4 feature is not enabled, then for each push constant that is statically used by a bound shader, a push constant value must have been set for the same pipeline bind point, with a VkPipelineLayout that is compatible for push constants, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout and VkPushConstantRange arrays used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-maintenance4-08602)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBeginCommandBuffer(): on active VkCommandBuffer 0x7f7184c365c0 before it has completed. You must check command buffer fence before this call.
+The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the last bound pipeline has pVertexBindingDescriptions[0].binding (0) which didn't have a buffer bound from any vkCmdBindVertexBuffers call in this command buffer.
+The Vulkan spec states: All vertex input bindings accessed via vertex input variables declared in the vertex shader entry point's interface must have either valid or VK_NULL_HANDLE buffers bound (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-04007)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): Shader in VK_SHADER_STAGE_FRAGMENT_BIT uses push-constant statically but vkCmdPushConstants was not called yet for pipeline layout VkPipelineLayout 0xb991fa0000000024.
+The Vulkan spec states: If the maintenance4 feature is not enabled, then for each push constant that is statically used by a bound shader, a push constant value must have been set for the same pipeline bind point, with a VkPipelineLayout that is compatible for push constants, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout and VkPushConstantRange arrays used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-maintenance4-08602)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBeginCommandBuffer(): on active VkCommandBuffer 0x7f7184c27380 before it has completed. You must check command buffer fence before this call.
+The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the last bound pipeline has pVertexBindingDescriptions[0].binding (0) which didn't have a buffer bound from any vkCmdBindVertexBuffers call in this command buffer.
+The Vulkan spec states: All vertex input bindings accessed via vertex input variables declared in the vertex shader entry point's interface must have either valid or VK_NULL_HANDLE buffers bound (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-04007)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): Shader in VK_SHADER_STAGE_FRAGMENT_BIT uses push-constant statically but vkCmdPushConstants was not called yet for pipeline layout VkPipelineLayout 0xb991fa0000000024.
+The Vulkan spec states: If the maintenance4 feature is not enabled, then for each push constant that is statically used by a bound shader, a push constant value must have been set for the same pipeline bind point, with a VkPipelineLayout that is compatible for push constants, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout and VkPushConstantRange arrays used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-maintenance4-08602)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBeginCommandBuffer(): on active VkCommandBuffer 0x7f7184c2c390 before it has completed. You must check command buffer fence before this call.
+The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBeginCommandBuffer(): on active VkCommandBuffer 0x7f7184c313a0 before it has completed. You must check command buffer fence before this call.
+The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBeginCommandBuffer(): on active VkCommandBuffer 0x7f7184c365c0 before it has completed. You must check command buffer fence before this call.
+The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBeginCommandBuffer(): on active VkCommandBuffer 0x7f7184c27380 before it has completed. You must check command buffer fence before this call.
+The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+Fri May 02 15:47:54 MSK 2025 VULKAN VALIDATION [ERROR] vkBeginCommandBuffer(): on active VkCommandBuffer 0x7f7184c2c390 before it has completed. You must check command buffer fence before this call.
+The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkDestroyBuffer(): can't be called on VkBuffer 0x5eb05e000000003b that is currently in use by VkDescriptorSet 0x2723ba0000000037.
+The Vulkan spec states: All submitted commands that refer to buffer, either directly or via a VkBufferView, must have completed execution (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/resources.html#VUID-vkDestroyBuffer-buffer-00922)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the uniform buffer descriptor [VkDescriptorSet 0x59f7450000000038, Set 0, Binding 0, Index 0, variable "unConfig"] is using buffer VkBuffer 0x5eb05e000000003b that is invalid or has been destroyed.
+The Vulkan spec states: Descriptors in each bound descriptor set, specified via vkCmdBindDescriptorSets, must be valid as described by descriptor validity if they are statically used by the VkPipeline bound to the pipeline bind point used by this command and the bound VkPipeline was not created with VK_PIPELINE_CREATE_DESCRIPTOR_BUFFER_BIT_EXT (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08114)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): the uniform buffer descriptor [VkDescriptorSet 0x944a2c0000000039, Set 0, Binding 0, Index 0, variable "unConfig"] is using buffer VkBuffer 0x5eb05e000000003b that is invalid or has been destroyed.
+The Vulkan spec states: Descriptors in each bound descriptor set, specified via vkCmdBindDescriptorSets, must be valid as described by descriptor validity if they are statically used by the VkPipeline bound to the pipeline bind point used by this command and the bound VkPipeline was not created with VK_PIPELINE_CREATE_DESCRIPTOR_BUFFER_BIT_EXT (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08114)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkDestroyDescriptorPool(): can't be called on VkDescriptorPool 0x4295ab0000000035 that is currently in use by VkCommandBuffer 0x7f7184c2c390.
+The Vulkan spec states: All submitted commands that refer to descriptorPool (via any allocated descriptor sets) must have completed execution (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkDestroyDescriptorPool-descriptorPool-00303)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] Invalid VkDescriptorSet Object 0x2723ba0000000037.
+The Vulkan spec states: pDescriptorSets must be a valid pointer to an array of descriptorSetCount valid or VK_NULL_HANDLE VkDescriptorSet handles (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-parameter)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] (VkDescriptorSet 0x2723ba0000000037) does not exist, and the pipeline layout was not created VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT.
+The Vulkan spec states: If the graphicsPipelineLibrary feature is not enabled, each element of pDescriptorSets must be a valid VkDescriptorSet (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-06563)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): Couldn't find VkDescriptorSet Object 0x2723ba0000000037. This should not happen and may indicate a bug in the application.
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): Couldn't find VkDescriptorSet Object 0x2723ba0000000037. This should not happen and may indicate a bug in the application.
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): VkPipeline 0x3a6cbb0000000025 uses set #0 but that set is not bound. (Need to use a command like vkCmdBindDescriptorSets to bind the set).
+The Vulkan spec states: For each set n that is statically used by a bound shader, a descriptor set must have been bound to n at the same pipeline bind point, with a VkPipelineLayout that is compatible for set n, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout array used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08600)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] Invalid VkDescriptorSet Object 0x9638f80000000036.
+The Vulkan spec states: pDescriptorSets must be a valid pointer to an array of descriptorSetCount valid or VK_NULL_HANDLE VkDescriptorSet handles (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-parameter)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] (VkDescriptorSet 0x9638f80000000036) does not exist, and the pipeline layout was not created VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT.
+The Vulkan spec states: If the graphicsPipelineLibrary feature is not enabled, each element of pDescriptorSets must be a valid VkDescriptorSet (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-06563)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): Couldn't find VkDescriptorSet Object 0x9638f80000000036. This should not happen and may indicate a bug in the application.
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): Couldn't find VkDescriptorSet Object 0x9638f80000000036. This should not happen and may indicate a bug in the application.
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): VkPipeline 0x3a6cbb0000000025 uses set #0 but that set is not bound. (Need to use a command like vkCmdBindDescriptorSets to bind the set).
+The Vulkan spec states: For each set n that is statically used by a bound shader, a descriptor set must have been bound to n at the same pipeline bind point, with a VkPipelineLayout that is compatible for set n, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout array used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08600)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] Invalid VkDescriptorSet Object 0x210d07000000003a.
+The Vulkan spec states: pDescriptorSets must be a valid pointer to an array of descriptorSetCount valid or VK_NULL_HANDLE VkDescriptorSet handles (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-parameter)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] (VkDescriptorSet 0x210d07000000003a) does not exist, and the pipeline layout was not created VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT.
+The Vulkan spec states: If the graphicsPipelineLibrary feature is not enabled, each element of pDescriptorSets must be a valid VkDescriptorSet (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-06563)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): Couldn't find VkDescriptorSet Object 0x210d07000000003a. This should not happen and may indicate a bug in the application.
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): Couldn't find VkDescriptorSet Object 0x210d07000000003a. This should not happen and may indicate a bug in the application.
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): VkPipeline 0x3a6cbb0000000025 uses set #0 but that set is not bound. (Need to use a command like vkCmdBindDescriptorSets to bind the set).
+The Vulkan spec states: For each set n that is statically used by a bound shader, a descriptor set must have been bound to n at the same pipeline bind point, with a VkPipelineLayout that is compatible for set n, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout array used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08600)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] Invalid VkDescriptorSet Object 0x944a2c0000000039.
+The Vulkan spec states: pDescriptorSets must be a valid pointer to an array of descriptorSetCount valid or VK_NULL_HANDLE VkDescriptorSet handles (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-parameter)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] (VkDescriptorSet 0x944a2c0000000039) does not exist, and the pipeline layout was not created VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT.
+The Vulkan spec states: If the graphicsPipelineLibrary feature is not enabled, each element of pDescriptorSets must be a valid VkDescriptorSet (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-06563)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): Couldn't find VkDescriptorSet Object 0x944a2c0000000039. This should not happen and may indicate a bug in the application.
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): Couldn't find VkDescriptorSet Object 0x944a2c0000000039. This should not happen and may indicate a bug in the application.
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): VkPipeline 0x3a6cbb0000000025 uses set #0 but that set is not bound. (Need to use a command like vkCmdBindDescriptorSets to bind the set).
+The Vulkan spec states: For each set n that is statically used by a bound shader, a descriptor set must have been bound to n at the same pipeline bind point, with a VkPipelineLayout that is compatible for set n, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout array used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08600)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] Invalid VkDescriptorSet Object 0x59f7450000000038.
+The Vulkan spec states: pDescriptorSets must be a valid pointer to an array of descriptorSetCount valid or VK_NULL_HANDLE VkDescriptorSet handles (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-parameter)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] (VkDescriptorSet 0x59f7450000000038) does not exist, and the pipeline layout was not created VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT.
+The Vulkan spec states: If the graphicsPipelineLibrary feature is not enabled, each element of pDescriptorSets must be a valid VkDescriptorSet (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-06563)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): Couldn't find VkDescriptorSet Object 0x59f7450000000038. This should not happen and may indicate a bug in the application.
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): Couldn't find VkDescriptorSet Object 0x59f7450000000038. This should not happen and may indicate a bug in the application.
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): VkPipeline 0x3a6cbb0000000025 uses set #0 but that set is not bound. (Need to use a command like vkCmdBindDescriptorSets to bind the set).
+The Vulkan spec states: For each set n that is statically used by a bound shader, a descriptor set must have been bound to n at the same pipeline bind point, with a VkPipelineLayout that is compatible for set n, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout array used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08600)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] Invalid VkDescriptorSet Object 0x2723ba0000000037.
+The Vulkan spec states: pDescriptorSets must be a valid pointer to an array of descriptorSetCount valid or VK_NULL_HANDLE VkDescriptorSet handles (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-parameter)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] (VkDescriptorSet 0x2723ba0000000037) does not exist, and the pipeline layout was not created VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT.
+The Vulkan spec states: If the graphicsPipelineLibrary feature is not enabled, each element of pDescriptorSets must be a valid VkDescriptorSet (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-06563)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): VkPipeline 0x3a6cbb0000000025 uses set #0 but that set is not bound. (Need to use a command like vkCmdBindDescriptorSets to bind the set).
+The Vulkan spec states: For each set n that is statically used by a bound shader, a descriptor set must have been bound to n at the same pipeline bind point, with a VkPipelineLayout that is compatible for set n, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout array used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08600)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] Invalid VkDescriptorSet Object 0x9638f80000000036.
+The Vulkan spec states: pDescriptorSets must be a valid pointer to an array of descriptorSetCount valid or VK_NULL_HANDLE VkDescriptorSet handles (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-parameter)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] (VkDescriptorSet 0x9638f80000000036) does not exist, and the pipeline layout was not created VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT.
+The Vulkan spec states: If the graphicsPipelineLibrary feature is not enabled, each element of pDescriptorSets must be a valid VkDescriptorSet (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-06563)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): VkPipeline 0x3a6cbb0000000025 uses set #0 but that set is not bound. (Need to use a command like vkCmdBindDescriptorSets to bind the set).
+The Vulkan spec states: For each set n that is statically used by a bound shader, a descriptor set must have been bound to n at the same pipeline bind point, with a VkPipelineLayout that is compatible for set n, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout array used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08600)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] Invalid VkDescriptorSet Object 0x944a2c0000000039.
+The Vulkan spec states: pDescriptorSets must be a valid pointer to an array of descriptorSetCount valid or VK_NULL_HANDLE VkDescriptorSet handles (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-parameter)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] (VkDescriptorSet 0x944a2c0000000039) does not exist, and the pipeline layout was not created VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT.
+The Vulkan spec states: If the graphicsPipelineLibrary feature is not enabled, each element of pDescriptorSets must be a valid VkDescriptorSet (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-06563)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): VkPipeline 0x3a6cbb0000000025 uses set #0 but that set is not bound. (Need to use a command like vkCmdBindDescriptorSets to bind the set).
+The Vulkan spec states: For each set n that is statically used by a bound shader, a descriptor set must have been bound to n at the same pipeline bind point, with a VkPipelineLayout that is compatible for set n, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout array used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08600)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] Invalid VkDescriptorSet Object 0x59f7450000000038.
+The Vulkan spec states: pDescriptorSets must be a valid pointer to an array of descriptorSetCount valid or VK_NULL_HANDLE VkDescriptorSet handles (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-parameter)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] (VkDescriptorSet 0x59f7450000000038) does not exist, and the pipeline layout was not created VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT.
+The Vulkan spec states: If the graphicsPipelineLibrary feature is not enabled, each element of pDescriptorSets must be a valid VkDescriptorSet (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-06563)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): VkPipeline 0x3a6cbb0000000025 uses set #0 but that set is not bound. (Need to use a command like vkCmdBindDescriptorSets to bind the set).
+The Vulkan spec states: For each set n that is statically used by a bound shader, a descriptor set must have been bound to n at the same pipeline bind point, with a VkPipelineLayout that is compatible for set n, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout array used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08600)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] Invalid VkDescriptorSet Object 0x2723ba0000000037.
+The Vulkan spec states: pDescriptorSets must be a valid pointer to an array of descriptorSetCount valid or VK_NULL_HANDLE VkDescriptorSet handles (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-parameter)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdBindDescriptorSets(): pDescriptorSets[0] (VkDescriptorSet 0x2723ba0000000037) does not exist, and the pipeline layout was not created VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT.
+The Vulkan spec states: If the graphicsPipelineLibrary feature is not enabled, each element of pDescriptorSets must be a valid VkDescriptorSet (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/descriptorsets.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-06563)
+Fri May 02 15:48:07 MSK 2025 VULKAN VALIDATION [ERROR] vkCmdDraw(): VkPipeline 0x3a6cbb0000000025 uses set #0 but that set is not bound. (Need to use a command like vkCmdBindDescriptorSets to bind the set).
+The Vulkan spec states: For each set n that is statically used by a bound shader, a descriptor set must have been bound to n at the same pipeline bind point, with a VkPipelineLayout that is compatible for set n, with the VkPipelineLayout used to create the current VkPipeline or the VkDescriptorSetLayout array used to create the current VkShaderEXT , as described in Pipeline Layout Compatibility (https://vulkan.lunarg.com/doc/view/1.4.309.0/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-08600)

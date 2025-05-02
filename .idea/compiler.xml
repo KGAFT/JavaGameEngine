@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="JavaGameEngine" />
+        <module name="KGAFTEngine" />
         <module name="MainBuild" />
       </profile>
     </annotationProcessing>
@@ -17,6 +17,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="JavaGameEngine" options="--enable-preview" />
+      <module name="KGAFTEngine" options="--enable-preview" />
     </option>
   </component>
 </project>

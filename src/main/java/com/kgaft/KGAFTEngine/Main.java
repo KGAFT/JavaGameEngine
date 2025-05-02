@@ -122,7 +122,6 @@ public class Main {
         Vector3f fColor = new Vector3f(1, 0, 0);
         Vector3f sColor = new Vector3f(0, 0, 1);
 
-        window
         while(window.isWindowActive()){
             window.preRenderEvents();
             VkCommandBuffer cmd = syncManager.beginRender(cmdCount);
